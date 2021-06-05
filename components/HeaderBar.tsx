@@ -1,21 +1,13 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faUser, faSearch, faBars } from '@fortawesome/free-solid-svg-icons'
 import { useState } from 'react'
+import VodType from '../types/VodType'
 
-type Nav = {
-    id: number,
-    name: string
+type HeaderBarProps = {
+    vodTypes: Array<VodType>
 }
 
-const navs: Array<Nav> = [
-    { id: 1, name: '首页' },
-    { id: 2, name: '精选' },
-    { id: 3, name: '原创' },
-    { id: 4, name: '日韩' },
-    { id: 5, name: '绅士' }
-]
-
-function HeaderBar() {
+function HeaderBar({ vodTypes }: HeaderBarProps) {
 
     const [ showNavs, setShowNavs ] = useState(false)
 
@@ -31,20 +23,26 @@ function HeaderBar() {
                     <img className="h-full" src="/images/logo.png" alt="LOGO" />
                 </a>
                 <ul className="flex-1 h-full text-gray-600 clear-both hidden lg:block">
+                    <li className="float-left h-full px-4 flex items-center">
+                        <a href="/">首页</a>
+                    </li>
                     {
-                        navs.map((nav: Nav) => (
-                            <li className="float-left h-full px-4 flex items-center" key={nav.id}>
-                                <a href="#">{nav.name}</a>
+                        vodTypes.map((nav: VodType) => (
+                            <li className="float-left h-full px-4 flex items-center" key={nav.typeId}>
+                                <a href="#">{nav.typeName}</a>
                             </li>
                         ))
                     }
                 </ul>
                 {
                     showNavs && <ul className="w-full absolute left-0 top-16 bg-gray-100 text-gray-700 shadow-md lg:hidden">
+                        <li className="container h-14 px-4 flex items-center">
+                            <a href="/">首页</a>
+                        </li>
                         {
-                            navs.map((nav: Nav) => (
-                                <li className="container h-14 px-4 flex items-center" key={nav.id}>
-                                    <a href="#">{nav.name}</a>
+                            vodTypes.map((nav: VodType) => (
+                                <li className="container h-14 px-4 flex items-center" key={nav.typeId}>
+                                    <a href="#">{nav.typeName}</a>
                                 </li>
                             ))
                         }
