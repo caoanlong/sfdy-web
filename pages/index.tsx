@@ -54,26 +54,38 @@ export default function Home({ vodTypes, vodsNewList }: HomeProps) {
       <HeaderBar vodTypes={vodTypes}></HeaderBar>
 
       <main className="pt-16">
-        <div className="h-96 bg-gray-500 text-9xl text-center text-gray-300 pt-20">Banner</div>
+        <div className="h-36 sm:h-48 md:h-60 lg:h-72 xl:h-80 2xl:h-96 bg-gray-500 text-9xl text-gray-300 flex items-center justify-center">
+          BANNER
+        </div>
         <div className="container pt-6">
           {
             vodsNewList.map((vodsNew: VodType) => (
-              <div className="bg-white shadow mb-6" key={vodsNew.typeId}>
+              <div className="mb-6" key={vodsNew.typeId}>
                 <div className="py-4 px-4">
                   <h2 className="text-lg text-gray-700 inline-block">最新{vodsNew.typeName}</h2>
                   <a className="text-sm text-gray-400 inline-block ml-2" href="#">更多</a>
                   <FontAwesomeIcon className="w-2 text-gray-400 inline-block " icon={faChevronRight}/>
                 </div>
-                <div className="grid grid-cols-6 gap-4 px-4">
+                <div className="px-4 grid gap-4 grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6">
                   {
                     vodsNew && vodsNew.vods && vodsNew.vods.map((vod: Vod) => (
-                      <div key={vod.vodId}>
-                        <LazyLoad height={200}>
-                          <img src={vod.vodPic} alt="" />
-                        </LazyLoad>
-                        <h3 className="text-gray-700">{vod.vodName}</h3>
-                        <p className="text-gray-400 text-sm">{vod.vodClass}</p>
-                      </div>
+                      <a 
+                        className="bg-white shadow-md overflow-hidden rounded-lg" 
+                        href="#"
+                        title={vod.vodName}
+                        key={vod.vodId}>
+                        <div className="aspectration" data-ratio="4:3">
+                          <div className="con">
+                            <LazyLoad height="100%">
+                              <img className="object-cover h-full" src={vod.vodPic} alt="" />
+                            </LazyLoad>
+                          </div>
+                        </div>
+                        <div className="p-3 leading-relaxed">
+                          <h3 className="text-gray-700 truncate">{vod.vodName}</h3>
+                          <p className="text-gray-400 text-sm">{vod.vodClass}</p>
+                        </div>
+                      </a>
                     ))
                   }
                 </div>

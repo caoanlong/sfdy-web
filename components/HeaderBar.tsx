@@ -50,7 +50,7 @@ function HeaderBar({ vodTypes }: HeaderBarProps) {
                 }
                 
                 <div className="w-64 h-full items-center hidden sm:flex">
-                    <div className="h-8 bg-gray-100 border-gray-200 border rounded-3xl flex focus-within:ring focus-within:border-blue-300">
+                    <div className="h-8 bg-gray-100 border-gray-200 border rounded-3xl flex focus-within:ring-2 focus-within:border-blue-600">
                         <input className="flex-1 h-full px-3 bg-transparent outline-none" type="text" placeholder="请输入关键字"/>
                         <div className="w-8 h-full flex justify-center items-center cursor-pointer">
                             <FontAwesomeIcon className="w-3 h-3 text-gray-400" icon={faSearch}/>
