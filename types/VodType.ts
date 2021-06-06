@@ -1,5 +1,15 @@
 import Vod from './Vod'
 
+type TypeExtend = {
+    class: string,
+    area: string,
+    lang: string,
+    year: string,
+    star: string,
+    director: string,
+    state: string,
+    version: string
+}
 interface VodType {
     typeId: number,
     typeName: string,
@@ -8,6 +18,9 @@ interface VodType {
     typeMid: number,
     typePid: number,
     typeStatus: number,
+    typeKey: string,
+    typeDes: string,
+    typeExtend: TypeExtend,
     vods?: Array<Vod>
 }
 

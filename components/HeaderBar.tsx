@@ -1,6 +1,8 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faUser, faSearch, faBars } from '@fortawesome/free-solid-svg-icons'
 import { useState } from 'react'
+import { useRouter } from 'next/router'
+import Link from 'next/link'
 import VodType from '../types/VodType'
 
 type HeaderBarProps = {
@@ -8,7 +10,8 @@ type HeaderBarProps = {
 }
 
 function HeaderBar({ vodTypes }: HeaderBarProps) {
-
+    const router = useRouter()
+    console.log(router)
     const [ showNavs, setShowNavs ] = useState(false)
 
     return (
@@ -23,13 +26,15 @@ function HeaderBar({ vodTypes }: HeaderBarProps) {
                     <img className="h-full" src="/images/logo.png" alt="LOGO" />
                 </a>
                 <ul className="flex-1 h-full text-gray-600 clear-both hidden lg:block">
-                    <li className="float-left h-full px-4 flex items-center">
-                        <a href="/">首页</a>
+                    <li className={`float-left h-full px-4 flex items-center ${router.asPath === '/' && 'text-purple-500'}`}>
+                        <Link href="/">首页</Link>
                     </li>
                     {
                         vodTypes.map((nav: VodType) => (
-                            <li className="float-left h-full px-4 flex items-center" key={nav.typeId}>
-                                <a href="#">{nav.typeName}</a>
+                            <li 
+                                className={`float-left h-full px-4 flex items-center ${router.asPath === '/list/' + nav.typeId && 'text-purple-500'}`} 
+                                key={nav.typeId}>
+                                <Link href="/list/[typeId]" as={`/list/${nav.typeId}`}>{nav.typeName}</Link>
                             </li>
                         ))
                     }
@@ -37,12 +42,12 @@ function HeaderBar({ vodTypes }: HeaderBarProps) {
                 {
                     showNavs && <ul className="w-full absolute left-0 top-16 bg-gray-100 text-gray-700 shadow-md lg:hidden">
                         <li className="container h-14 px-4 flex items-center">
-                            <a href="/">首页</a>
+                            <Link href="/">首页</Link>
                         </li>
                         {
                             vodTypes.map((nav: VodType) => (
                                 <li className="container h-14 px-4 flex items-center" key={nav.typeId}>
-                                    <a href="#">{nav.typeName}</a>
+                                    <Link href="/list/[typeId]" as={`/list/${nav.typeId}`}>{nav.typeName}</Link>
                                 </li>
                             ))
                         }
@@ -50,7 +55,7 @@ function HeaderBar({ vodTypes }: HeaderBarProps) {
                 }
                 
                 <div className="w-64 h-full items-center hidden sm:flex">
-                    <div className="h-8 bg-gray-100 border-gray-200 border rounded-3xl flex focus-within:ring-2 focus-within:border-blue-600">
+                    <div className="h-8 bg-gray-100 border-gray-200 border rounded-3xl flex focus-within:ring-2 focus-within:border-purple-600">
                         <input className="flex-1 h-full px-3 bg-transparent outline-none" type="text" placeholder="请输入关键字"/>
                         <div className="w-8 h-full flex justify-center items-center cursor-pointer">
                             <FontAwesomeIcon className="w-3 h-3 text-gray-400" icon={faSearch}/>
