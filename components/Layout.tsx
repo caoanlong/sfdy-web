@@ -3,6 +3,7 @@ import Head from 'next/head'
 import HeaderBar from './HeaderBar'
 import FooterBar from './FooterBar'
 import VodType from '../types/VodType'
+import VodTypeApi from '../services/VodTypeApi'
 
 function decodeUnicode(str: string) {
     str = str.replace(/\\/g, "%")
@@ -10,12 +11,11 @@ function decodeUnicode(str: string) {
 }
 
 export const getVodTypes = async () => {
-    const res = await fetch('https://jyavs.com/api/type/findAll')
-    const data = await res.json()
-    if (!data || data.code != 200 || !data.data) {
+    const res = await VodTypeApi.findAll()
+    if (res.data.code != 200 || !res.data.data) {
       return null
     }
-    return data.data.map((item: VodType) => ({ ...item, typeExtend: JSON.parse(decodeUnicode(item.typeExtend)) }))
+    return res.data.data.map((item: VodType) => ({ ...item, typeExtend: JSON.parse(decodeUnicode(item.typeExtend)) }))
 }
 
 type LayoutProps = {

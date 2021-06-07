@@ -16,6 +16,15 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 type ListProps = {
     vodTypes: Array<VodType>
 }
+type SortItem = {
+    code: string,
+    name: string
+}
+const sortList: Array<SortItem> = [
+    { code: 'time', name: '时间' },
+    { code: 'hits', name: '人气' },
+    { code: 'score', name: '评分' }
+]
 function List({ vodTypes }: ListProps) {
     const router = useRouter()
     const { typeId } = router.query
@@ -23,6 +32,7 @@ function List({ vodTypes }: ListProps) {
     const classes = '全部,' + vodType?.typeExtend?.class
     const classList = classes?.split(',')
     const [ currentClass, setCurrentClass ] = useState('全部')
+    const [ currentSort, setCurrentSort ] = useState(sortList[0])
     return (
         <Layout vodTypes={vodTypes}>
             <main className="pt-16">
@@ -52,9 +62,16 @@ function List({ vodTypes }: ListProps) {
                         <div className="flex">
                             <div className="w-16 text-sm text-gray-400 text-center h-8 flex justify-center items-center">排序</div>
                             <ul className="flex-1 clearfix">
-                                <li className="float-left text-sm px-5 h-8 flex justify-center items-center rounded-md cursor-pointer bg-purple-500 text-white shadow-lg">时间</li>
-                                <li className="float-left text-sm text-gray-600 px-5 h-8 flex justify-center items-center rounded-md cursor-pointer">人气</li>
-                                <li className="float-left text-sm text-gray-600 px-5 h-8 flex justify-center items-center rounded-md cursor-pointer">评分</li>
+                                {
+                                    sortList.map((item: SortItem) => (
+                                        <li 
+                                            key={item.code}
+                                            className={`float-left text-sm px-5 h-8 flex justify-center items-center rounded-md cursor-pointer ${currentSort.code === item.code ? 'bg-purple-500 text-white shadow-lg' : 'text-gray-600'}`} 
+                                            onClick={() => setCurrentSort(item)}>
+                                            {item.name}
+                                        </li>
+                                    ))
+                                }
                             </ul>
                         </div>
                     </div>

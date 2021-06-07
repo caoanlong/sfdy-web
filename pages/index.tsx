@@ -6,15 +6,15 @@ import Banner from '../components/Banner'
 import VodItem from '../components/VodItem'
 import VodType from '../types/VodType'
 import Vod from '../types/Vod'
+import VodApi from '../services/VodApi'
 
 
 const getVodsNew = async () => {
-	const res = await fetch('https://jyavs.com/api/vod/homeNew?num=12')
-	const data = await res.json()
-	if (!data || data.code != 200) {
+	const res = await VodApi.homeNew({ num: 12 })
+	if (!res.data || res.data.code != 200) {
 		return null
 	}
-	return data.data
+	return res.data.data
 }
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
