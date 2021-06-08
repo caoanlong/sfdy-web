@@ -9,7 +9,7 @@ const handle = app.getRequestHandler()
 
 const apiPaths = {
     '/api': {
-        target: 'https://jyavs.com', 
+        target: 'https://jyavs.com/', 
         pathRewrite: {
             '^/api': '/api'
         },

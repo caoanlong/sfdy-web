@@ -9,8 +9,8 @@ import Vod from '../types/Vod'
 import VodApi from '../services/VodApi'
 
 
-const getVodsNew = async () => {
-	const res = await VodApi.homeNew({ num: 12 })
+const getVodsNew = async (num=12) => {
+	const res = await VodApi.homeNew({ num })
 	if (!res.data || res.data.code != 200) {
 		return null
 	}

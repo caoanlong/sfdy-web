@@ -1,38 +1,67 @@
 import { GetServerSideProps } from 'next'
+import Link from 'next/link'
 import { useRouter } from 'next/router'
-import { useState } from 'react'
 import Layout, { getVodTypes } from '../../../components/Layout'
+import VodApi, { VodFindListParams } from '../../../services/VodApi'
+import Vod from '../../../types/Vod'
 import VodType from '../../../types/VodType'
 
-export const getServerSideProps: GetServerSideProps = async (context) => {
-    const vodTypes = await getVodTypes()
-    return {
-        props: {
-            vodTypes
-        }
-    }
-}
+const ALL = '全部'
+const SORTLIST: Array<SortItem> = [
+    { code: 'time', name: '时间' },
+    { code: 'hits', name: '人气' },
+    { code: 'score', name: '评分' }
+]
 
 type ListProps = {
-    vodTypes: Array<VodType>
+    vodTypes: Array<VodType>,
+    vodType: VodType,
+    classList: Array<string>,
+    vodList: Array<Vod>,
+    total: number,
+    pages: number
 }
 type SortItem = {
     code: string,
     name: string
 }
-const sortList: Array<SortItem> = [
-    { code: 'time', name: '时间' },
-    { code: 'hits', name: '人气' },
-    { code: 'score', name: '评分' }
-]
-function List({ vodTypes }: ListProps) {
-    const router = useRouter()
-    const { typeId } = router.query
-    const vodType = vodTypes.find(item => String(item.typeId) === typeId)
-    const classes = '全部,' + vodType?.typeExtend?.class
+
+export const getServerSideProps: GetServerSideProps = async (context) => {
+    const query = context.query
+    const typeId: number = Number(query.typeId)
+    const vodClass: string = query.vodClass as string
+    const orderBy: string = query.orderBy as string
+    const vodTypes = await getVodTypes()
+    const vodType = vodTypes.find((item: VodType) => item.typeId === typeId)
+    const classes = ALL + ',' + vodType?.typeExtendJson?.class
     const classList = classes?.split(',')
-    const [ currentClass, setCurrentClass ] = useState('全部')
-    const [ currentSort, setCurrentSort ] = useState(sortList[0])
+    const params: VodFindListParams = {
+        typeId, 
+        orderBy: orderBy || SORTLIST[0].code 
+    }
+    if (vodClass && vodClass !== ALL) {
+        params.vodClass = vodClass
+    }
+    const { data } = await VodApi.findList(params)
+    const vodList: Array<Vod> = data.data.list
+    const total: number = data.data.total
+    const pages: number = data.data.pages
+    return {
+        props: {
+            vodTypes,
+            vodType,
+            classList,
+            vodList,
+            total,
+            pages
+        }
+    }
+}
+
+function List({ vodTypes, vodType, classList, vodList, total, pages }: ListProps) {
+    const router = useRouter()
+    const { typeId, vodClass=ALL, orderBy=SORTLIST[0].code } = router.query
+
     return (
         <Layout vodTypes={vodTypes}>
             <main className="pt-16">
@@ -50,10 +79,12 @@ function List({ vodTypes }: ListProps) {
                                         <li 
                                             key={cls} 
                                             className={
-                                                `float-left text-sm px-5 h-8 flex justify-center items-center rounded-md cursor-pointer ${cls === currentClass ? 'bg-purple-500 text-white shadow-lg' : 'text-gray-600' }`
-                                            } 
-                                            onClick={() => setCurrentClass(cls)}>
-                                            {cls}
+                                                `float-left text-sm px-5 h-8 flex justify-center items-center rounded-md cursor-pointer ${cls === vodClass ? 'bg-purple-500 text-white shadow-lg' : 'text-gray-600' }`
+                                            }>
+                                            <Link 
+                                                href={`/list/${typeId}?vodClass=${cls}&orderBy=${orderBy}`}>
+                                                <a>{cls}</a>
+                                            </Link>
                                         </li>
                                     ))
                                 }
@@ -63,17 +94,26 @@ function List({ vodTypes }: ListProps) {
                             <div className="w-16 text-sm text-gray-400 text-center h-8 flex justify-center items-center">排序</div>
                             <ul className="flex-1 clearfix">
                                 {
-                                    sortList.map((item: SortItem) => (
+                                    SORTLIST.map((item: SortItem) => (
                                         <li 
                                             key={item.code}
-                                            className={`float-left text-sm px-5 h-8 flex justify-center items-center rounded-md cursor-pointer ${currentSort.code === item.code ? 'bg-purple-500 text-white shadow-lg' : 'text-gray-600'}`} 
-                                            onClick={() => setCurrentSort(item)}>
-                                            {item.name}
+                                            className={`float-left text-sm px-5 h-8 flex justify-center items-center rounded-md cursor-pointer ${orderBy === item.code ? 'bg-purple-500 text-white shadow-lg' : 'text-gray-600'}`}>
+                                            <Link 
+                                                href={`/list/${typeId}?vodClass=${vodClass}&orderBy=${item.code}`}>
+                                                <a>{item.name}</a>
+                                            </Link>
                                         </li>
                                     ))
                                 }
                             </ul>
                         </div>
+                    </div>
+                    <div>
+                        {
+                            vodList.map(item => (
+                                <div key={item.vodId}>{item.vodName}</div>
+                            ))
+                        }
                     </div>
                 </div>
             </main>

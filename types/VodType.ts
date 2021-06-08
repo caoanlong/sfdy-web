@@ -20,7 +20,8 @@ interface VodType {
     typeStatus: number,
     typeKey: string,
     typeDes: string,
-    typeExtend: TypeExtend,
+    typeExtend: string,
+    typeExtendJson: TypeExtend,
     vods?: Array<Vod>
 }
 

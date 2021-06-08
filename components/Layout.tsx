@@ -15,7 +15,7 @@ export const getVodTypes = async () => {
     if (res.data.code != 200 || !res.data.data) {
       return null
     }
-    return res.data.data.map((item: VodType) => ({ ...item, typeExtend: JSON.parse(decodeUnicode(item.typeExtend)) }))
+    return res.data.data.map((item: VodType) => ({ ...item, typeExtendJson: JSON.parse(decodeUnicode(item.typeExtend)) }))
 }
 
 type LayoutProps = {

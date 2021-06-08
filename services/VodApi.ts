@@ -23,6 +23,7 @@ class VodApi {
     }
 
     static findList(params: VodFindListParams) {
+        console.log(params)
         return request({
             url: this.url + '/findList',
             params

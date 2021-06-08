@@ -11,7 +11,7 @@ type HeaderBarProps = {
 
 function HeaderBar({ vodTypes }: HeaderBarProps) {
     const router = useRouter()
-    console.log(router)
+    const { typeId='0' } = router.query
     const [ showNavs, setShowNavs ] = useState(false)
 
     return (
@@ -26,15 +26,15 @@ function HeaderBar({ vodTypes }: HeaderBarProps) {
                     <img className="h-full" src="/images/logo.png" alt="LOGO" />
                 </a>
                 <ul className="flex-1 h-full text-gray-600 clear-both hidden lg:block">
-                    <li className={`float-left h-full px-4 flex items-center ${router.asPath === '/' && 'text-purple-500'}`}>
+                    <li className={`float-left h-full px-4 flex items-center ${typeId === '0' && 'text-purple-500'}`}>
                         <Link href="/">首页</Link>
                     </li>
                     {
                         vodTypes.map((nav: VodType) => (
                             <li 
-                                className={`float-left h-full px-4 flex items-center ${router.asPath === '/list/' + nav.typeId && 'text-purple-500'}`} 
+                                className={`float-left h-full px-4 flex items-center ${+typeId === nav.typeId && 'text-purple-500'}`} 
                                 key={nav.typeId}>
-                                <Link href="/list/[typeId]" as={`/list/${nav.typeId}`}>{nav.typeName}</Link>
+                                <Link href={`/list/${nav.typeId}`}>{nav.typeName}</Link>
                             </li>
                         ))
                     }
@@ -47,7 +47,7 @@ function HeaderBar({ vodTypes }: HeaderBarProps) {
                         {
                             vodTypes.map((nav: VodType) => (
                                 <li className="container h-14 px-4 flex items-center" key={nav.typeId}>
-                                    <Link href="/list/[typeId]" as={`/list/${nav.typeId}`}>{nav.typeName}</Link>
+                                    <Link href={`/list/${nav.typeId}`}>{nav.typeName}</Link>
                                 </li>
                             ))
                         }
