@@ -5,6 +5,8 @@ export type VodHomeNewParams = {
 }
 
 export type VodFindListParams = {
+    pageIndex: number,
+    pageSize: number,
     typeId: number, 
     vodClass?: string, 
     orderBy?: string

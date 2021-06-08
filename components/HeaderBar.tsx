@@ -34,7 +34,7 @@ function HeaderBar({ vodTypes }: HeaderBarProps) {
                             <li 
                                 className={`float-left h-full px-4 flex items-center ${+typeId === nav.typeId && 'text-purple-500'}`} 
                                 key={nav.typeId}>
-                                <Link href={`/list/${nav.typeId}`}>{nav.typeName}</Link>
+                                <Link href={`/list/${nav.typeId}`}><a>{nav.typeName}</a></Link>
                             </li>
                         ))
                     }
@@ -47,7 +47,7 @@ function HeaderBar({ vodTypes }: HeaderBarProps) {
                         {
                             vodTypes.map((nav: VodType) => (
                                 <li className="container h-14 px-4 flex items-center" key={nav.typeId}>
-                                    <Link href={`/list/${nav.typeId}`}>{nav.typeName}</Link>
+                                    <Link href={`/list/${nav.typeId}`}><a>{nav.typeName}</a></Link>
                                 </li>
                             ))
                         }

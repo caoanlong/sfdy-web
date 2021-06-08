@@ -2,6 +2,8 @@ import { GetServerSideProps } from 'next'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import Layout, { getVodTypes } from '../../../components/Layout'
+import VodItem from '../../../components/VodItem'
+import PaginationBar from '../../../components/PaginationBar'
 import VodApi, { VodFindListParams } from '../../../services/VodApi'
 import Vod from '../../../types/Vod'
 import VodType from '../../../types/VodType'
@@ -18,6 +20,8 @@ type ListProps = {
     vodType: VodType,
     classList: Array<string>,
     vodList: Array<Vod>,
+    pageIndex: number,
+    pageSize: number,
     total: number,
     pages: number
 }
@@ -28,6 +32,8 @@ type SortItem = {
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
     const query = context.query
+    const pageIndex: number = Number(query.pageIndex || 1)
+    const pageSize: number = Number(query.pageSize || 24)
     const typeId: number = Number(query.typeId)
     const vodClass: string = query.vodClass as string
     const orderBy: string = query.orderBy as string
@@ -36,6 +42,8 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     const classes = ALL + ',' + vodType?.typeExtendJson?.class
     const classList = classes?.split(',')
     const params: VodFindListParams = {
+        pageIndex,
+        pageSize,
         typeId, 
         orderBy: orderBy || SORTLIST[0].code 
     }
@@ -52,24 +60,28 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
             vodType,
             classList,
             vodList,
+            pageIndex,
+            pageSize,
             total,
             pages
         }
     }
 }
 
-function List({ vodTypes, vodType, classList, vodList, total, pages }: ListProps) {
+function List({ vodTypes, vodType, classList, vodList, pageIndex, pageSize, total, pages }: ListProps) {
     const router = useRouter()
     const { typeId, vodClass=ALL, orderBy=SORTLIST[0].code } = router.query
 
     return (
         <Layout vodTypes={vodTypes}>
-            <main className="pt-16">
+            <main className="pt-16 px-4">
                 <div className="container py-6">
                     <div className="bg-white shadow rounded-lg pb-5">
                         <div className="p-4 border-b border-gray-200">
                             <h2 className="text-lg text-gray-700 inline-block">{vodType?.typeName}</h2>
-                            <span className="text-sm text-gray-400 ml-2">重置筛选</span>
+                            <Link href={`/list/${typeId}`}>
+                                <a className="text-sm text-gray-400 ml-2 cursor-pointer">重置筛选</a>
+                            </Link>
                         </div>
                         <div className="flex my-5">
                             <div className="w-16 text-sm text-gray-400 text-center h-8 flex justify-center items-center">剧情</div>
@@ -82,7 +94,7 @@ function List({ vodTypes, vodType, classList, vodList, total, pages }: ListProps
                                                 `float-left text-sm px-5 h-8 flex justify-center items-center rounded-md cursor-pointer ${cls === vodClass ? 'bg-purple-500 text-white shadow-lg' : 'text-gray-600' }`
                                             }>
                                             <Link 
-                                                href={`/list/${typeId}?vodClass=${cls}&orderBy=${orderBy}`}>
+                                                href={`/list/${typeId}?pageIndex=1&pageSize=${pageSize}&vodClass=${cls}&orderBy=${orderBy}`}>
                                                 <a>{cls}</a>
                                             </Link>
                                         </li>
@@ -99,7 +111,7 @@ function List({ vodTypes, vodType, classList, vodList, total, pages }: ListProps
                                             key={item.code}
                                             className={`float-left text-sm px-5 h-8 flex justify-center items-center rounded-md cursor-pointer ${orderBy === item.code ? 'bg-purple-500 text-white shadow-lg' : 'text-gray-600'}`}>
                                             <Link 
-                                                href={`/list/${typeId}?vodClass=${vodClass}&orderBy=${item.code}`}>
+                                                href={`/list/${typeId}?pageIndex=1&pageSize=${pageSize}&vodClass=${vodClass}&orderBy=${item.code}`}>
                                                 <a>{item.name}</a>
                                             </Link>
                                         </li>
@@ -108,13 +120,19 @@ function List({ vodTypes, vodType, classList, vodList, total, pages }: ListProps
                             </ul>
                         </div>
                     </div>
-                    <div>
+                    <div className="mt-4 grid gap-4 grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6">
                         {
-                            vodList.map(item => (
-                                <div key={item.vodId}>{item.vodName}</div>
-                            ))
+                            vodList.map(vod => (<VodItem key={vod.vodId} vod={vod}/>))
                         }
                     </div>
+                    <PaginationBar 
+                        pageIndex={pageIndex} 
+                        pageSize={pageSize} 
+                        pages={pages} 
+                        total={total} 
+                        typeId={Number(typeId)} 
+                        vodClass={String(vodClass || '')} 
+                        orderBy={String(orderBy || '')} />
                 </div>
             </main>
         </Layout>

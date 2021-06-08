@@ -1,4 +1,4 @@
-import LazyLoad from 'react-lazyload'
+import { LazyLoadImage } from 'react-lazy-load-image-component'
 import Vod from '../types/Vod'
 
 type VodItemProps = {
@@ -13,10 +13,11 @@ function VodItem({ vod }: VodItemProps) {
             title={vod.vodName}
             key={vod.vodId}>
             <div className="aspectration" data-ratio="4:3">
-                <div className="con">
-                    <LazyLoad height="100%">
-                        <img className="object-cover h-full" src={vod.vodPic} alt="" />
-                    </LazyLoad>
+                <div className="con overflow-hidden">
+                    <LazyLoadImage
+                        className="h-full w-full object-cover transition duration-500 transform hover:scale-125"
+                        src={vod.vodPic}>
+                    </LazyLoadImage>
                 </div>
             </div>
             <div className="p-3 leading-relaxed">
