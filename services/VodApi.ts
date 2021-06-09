@@ -12,6 +12,12 @@ export type VodFindListParams = {
     orderBy?: string
 }
 
+export type VodSearchParams = {
+    pageIndex: number,
+    pageSize: number,
+    keyword: string
+}
+
 class VodApi {
     static isClick = true
     static delay = 1000
@@ -27,6 +33,13 @@ class VodApi {
     static findList(params: VodFindListParams) {
         return request({
             url: this.url + '/findList',
+            params
+        })
+    }
+
+    static search(params: VodSearchParams) {
+        return request({
+            url: this.url + '/search',
             params
         })
     }

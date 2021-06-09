@@ -1,6 +1,6 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faUser, faSearch, faBars } from '@fortawesome/free-solid-svg-icons'
-import { useState, MouseEvent, createRef } from 'react'
+import { useState, MouseEvent, createRef, useEffect } from 'react'
 import { useRouter } from 'next/router'
 import Link from 'next/link'
 import VodType from '../types/VodType'
@@ -13,7 +13,7 @@ function HeaderBar({ vodTypes }: HeaderBarProps) {
     const router = useRouter()
     const [ showNavs, setShowNavs ] = useState(false)
     const keywordsRef = createRef<HTMLInputElement>()
-
+    
     const changePage = (e: MouseEvent<HTMLLIElement>, tId: number) => {
         e.stopPropagation()
         setShowNavs(false)
@@ -26,6 +26,18 @@ function HeaderBar({ vodTypes }: HeaderBarProps) {
             router.push(`/search?keyword=${keyword}`)
         }
     }
+    const handleEnter = (e: KeyboardEvent) => {
+        if (e.key === 'Enter') {
+            handleSearch()
+        }
+    }
+
+    useEffect(() => {
+        keywordsRef.current?.addEventListener('keyup', handleEnter)
+        return () => {
+            keywordsRef.current?.removeEventListener('keyup', handleEnter)
+        }
+    })
 
     return (
         <div className="w-full h-12 sm:h-16 fixed z-50 shadow bg-white dark:bg-gray-900">
@@ -45,7 +57,7 @@ function HeaderBar({ vodTypes }: HeaderBarProps) {
                     {
                         vodTypes.map((nav: VodType) => (
                             <li 
-                                className={`float-left h-full px-4 flex items-center ${router.asPath === '/list/' + nav.typeId ? 'text-purple-500' : 'text-gray-600 hover:text-purple-500'}`} 
+                                className={`float-left h-full px-4 flex items-center ${router.asPath === '/list/' + nav.typeId ? 'text-purple-500' : 'text-gray-600 dark:text-gray-500 hover:text-purple-500'}`} 
                                 key={nav.typeId}>
                                 <Link href={`/list/${nav.typeId}`}><a>{nav.typeName}</a></Link>
                             </li>
@@ -63,7 +75,7 @@ function HeaderBar({ vodTypes }: HeaderBarProps) {
                             {
                                 vodTypes.map((nav: VodType) => (
                                     <li 
-                                        className={`container h-14 px-4 flex items-center ${router.asPath === '/list/' + nav.typeId ? 'text-purple-500' : 'text-gray-600'}`} 
+                                        className={`container h-14 px-4 flex items-center ${router.asPath === '/list/' + nav.typeId ? 'text-purple-500' : 'text-gray-600 dark:text-gray-500'}`} 
                                         key={nav.typeId} 
                                         onClick={(e: MouseEvent<HTMLLIElement>) => changePage(e, nav.typeId)}>
                                         {nav.typeName}

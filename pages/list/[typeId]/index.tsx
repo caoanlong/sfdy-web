@@ -32,8 +32,8 @@ type SortItem = {
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
     const query = context.query
-    const pageIndex: number = Number(query.pageIndex || 1)
-    const pageSize: number = Number(query.pageSize || 24)
+    const pageIndex: number = Number(query.pageIndex ?? 1)
+    const pageSize: number = Number(query.pageSize ?? 24)
     const typeId: number = Number(query.typeId)
     const vodClass: string = query.vodClass as string
     const orderBy: string = query.orderBy as string
@@ -45,7 +45,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
         pageIndex,
         pageSize,
         typeId, 
-        orderBy: orderBy || SORTLIST[0].code 
+        orderBy: orderBy ?? SORTLIST[0].code 
     }
     if (vodClass && vodClass !== ALL) {
         params.vodClass = vodClass
