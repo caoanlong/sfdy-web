@@ -74,10 +74,10 @@ function List({ vodTypes, vodType, classList, vodList, pageIndex, pageSize, tota
 
     return (
         <Layout vodTypes={vodTypes}>
-            <main className="pt-16 px-4">
-                <div className="container py-6">
-                    <div className="bg-white shadow rounded-lg pb-5">
-                        <div className="p-4 border-b border-gray-200">
+            <main className="px-4">
+                <div className="container py-4">
+                    <div className="bg-white dark:bg-gray-900 shadow rounded-lg pb-5">
+                        <div className="p-4 border-b border-gray-200 dark:border-gray-800">
                             <h2 className="text-lg text-gray-700 inline-block">{vodType?.typeName}</h2>
                             <Link href={`/list/${typeId}`}>
                                 <a className="text-sm text-gray-400 ml-2 cursor-pointer">重置筛选</a>
@@ -91,7 +91,7 @@ function List({ vodTypes, vodType, classList, vodList, pageIndex, pageSize, tota
                                         <li 
                                             key={cls} 
                                             className={
-                                                `float-left text-sm px-5 h-8 flex justify-center items-center rounded-md cursor-pointer ${cls === vodClass ? 'bg-purple-500 text-white shadow-lg' : 'text-gray-600' }`
+                                                `float-left text-xs sm:text-sm px-5 h-8 flex justify-center items-center rounded-md cursor-pointer ${cls === vodClass ? 'bg-purple-500 text-white shadow-lg' : 'text-gray-600 hover:text-purple-500' }`
                                             }>
                                             <Link 
                                                 href={`/list/${typeId}?pageIndex=1&pageSize=${pageSize}&vodClass=${cls}&orderBy=${orderBy}`}>
@@ -109,7 +109,7 @@ function List({ vodTypes, vodType, classList, vodList, pageIndex, pageSize, tota
                                     SORTLIST.map((item: SortItem) => (
                                         <li 
                                             key={item.code}
-                                            className={`float-left text-sm px-5 h-8 flex justify-center items-center rounded-md cursor-pointer ${orderBy === item.code ? 'bg-purple-500 text-white shadow-lg' : 'text-gray-600'}`}>
+                                            className={`float-left text-xs sm:text-sm px-5 h-8 flex justify-center items-center rounded-md cursor-pointer ${orderBy === item.code ? 'bg-purple-500 text-white shadow-lg' : 'text-gray-600 hover:text-purple-500'}`}>
                                             <Link 
                                                 href={`/list/${typeId}?pageIndex=1&pageSize=${pageSize}&vodClass=${vodClass}&orderBy=${item.code}`}>
                                                 <a>{item.name}</a>

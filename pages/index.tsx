@@ -36,9 +36,9 @@ type HomeProps = {
 function Home({ vodTypes, vodsNewList }: HomeProps) {
 	return (
 		<Layout vodTypes={vodTypes}>
-			<main className="pt-16">
+			<main>
 				<Banner></Banner>
-				<div className="container pt-6">
+				<div className="container pt-4">
 				{
 					vodsNewList.map((vodsNew: VodType) => (
 						<div className="mb-6" key={vodsNew.typeId}>

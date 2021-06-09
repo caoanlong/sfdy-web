@@ -8,7 +8,7 @@ type VodItemProps = {
 function VodItem({ vod }: VodItemProps) {
     return (
         <a 
-            className="bg-white shadow-md overflow-hidden rounded-lg" 
+            className="bg-white dark:bg-gray-900 shadow-md overflow-hidden rounded-lg" 
             href="#"
             title={vod.vodName}
             key={vod.vodId}>
@@ -21,8 +21,8 @@ function VodItem({ vod }: VodItemProps) {
                 </div>
             </div>
             <div className="p-3 leading-relaxed">
-                <h3 className="text-gray-700 truncate">{vod.vodName}</h3>
-                <p className="text-gray-400 text-sm">{vod.vodClass}</p>
+                <h3 className="text-gray-700 dark:text-gray-400 truncate text-sm sm:text-base">{vod.vodName}</h3>
+                <p className="text-gray-400 dark:text-gray-600 text-xs sm:text-sm">{vod.vodClass}</p>
             </div>
         </a>
     )

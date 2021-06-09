@@ -22,21 +22,27 @@ function PaginationBar({ pageIndex, pageSize, pages, total, typeId, vodClass, or
             list.push(i)
         }
     } else {
-        for (let i = pageIndex - 2; i < pageIndex + 3; i++) {
-            list.push(i)
+        if (pageIndex < 3) {
+            list = [1, 2, 3, 4, 5]
+        } else if (pageIndex > pages - 3) {
+            list = [pages - 4, pages - 3, pages - 2, pages - 1, pages]
+        } else {
+            for (let i = pageIndex - 2; i < pageIndex + 3; i++) {
+                list.push(i)
+            }
         }
     }
     return (
-        <div className="flex py-6 justify-center text-xs text-gray-700">
+        <div className="flex py-6 justify-center text-xs text-gray-700 dark:text-gray-400">
             <Link href={first}>
                 <a 
-                    className={`bg-white px-3 py-2 rounded shadow-md mr-2 ${pageIndex === 1 && 'pointer-events-none cursor-not-allowed'}`}>
+                    className={`bg-white dark:bg-gray-900 px-3 py-2 rounded shadow-md mr-2 ${pageIndex === 1 && 'pointer-events-none cursor-not-allowed'}`}>
                     首页
                 </a>
             </Link>
             <Link href={prev}>
                 <a 
-                    className={`bg-white px-4 py-2 rounded shadow-md mr-2 ${pageIndex === 1 && 'pointer-events-none cursor-not-allowed'}`}>
+                    className={`bg-white dark:bg-gray-900 px-4 py-2 rounded shadow-md mr-2 ${pageIndex === 1 && 'pointer-events-none cursor-not-allowed'}`}>
                     上一页
                 </a>
             </Link>
@@ -46,18 +52,24 @@ function PaginationBar({ pageIndex, pageSize, pages, total, typeId, vodClass, or
             </div>
             {
                 list.map((item: number) => (
-                    <div className="hidden md:block bg-white px-4 py-2 rounded shadow-md mr-2">{item}</div>
+                    <Link 
+                        href={`/list/${typeId}?pageIndex=${item}&pageSize=${pageSize}&vodClass=${vodClass}&orderBy=${orderBy}`} 
+                        key={item}>
+                        <a className={`hidden md:block px-4 py-2 rounded shadow-md mr-2 ${pageIndex === item ? 'bg-purple-500 text-white' : 'bg-white dark:bg-gray-900'}`}>
+                            {item}
+                        </a>
+                    </Link>
                 ))
             }
             <Link href={next}>
                 <a 
-                    className={`bg-white px-4 py-2 rounded shadow-md mr-2 ${pageIndex === pages && 'pointer-events-none cursor-not-allowed'}`}>
+                    className={`bg-white dark:bg-gray-900 px-4 py-2 rounded shadow-md mr-2 ${pageIndex === pages && 'pointer-events-none cursor-not-allowed'}`}>
                     下一页
                 </a>
             </Link>
             <Link href={last}>
                 <a 
-                    className={`bg-white px-3 py-2 rounded shadow-md ${pageIndex === pages && 'pointer-events-none cursor-not-allowed'}`}>
+                    className={`bg-white dark:bg-gray-900 px-3 py-2 rounded shadow-md ${pageIndex === pages && 'pointer-events-none cursor-not-allowed'}`}>
                     尾页
                 </a>
             </Link>
