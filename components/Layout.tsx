@@ -9,7 +9,7 @@ type LayoutProps = {
 
 function Layout({children}: LayoutProps) {
     return (
-        <div className="dark">
+        <div className="">
             <div className="bg-gray-50 dark:bg-gray-800">
                 <Head>
                     <title>巨硬AV</title>

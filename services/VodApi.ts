@@ -4,6 +4,10 @@ export type VodHomeNewParams = {
     num: number
 }
 
+export type VodFindByIdParams = {
+    vodId: number
+}
+
 export type VodFindListParams = {
     pageIndex: number,
     pageSize: number,
@@ -26,6 +30,13 @@ class VodApi {
     static homeNew(params: VodHomeNewParams) {
         return request({
             url: this.url + '/homeNew',
+            params
+        })
+    }
+
+    static findById(params: VodFindByIdParams) {
+        return request({
+            url: this.url + '/findById',
             params
         })
     }
