@@ -3,17 +3,18 @@ import Link from 'next/link'
 import Vod from '../types/Vod'
 
 type VodItemProps = {
-    vod: Vod
+    vod: Vod,
+    isInShadow?: boolean
 }
 
-function VodItem({ vod }: VodItemProps) {
+function VodItem({ vod, isInShadow }: VodItemProps) {
     return (
         <Link href={`/detail/${vod.vodId}`}>
             <a 
-                className="bg-white dark:bg-gray-900 shadow-md overflow-hidden rounded-lg" 
+                className={`bg-white dark:bg-gray-900 overflow-hidden ${isInShadow ? '' : 'shadow-md rounded-lg'}`} 
                 title={vod.vodName}>
                 <div className="aspectration" data-ratio="4:3">
-                    <div className="con overflow-hidden">
+                    <div className={`con overflow-hidden ${isInShadow ? 'shadow-md rounded-lg' : ''}`}>
                         <LazyLoadImage
                             className="h-full w-full object-cover transition duration-500 transform hover:scale-125"
                             src={'https://sfdy1.com/' + vod.vodPic}>

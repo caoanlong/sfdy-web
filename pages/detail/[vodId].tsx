@@ -7,23 +7,29 @@ import Vod from "../../types/Vod"
 import { useStore } from "react-redux"
 import VodType from "../../types/VodType"
 import Link from "next/link"
+import VodItem from "../../components/VodItem"
 
 type DetailProps = {
-    vod: Vod
+    vod: Vod,
+    likeList: Array<Vod>
 }
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
     const query = context.query
     const vodId: number = Number(query.vodId)
-    const { data } = await VodApi.findById({ vodId })
+    const resById = await VodApi.findById({ vodId })
+    const vod: Vod = resById?.data?.data
+    const resLike = await VodApi.findYouLike({ typeId: vod.typeId, vodClass: vod.vodClass, num: 12 })
+    
     return {
         props: {
-            vod: data.data
+            vod,
+            likeList: resLike?.data?.data
         }
     }
 }
 
-function Detail({ vod }: DetailProps) {
+function Detail({ vod, likeList }: DetailProps) {
     const store = useStore()
     const state = store.getState()
     const typeList = state.typeList
@@ -90,6 +96,16 @@ function Detail({ vod }: DetailProps) {
                                 立即播放
                             </div>
                         </div>
+                    </div>
+                </div>
+                <div className="bg-white shadow p-3 my-4">
+                    <h1 className="text-lg py-2">猜你喜欢</h1>
+                    <div className="grid gap-4 grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6">
+                        {
+                            likeList?.map((item: Vod) => (
+                                <VodItem vod={item} isInShadow={true} key={item.vodId}></VodItem>
+                            ))
+                        }
                     </div>
                 </div>
             </div>

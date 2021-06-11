@@ -4,6 +4,12 @@ export type VodHomeNewParams = {
     num: number
 }
 
+export type VodFindYouLikeParams = {
+    typeId: number,
+    vodClass: string,
+    num: number
+}
+
 export type VodFindByIdParams = {
     vodId: number
 }
@@ -30,6 +36,13 @@ class VodApi {
     static homeNew(params: VodHomeNewParams) {
         return request({
             url: this.url + '/homeNew',
+            params
+        })
+    }
+
+    static findYouLike(params: VodFindYouLikeParams) {
+        return request({
+            url: this.url + '/findYouLike',
             params
         })
     }
