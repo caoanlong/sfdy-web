@@ -3,33 +3,41 @@ import { faUser, faSearch, faBars } from '@fortawesome/free-solid-svg-icons'
 import { useState, MouseEvent, createRef, useEffect } from 'react'
 import { useRouter } from 'next/router'
 import Link from 'next/link'
+import { useSelector } from 'react-redux'
+import { State } from '../store'
 import VodType from '../types/VodType'
 
-type HeaderBarProps = {
-    vodTypes: Array<VodType>
-}
-
-function HeaderBar({ vodTypes }: HeaderBarProps) {
+function HeaderBar() {
     const router = useRouter()
+
+    const vodTypes = useSelector((state: State) => state.typeList)
+
     const [ showNavs, setShowNavs ] = useState(false)
     const keywordsRef = createRef<HTMLInputElement>()
     
     const changePage = (e: MouseEvent<HTMLLIElement>, tId: number) => {
         e.stopPropagation()
         setShowNavs(false)
-        router.push(`/list/${tId}`)
+        router.push(`/list/${tId}/全部/time`)
     }
 
     const handleSearch = () => {
         const keyword = keywordsRef.current?.value
         if (keyword) {
-            router.push(`/search?keyword=${keyword}`)
+            router.push(`/search/${keyword}`)
         }
     }
     const handleEnter = (e: KeyboardEvent) => {
         if (e.key === 'Enter') {
             handleSearch()
         }
+    }
+
+    const isActive = (typeId: number) => {
+        if (router.pathname.includes('/list') && router.query.typeId === String(typeId)) {
+            return true
+        }
+        return false
     }
 
     useEffect(() => {
@@ -57,9 +65,9 @@ function HeaderBar({ vodTypes }: HeaderBarProps) {
                     {
                         vodTypes.map((nav: VodType) => (
                             <li 
-                                className={`float-left h-full px-4 flex items-center ${router.asPath === '/list/' + nav.typeId ? 'text-purple-500' : 'text-gray-600 dark:text-gray-500 hover:text-purple-500'}`} 
+                                className={`float-left h-full px-4 flex items-center ${isActive(nav.typeId) ? 'text-purple-500' : 'text-gray-600 dark:text-gray-500 hover:text-purple-500'}`} 
                                 key={nav.typeId}>
-                                <Link href={`/list/${nav.typeId}`}><a>{nav.typeName}</a></Link>
+                                <Link href={`/list/${nav.typeId}/全部/time`}><a>{nav.typeName}</a></Link>
                             </li>
                         ))
                     }
@@ -75,7 +83,7 @@ function HeaderBar({ vodTypes }: HeaderBarProps) {
                             {
                                 vodTypes.map((nav: VodType) => (
                                     <li 
-                                        className={`container h-14 px-4 flex items-center ${router.asPath === '/list/' + nav.typeId ? 'text-purple-500' : 'text-gray-600 dark:text-gray-500'}`} 
+                                        className={`container h-14 px-4 flex items-center ${isActive(nav.typeId) ? 'text-purple-500' : 'text-gray-600 dark:text-gray-500'}`} 
                                         key={nav.typeId} 
                                         onClick={(e: MouseEvent<HTMLLIElement>) => changePage(e, nav.typeId)}>
                                         {nav.typeName}

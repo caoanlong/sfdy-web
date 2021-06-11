@@ -4,18 +4,19 @@ type PaginationProps = {
     pageIndex: number, 
     pageSize: number, 
     pages: number, 
-    total: number,
-    typeId: number,
-    vodClass?: string,
-    orderBy?: string
+    baseUrl: string
 }
 
-function PaginationBar({ pageIndex, pageSize, pages, total, typeId, vodClass, orderBy }: PaginationProps) {
-    const first = `/list/${typeId}?pageIndex=1&pageSize=${pageSize}&vodClass=${vodClass}&orderBy=${orderBy}`
-    const last = `/list/${typeId}?pageIndex=${pages}&pageSize=${pageSize}&vodClass=${vodClass}&orderBy=${orderBy}`
-    const prev = `/list/${typeId}?pageIndex=${pageIndex-1}&pageSize=${pageSize}&vodClass=${vodClass}&orderBy=${orderBy}`
-    const next = `/list/${typeId}?pageIndex=${pageIndex+1}&pageSize=${pageSize}&vodClass=${vodClass}&orderBy=${orderBy}`
-
+function PaginationBar({ 
+    pageIndex, 
+    pageSize, 
+    pages, 
+    baseUrl
+}: PaginationProps) {
+    const first = `${baseUrl}?pageIndex=1&pageSize=${pageSize}`
+    const last = `${baseUrl}?pageIndex=${pages}&pageSize=${pageSize}`
+    const prev = `${baseUrl}?pageIndex=${pageIndex-1}&pageSize=${pageSize}`
+    const next = `${baseUrl}?pageIndex=${pageIndex+1}&pageSize=${pageSize}`
     let list = []
     if (pages <= 5) {
         for (let i = 1; i < pages + 1; i++) {
@@ -53,7 +54,7 @@ function PaginationBar({ pageIndex, pageSize, pages, total, typeId, vodClass, or
             {
                 list.map((item: number) => (
                     <Link 
-                        href={`/list/${typeId}?pageIndex=${item}&pageSize=${pageSize}&vodClass=${vodClass}&orderBy=${orderBy}`} 
+                        href={`${baseUrl}?pageIndex=${item}&pageSize=${pageSize}`} 
                         key={item}>
                         <a className={`hidden md:block px-4 py-2 rounded shadow-md mr-2 ${pageIndex === item ? 'bg-purple-500 text-white' : 'bg-white dark:bg-gray-900'}`}>
                             {item}

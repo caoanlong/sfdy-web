@@ -12,7 +12,7 @@ function SearchItem({ vod, index }: SearchItemProps) {
             <div className="w-36 sm:w-60 rounded-lg overflow-hidden">
                 <LazyLoadImage
                     className="h-full w-full object-cover"
-                    src={vod.vodPic}>
+                    src={'https://sfdy1.com/' + vod.vodPic}>
                 </LazyLoadImage>
             </div>
             <div className="flex-1 pl-4 flex flex-col justify-between overflow-hidden">
@@ -30,7 +30,7 @@ function SearchItem({ vod, index }: SearchItemProps) {
                         <span className="text-gray-400">分类：</span>
                         <span className="text-gray-600">精选</span>
                     </span>
-                    <span className="px-4 border-l border-r">
+                    <span className="px-4 border-l border-r dark:border-gray-700">
                         <span className="text-gray-400">地区：</span>
                         <span className="text-gray-600">内详</span>
                     </span>
