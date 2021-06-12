@@ -3,6 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faChevronRight } from '@fortawesome/free-solid-svg-icons'
 import Banner from '../components/Banner'
 import VodItem from '../components/VodItem'
+import SEO from '../components/SEO'
 import VodType from '../types/VodType'
 import Vod from '../types/Vod'
 import VodApi from '../services/VodApi'
@@ -32,6 +33,11 @@ type HomeProps = {
 function Home({ vodsNewList }: HomeProps) {
 	return (
 		<main>
+			<SEO 
+				title={`巨硬AV`} 
+				description={`最新免费成人影片`} 
+				canonical={`https://jyavs.com/`} 
+			/>
 			<Banner></Banner>
 			<div className="container pt-4">
 			{

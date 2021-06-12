@@ -8,10 +8,10 @@ const app = next({ dev })
 const handle = app.getRequestHandler()
 
 const apiPaths = {
-    '/api': {
+    '/app': {
         target: 'https://jyavs.com/', 
         pathRewrite: {
-            '^/api': '/api'
+            '^/app': '/app'
         },
         changeOrigin: true
     }
@@ -23,7 +23,7 @@ app.prepare().then(() => {
   const server = express()
  
   if (isDevelopment) {
-    server.use('/api', createProxyMiddleware(apiPaths['/api']));
+    server.use('/app', createProxyMiddleware(apiPaths['/app']));
   }
 
   server.all('*', (req, res) => {

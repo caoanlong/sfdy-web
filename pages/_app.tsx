@@ -1,5 +1,5 @@
 import '../styles/globals.css'
-import React, { FC } from 'react'
+import React from 'react'
 import type { AppContext, AppProps } from 'next/app'
 import { wrapper } from '../store'
 import Layout from '../components/Layout'
@@ -16,7 +16,6 @@ const WrappedApp = ({ Component, pageProps }: AppProps) => {
 
 WrappedApp.getInitialProps = wrapper.getInitialAppProps(store => async ({ Component, ctx }: AppContext): Promise<any> => {
 	const state = store.getState()
-	console.log('初始化...')
 	if (!state.typeList || state.typeList.length === 0) {
 		const { data } = await VodTypeApi.findAll()
 		if (data.code === 200) {
@@ -24,7 +23,6 @@ WrappedApp.getInitialProps = wrapper.getInitialAppProps(store => async ({ Compon
 				type: 'SET_TYPES',
 				payload: data.data
 			})
-			console.log('初始化完成...')
 		}
 	}
 	
