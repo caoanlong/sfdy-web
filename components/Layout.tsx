@@ -1,15 +1,45 @@
-import React, { ReactNode } from 'react'
+import React, { ReactNode, useEffect } from 'react'
 import Head from 'next/head'
 import HeaderBar from './HeaderBar'
 import FooterBar from './FooterBar'
+import { useDispatch, useSelector } from 'react-redux'
+import { State } from '../store'
 
 type LayoutProps = {
     children: ReactNode
 }
 
 function Layout({children}: LayoutProps) {
+    const theme = useSelector((state: State) => state.theme)
+    const dispatch = useDispatch()
+
+    useEffect(() => {
+        const prefersDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches
+        const t = localStorage.getItem('theme')
+        if (t) {
+            dispatch({
+                type: 'SET_THEME',
+                payload: t
+            })
+        } else {
+            if (prefersDarkMode) {
+                dispatch({
+                    type: 'SET_THEME',
+                    payload: 'dark'
+                })
+                localStorage.setItem('theme', 'dark')
+            } else {
+                dispatch({
+                    type: 'SET_THEME',
+                    payload: 'light'
+                })
+                localStorage.setItem('theme', 'light')
+            }
+        }
+    })
+    
     return (
-        <div className="">
+        <div className={theme}>
             <div className="bg-gray-50 dark:bg-gray-800">
                 <Head>
                     <title>巨硬AV</title>

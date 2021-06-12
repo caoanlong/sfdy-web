@@ -1,9 +1,9 @@
 import { GetServerSideProps } from 'next'
-import SearchItem from '../../../components/SearchItem'
-import PaginationBar from '../../../components/PaginationBar'
-import VodApi from '../../../services/VodApi'
-import Vod from '../../../types/Vod'
-import VodType from '../../../types/VodType'
+import SearchItem from '../../components/SearchItem'
+import PaginationBar from '../../components/PaginationBar'
+import VodApi from '../../services/VodApi'
+import Vod from '../../types/Vod'
+import VodType from '../../types/VodType'
 
 
 type SearchProps = {

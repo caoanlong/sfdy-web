@@ -38,17 +38,17 @@ function Detail({ vod, likeList }: DetailProps) {
         <main>
             <div className="container py-4">
                 <div className="bg-white dark:bg-gray-900 shadow p-3 sm:rounded-lg lg:p-5">
-                    <div className="text-xs text-gray-400 mb-2 sm:text-sm sm:mb-4">
+                    <div className="text-xs text-gray-400 dark:text-gray-600 mb-2 sm:text-sm sm:mb-4">
                         <span>当前位置：</span>
                         <Link href="/">
-                            <a className="text-gray-700 px-1">首页</a>
+                            <a className="text-gray-700 dark:text-gray-400 px-1">首页</a>
                         </Link>
                         <FontAwesomeIcon 
                             style={{top: '-2px'}}
                             className="w-2 h-2 text-gray-400 relative inline-block" 
                             icon={faChevronRight}/>
                         <Link href={`/list/${currentType.typeId}/全部/time`}>
-                            <a className="text-gray-700 px-1">{currentType.typeName}</a>
+                            <a className="text-gray-700 dark:text-gray-400 px-1">{currentType.typeName}</a>
                         </Link>
                         <FontAwesomeIcon 
                             style={{top: '-2px'}}
@@ -56,7 +56,7 @@ function Detail({ vod, likeList }: DetailProps) {
                             icon={faChevronRight}/>
                         <span className="pl-1">{vod.vodName}</span>
                     </div>
-                    <h1 className="text-lg mb-2 sm:hidden">{vod.vodName}</h1>
+                    <h1 className="text-lg mb-2 sm:hidden dark:text-gray-400">{vod.vodName}</h1>
                     <div className="flex">
                         <div className="w-48 sm:w-72">
                             <div className="aspectration" data-ratio="4:3">
@@ -69,19 +69,21 @@ function Detail({ vod, likeList }: DetailProps) {
                             </div>
 
                         </div>
-                        <div className="flex-1 text-sm text-gray-400 pl-3">
-                            <h1 className="hidden sm:block text-lg text-gray-800 lg:text-2xl lg:mb-2">{vod.vodName}</h1>
+                        <div className="flex-1 text-sm text-gray-400 dark:text-gray-600 pl-3">
+                            <h1 className="hidden sm:block text-lg text-gray-800 dark:text-gray-400 lg:text-2xl lg:mb-2">
+                                {vod.vodName}
+                            </h1>
                             <p>
                                 <span>评分：</span>
                             </p>
                             <p>
                                 <span>分类：</span>
-                                <span className="border-r pr-2">{currentType.typeName}</span>
+                                <span className="border-r dark:border-gray-700 pr-2">{currentType.typeName}</span>
                                 <span className="pl-2">{vod.vodClass}</span>
                             </p>
                             <p>
                                 <span>更新：</span>
-                                <span>{dayjs(vod.vodTime).format('YYYY-MM-DD')}</span>
+                                <span>{dayjs(vod.vodTime * 1000).format('YYYY-MM-DD')}</span>
                             </p>
                             <p>
                                 <span>主演：</span>
@@ -91,15 +93,17 @@ function Detail({ vod, likeList }: DetailProps) {
                                 <span>导演：</span>
                                 <span>未知</span>
                             </p>
-                            <div 
-                                className="bg-purple-500 py-2 text-center text-white rounded mt-2 shadow-lg sm:w-32 sm:mt-3 cursor-pointer">
-                                立即播放
-                            </div>
+                            <Link href={`/play/${vod.vodId}`}>
+                                <a 
+                                    className="bg-purple-500 py-2 text-center text-white rounded mt-2 shadow-lg sm:w-32 sm:mt-3 cursor-pointer block">
+                                    立即播放
+                                </a>
+                            </Link>
                         </div>
                     </div>
                 </div>
-                <div className="bg-white shadow p-3 my-4">
-                    <h1 className="text-lg py-2">猜你喜欢</h1>
+                <div className="bg-white dark:bg-gray-900 shadow p-3 my-4 sm:rounded-lg">
+                    <h1 className="text-lg py-2 dark:text-gray-400">猜你喜欢</h1>
                     <div className="grid gap-4 grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6">
                         {
                             likeList?.map((item: Vod) => (

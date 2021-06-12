@@ -14,17 +14,20 @@
     "@fortawesome/react-fontawesome": "^0.1.14",
     "axios": "^0.21.1",
     "dayjs": "^1.10.5",
+    "hls.js": "^1.0.7",
     "light-toast": "^0.3.3",
     "next": "10.2.3",
     "next-redux-wrapper": "^7.0.0",
     "react": "17.0.2",
     "react-dom": "17.0.2",
     "react-lazy-load-image-component": "^1.5.1",
+    "react-player": "^2.9.0",
     "react-redux": "^7.2.4",
     "react-responsive-carousel": "^3.2.18",
     "redux": "^4.1.0",
     "redux-persist": "^6.0.0",
-    "redux-thunk": "^2.3.0"
+    "redux-thunk": "^2.3.0",
+    "video-react": "^0.14.1"
   },
   "devDependencies": {
     "@types/react": "17.0.9",

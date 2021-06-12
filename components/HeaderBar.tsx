@@ -1,18 +1,36 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faUser, faSearch, faBars } from '@fortawesome/free-solid-svg-icons'
+import { faUser, faSearch, faBars, faTimes } from '@fortawesome/free-solid-svg-icons'
 import { useState, MouseEvent, createRef, useEffect } from 'react'
 import { useRouter } from 'next/router'
 import Link from 'next/link'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { State } from '../store'
 import VodType from '../types/VodType'
+import Switch from '../components/Switch'
+
+const HOT_LIST = [
+    '三上悠亚',
+    '桥本有菜',
+    '明日花绮罗',
+    '吉泽明步',
+    '篠田优',
+    '佐佐木明希',
+    '古川伊织',
+    '桃乃木香奈',
+    '山岸逢花',
+    '明里紬'
+]
 
 function HeaderBar() {
     const router = useRouter()
 
     const vodTypes = useSelector((state: State) => state.typeList)
+    const theme = useSelector((state: State) => state.theme)
+    const dispatch = useDispatch()
 
     const [ showNavs, setShowNavs ] = useState(false)
+    const [ showMobileSearch, setShowMobileSearch ] = useState(false)
+    const [ showHotList, setShowHotList ] = useState(false)
     const keywordsRef = createRef<HTMLInputElement>()
     
     const changePage = (e: MouseEvent<HTMLLIElement>, tId: number) => {
@@ -32,12 +50,21 @@ function HeaderBar() {
             handleSearch()
         }
     }
+    const handleSelectSearch = (keyword: string) => {
+        setShowHotList(false)
+        router.push(`/search/${keyword}`)
+    }
 
     const isActive = (typeId: number) => {
-        if (router.pathname.includes('/list') && router.query.typeId === String(typeId)) {
-            return true
-        }
-        return false
+        return (router.pathname.includes('/list') && router.query.typeId === String(typeId))
+    }
+    const changeTheme = () => {
+        const t = theme === 'dark' ? 'light' : 'dark'
+        dispatch({
+            type: 'SET_THEME',
+            payload: t
+        })
+        localStorage.setItem('theme', t)
     }
 
     useEffect(() => {
@@ -73,7 +100,8 @@ function HeaderBar() {
                     }
                 </ul>
                 {
-                    showNavs && <div 
+                    showNavs ? 
+                    <div 
                         className="w-full fixed left-0 top-12 right-0 bottom-0 bg-black bg-opacity-50 backdrop-filter backdrop-blur" 
                         onClick={() => setShowNavs(false)}>
                         <ul className="w-full absolute left-0 top-0 sm:top-16 bg-gray-100 dark:bg-gray-800 shadow-md lg:hidden">
@@ -92,19 +120,112 @@ function HeaderBar() {
                             }
                         </ul>
                     </div>
+                    : <></>
                 }
                 
-                <div className="w-64 h-full items-center hidden sm:flex">
+                <div 
+                    className="w-64 h-full bg-white dark:bg-gray-900 hidden sm:flex items-center relative">
                     <div 
-                        className="h-8 bg-gray-100 dark:bg-gray-700 border-gray-200 dark:border-gray-600 border rounded-3xl flex focus-within:ring-2 focus-within:border-purple-600">
-                        <input ref={keywordsRef} className="flex-1 h-full px-3 bg-transparent outline-none dark:text-white" type="text" placeholder="请输入关键字"/>
-                        <div className="w-8 h-full flex justify-center items-center cursor-pointer" onClick={handleSearch}>
+                        className="w-auto h-8 bg-gray-100 dark:bg-gray-700 border-gray-200 dark:border-gray-600 border rounded-3xl flex focus-within:ring-2 focus-within:border-purple-600">
+                        <input 
+                            ref={keywordsRef} 
+                            className="flex-1 h-full px-3 bg-transparent outline-none dark:text-white" 
+                            type="text" 
+                            placeholder="请输入关键字" 
+                            onFocus={() => setShowHotList(true)} 
+                            onBlur={() => {
+                                setTimeout(() => {
+                                    setShowHotList(false)
+                                }, 200)
+                            }}/>
+                        <div 
+                            className="w-8 h-full flex justify-center items-center cursor-pointer" 
+                            onClick={handleSearch}>
                             <FontAwesomeIcon className="w-3 h-3 text-gray-400" icon={faSearch}/>
                         </div>
                     </div>
+                    {
+                        showHotList ? 
+                        <div className="absolute z-10 top-14 left-0 right-6 bg-white dark:bg-gray-800 shadow-lg rounded p-4">
+                            <p className="text-xs text-gray-400 pb-2">热门搜索</p>
+                            <ul className="text-sm">
+                                {
+                                    HOT_LIST.map((hot: string, i: number) => (
+                                        <li 
+                                            key={i} 
+                                            className="block py-2 text-gray-700 dark:text-gray-400 cursor-pointer" 
+                                            onClick={() => handleSelectSearch(hot)}>
+                                            <span 
+                                                className={`inline-block w-5 h-5 text-center text-xs rounded-sm mr-2 ${i === 0 ? 'bg-red-500 text-white' : i === 1 ? 'bg-yellow-500 text-white' : i === 2 ? 'bg-yellow-300 text-white' : 'bg-gray-300 text-gray-600'}`} 
+                                                style={{lineHeight: '20px'}}>
+                                                {i+1}
+                                            </span>
+                                            <span>{hot}</span>
+                                        </li>
+                                    ))
+                                }
+                            </ul>
+                        </div>
+                        : <></>
+                    }
                 </div>
+                {
+                    showMobileSearch ? 
+                    <div 
+                        className="w-full h-full items-center flex sm:w-64 absolute z-10 sm:hidden px-3 bg-white dark:bg-gray-900">
+                        <div 
+                            className="w-full h-8 bg-gray-100 dark:bg-gray-700 border-gray-200 dark:border-gray-600 border rounded-3xl flex focus-within:ring-2 focus-within:border-purple-600">
+                            <input 
+                                ref={keywordsRef} 
+                                className="flex-1 h-full px-3 bg-transparent outline-none dark:text-white" 
+                                type="text" 
+                                placeholder="请输入关键字" 
+                                onFocus={() => setShowHotList(true)}/>
+                            <div 
+                                className="w-8 h-full flex justify-center items-center cursor-pointer" 
+                                onClick={handleSearch}>
+                                <FontAwesomeIcon className="w-3 h-3 text-gray-400" icon={faSearch}/>
+                            </div>
+                        </div>
+                        <div className="w-8 flex justify-center" onClick={() => setShowMobileSearch(false)}>
+                            <FontAwesomeIcon className="w-4 h-4 text-gray-600 cursor-pointer" icon={faTimes}/>
+                        </div>
+                        <div 
+                            className="fixed top-12 left-0 right-0 bottom-0 bg-black bg-opacity-50 backdrop-filter backdrop-blur" onClick={() => setShowMobileSearch(false)}>
+                            <div className="bg-white dark:bg-gray-900 p-4">
+                                <p className="text-xs text-gray-400 pb-2">热门搜索</p>
+                                <ul className="text-sm">
+                                    {
+                                        HOT_LIST.map((hot: string, i: number) => (
+                                            <li 
+                                                key={i} 
+                                                className="block py-2 text-gray-700 dark:text-gray-400" 
+                                                onClick={(e) => {
+                                                    e.stopPropagation()
+                                                    setShowMobileSearch(false)
+                                                    handleSelectSearch(hot)
+                                                }}>
+                                                <span 
+                                                    className={`inline-block w-5 h-5 text-center text-xs rounded-sm mr-2 ${i === 0 ? 'bg-red-500 text-white' : i === 1 ? 'bg-yellow-500 text-white' : i === 2 ? 'bg-yellow-300 text-white' : 'bg-gray-300 text-gray-600'}`} 
+                                                    style={{lineHeight: '20px'}}>
+                                                    {i+1}
+                                                </span>
+                                                <span>{hot}</span>
+                                            </li>
+                                        ))
+                                    }
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    : <></>
+                }
                 <div className="flex-1 lg:flex-none lg:w-40 h-full flex justify-end items-center px-4">
-                    <FontAwesomeIcon className="w-4 h-8 text-gray-600 cursor-pointer" icon={faUser}/>
+                    <Switch text="切换主题" isOpen={theme === 'dark'} handleChange={changeTheme}></Switch>
+                    <FontAwesomeIcon 
+                        className="w-4 h-8 text-gray-600 mx-4 sm:hidden" 
+                        icon={faSearch} onClick={() => setShowMobileSearch(true)}/>
+                    {/* <FontAwesomeIcon className="w-4 h-8 text-gray-600 cursor-pointer" icon={faUser}/> */}
                 </div>
             </div>
         </div>

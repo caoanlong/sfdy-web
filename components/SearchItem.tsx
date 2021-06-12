@@ -1,4 +1,5 @@
 import { LazyLoadImage } from 'react-lazy-load-image-component'
+import Link from 'next/link'
 import Vod from "../types/Vod"
 
 type SearchItemProps = {
@@ -40,12 +41,17 @@ function SearchItem({ vod, index }: SearchItemProps) {
                     </span>
                 </p>
                 <div className="flex">
-                    <div className="h-6 sm:h-8 rounded shadow-md flex justify-center items-center px-4 bg-purple-500 text-white text-xs sm:text-sm mr-3">
-                        立即播放
-                    </div>
-                    <div className="h-6 sm:h-8 rounded shadow-md flex justify-center items-center px-4 bg-gray-200 dark:bg-gray-500 text-xs sm:text-sm">
-                        查看详情
-                    </div>
+                    <Link href={`/play/${vod.vodId}`}>
+                        <a className="h-6 sm:h-8 rounded shadow-md flex justify-center items-center px-4 bg-purple-500 text-white text-xs sm:text-sm mr-3">
+                            立即播放
+                        </a>
+                    </Link>
+                    <Link href={`/detail/${vod.vodId}`}>
+                        <a className="h-6 sm:h-8 rounded shadow-md flex justify-center items-center px-4 bg-gray-200 dark:bg-gray-500 text-xs sm:text-sm">
+                            查看详情
+                        </a>
+                    </Link>
+                    
                 </div>
             </div>
         </div>
