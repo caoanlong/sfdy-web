@@ -2,7 +2,7 @@ import axios, { AxiosRequestConfig, AxiosResponse, AxiosError } from 'axios'
 import Toast from 'light-toast'
 
 const service = axios.create({
-    baseURL: process.env.NODE_ENV !== 'production' ? 'https://jyavs.com/app' : '/app',
+    baseURL: process.env.NODE_ENV !== 'production' ? 'https://jyavs.com/app' : 'http://10.74.12.30:8100/api',
     timeout: 15000
 })
 
