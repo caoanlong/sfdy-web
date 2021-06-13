@@ -1,11 +1,11 @@
 import { GetServerSideProps } from "next"
 import { useStore } from "react-redux"
-import ReactHlsPlayer from 'react-hls-player'
+import Hls from 'hls.js'
 import VodApi from "../../services/VodApi"
 import Vod from "../../types/Vod"
 import VodType from "../../types/VodType"
 import VodItem from "../../components/VodItem"
-import { RefObject, useEffect, useRef, useState } from "react"
+import { RefObject, useEffect, useRef } from "react"
 
 type PlayProps = {
     vod: Vod,
@@ -34,10 +34,16 @@ function Play({ vod, likeList }: PlayProps) {
     const state = store.getState()
     const typeList = state.typeList
     const currentType: VodType = typeList.find((vodType: VodType) => vodType.typeId === vod.typeId)
-    const [ isSafari, setIsSafari ] = useState(false)
-    const playerRef = useRef() as RefObject<HTMLVideoElement>
+    const videoRef = useRef() as RefObject<HTMLVideoElement>
     useEffect(() => {
-        setIsSafari(/^((?!chrome|android).)*safari/i.test(navigator.userAgent))
+        const videoEle = videoRef.current as HTMLVideoElement
+        if (Hls.isSupported()) {
+            const hls = new Hls()
+            hls.loadSource(vod.vodPlayUrl)
+            hls.attachMedia(videoEle)
+        } else if (videoEle?.canPlayType("application/vnd.apple.mpegurl")) {
+            videoEle.setAttribute('src', vod.vodPlayUrl)
+        }
     })
     
     return (
@@ -47,14 +53,12 @@ function Play({ vod, likeList }: PlayProps) {
                     <div className="w-full">
                         <div className="aspectration" data-ratio="16:9">
                             <div className="con overflow-hidden">
-                                <ReactHlsPlayer
-                                    playerRef={playerRef}
-                                    src={vod.vodPlayUrl}
-                                    autoPlay={false}
-                                    controls={true}
-                                    width="100%"
-                                    height="100%"
-                                />
+                                <video 
+                                    ref={videoRef}
+                                    className="w-full h-full"
+                                    autoPlay
+                                    controls>
+                                </video>
                             </div>
                         </div>
                     </div>
