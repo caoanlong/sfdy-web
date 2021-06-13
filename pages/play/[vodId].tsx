@@ -63,6 +63,10 @@ function Play({ vod, likeList }: PlayProps) {
                                             }
                                         }
                                     }}
+                                    onError={(e) => {
+                                        console.log('onError', e)
+                                        alert('onError:' + e)
+                                    }}
                                 />
                             </div>
                         </div>
