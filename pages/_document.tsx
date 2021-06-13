@@ -15,13 +15,6 @@ class Mydocument extends Document {
                     <script
                         dangerouslySetInnerHTML={{
                         __html: `
-                            (function (doc) {
-                                if (!doc.addEventListener) return;
-                                doc.addEventListener('DOMContentLoaded', function() {
-                                    FastClick.attach(doc.body);//解决手机浏览器点击事件300ms延迟的bug
-                                }, false);
-                            })(document, window)
-
                             if (navigator.userAgent.indexOf('iPhone') > -1) {
                                 document.addEventListener('touchstart', function(event) {
                                   if (event.touches.length > 1) {
