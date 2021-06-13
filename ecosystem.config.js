@@ -2,7 +2,7 @@ module.exports = {
     apps: [
         {
             name: 'sfdy',
-            exec_mode: 'cluster',
+            exec_mode: 'fork',
             instances: 'max', // Or a number of instances
             script: 'yarn',
             args: 'start'
