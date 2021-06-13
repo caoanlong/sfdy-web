@@ -48,7 +48,7 @@ function Play({ vod, likeList }: PlayProps) {
                             <div className="con overflow-hidden">
                                 <ReactPlayer 
                                     url={vod.vodPlayUrl}
-                                    playing={true}
+                                    playing={false}
                                     controls={true}
                                     width="100%"
                                     height="100%"
