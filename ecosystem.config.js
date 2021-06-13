@@ -4,7 +4,7 @@ module.exports = {
             name: 'sfdy',
             exec_mode: 'cluster',
             instances: 'max', // Or a number of instances
-            script: 'yarn --name "sfdy" -- run start',
+            script: './node_modules/next/dist/bin/next',
             args: 'start'
         }
     ]
