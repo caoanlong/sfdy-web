@@ -5,6 +5,7 @@ import VodApi from "../../services/VodApi"
 import Vod from "../../types/Vod"
 import VodType from "../../types/VodType"
 import VodItem from "../../components/VodItem"
+import { useEffect, useState } from "react"
 
 type PlayProps = {
     vod: Vod,
@@ -33,6 +34,11 @@ function Play({ vod, likeList }: PlayProps) {
     const state = store.getState()
     const typeList = state.typeList
     const currentType: VodType = typeList.find((vodType: VodType) => vodType.typeId === vod.typeId)
+    const [ isSafari, setIsSafari ] = useState(false)
+    useEffect(() => {
+        setIsSafari(/^((?!chrome|android).)*safari/i.test(navigator.userAgent))
+    })
+    
     return (
         <main>
             <div className="container sm:py-4">
@@ -48,7 +54,12 @@ function Play({ vod, likeList }: PlayProps) {
                                     height="100%"
                                     config={{
                                         file: {
-                                            forceHLS: true,
+                                            forceHLS: !isSafari,
+                                            forceVideo: true,
+                                            attributes: {
+                                                poster: 'https://sfdy1.com/' + vod.vodPic,
+                                                disablePictureInPicture: true
+                                            }
                                         }
                                     }}
                                 />
