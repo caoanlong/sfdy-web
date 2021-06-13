@@ -1,6 +1,7 @@
 import { GetServerSideProps } from 'next'
 import SearchItem from '../../components/SearchItem'
 import PaginationBar from '../../components/PaginationBar'
+import SEO from '../../components/SEO'
 import VodApi from '../../services/VodApi'
 import Vod from '../../types/Vod'
 import VodType from '../../types/VodType'
@@ -44,6 +45,11 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 function Search({ keyword, vodList, pageIndex, pageSize, pages }: SearchProps) {
     return (
         <main className="px-4">
+            <SEO 
+				title={`${keyword}-${process.env.title}`} 
+				description={`${keyword},${process.env.description}`} 
+				canonical={process.env.site_url} 
+			/>
             <div className="container py-4">
                 <div className="bg-white dark:bg-gray-900 shadow rounded-lg pb-5">
                     <div className="p-4 border-b border-gray-200 dark:border-gray-800">

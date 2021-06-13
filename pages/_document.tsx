@@ -9,8 +9,42 @@ class Mydocument extends Document {
 
     render() {
         return (
-            <Html lang="zh-CN">
-                <Head />
+            <Html lang={process.env.lang}>
+                <Head>
+                    <script async src="/fastclick.js" />
+                    <script
+                        dangerouslySetInnerHTML={{
+                        __html: `
+                            (function (doc) {
+                                if (!doc.addEventListener) return;
+                                doc.addEventListener('DOMContentLoaded', function() {
+                                    FastClick.attach(doc.body);//解决手机浏览器点击事件300ms延迟的bug
+                                }, false);
+                            })(document, window)
+
+                            if (navigator.userAgent.indexOf('iPhone') > -1) {
+                                document.addEventListener('touchstart', function(event) {
+                                  if (event.touches.length > 1) {
+                                    event.preventDefault()
+                                  }
+                                })
+                                var lastTouchEnd = 0
+                                document.addEventListener('touchend', function(event) {
+                                  var now = new Date().getTime()
+                                  if (now - lastTouchEnd <= 300) {
+                                    event.preventDefault()
+                                  }
+                                  lastTouchEnd = now
+                                }, false)
+                              }
+                              // disable ios scale
+                              document.addEventListener('gesturestart', function (event) {
+                                event.preventDefault()
+                              })
+                        `,
+                        }}
+                    />
+                </Head>
                 <body>
                     <Main />
                     <NextScript />

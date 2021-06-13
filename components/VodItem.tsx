@@ -16,7 +16,7 @@ function VodItem({ vod, isInShadow }: VodItemProps) {
                 <div className="aspectration" data-ratio="4:3">
                     <div className={`con overflow-hidden ${isInShadow ? 'shadow-md rounded-lg' : ''}`}>
                         <LazyLoadImage
-                            className="h-full w-full object-cover"
+                            className={`h-full w-full object-cover ${isInShadow ? '' : 'rounded-t-lg'}`}
                             src={'https://sfdy1.com/' + vod.vodPic}>
                         </LazyLoadImage>
                     </div>

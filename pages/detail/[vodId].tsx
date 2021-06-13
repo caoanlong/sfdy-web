@@ -8,6 +8,7 @@ import { useStore } from "react-redux"
 import VodType from "../../types/VodType"
 import Link from "next/link"
 import VodItem from "../../components/VodItem"
+import SEO from '../../components/SEO'
 
 type DetailProps = {
     vod: Vod,
@@ -36,6 +37,11 @@ function Detail({ vod, likeList }: DetailProps) {
     const currentType: VodType = typeList.find((vodType: VodType) => vodType.typeId === vod.typeId)
     return (
         <main>
+            <SEO 
+				title={`${vod.vodName}-${process.env.title}`} 
+				description={`${vod.vodName},${process.env.description}`} 
+				canonical={process.env.site_url} 
+			/>
             <div className="container py-4">
                 <div className="bg-white dark:bg-gray-900 shadow p-3 sm:rounded-lg lg:p-5">
                     <div className="text-xs text-gray-400 dark:text-gray-600 mb-2 sm:text-sm sm:mb-4">
@@ -75,6 +81,7 @@ function Detail({ vod, likeList }: DetailProps) {
                             </h1>
                             <p>
                                 <span>评分：</span>
+                                <span>{vod.vodScore}</span>
                             </p>
                             <p>
                                 <span>分类：</span>

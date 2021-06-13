@@ -3,6 +3,7 @@ import Link from 'next/link'
 import { useRouter } from 'next/router'
 import VodItem from '../../../../../components/VodItem'
 import PaginationBar from '../../../../../components/PaginationBar'
+import SEO from '../../../../../components/SEO'
 import VodApi, { VodFindListParams } from '../../../../../services/VodApi'
 import Vod from '../../../../../types/Vod'
 import VodType from '../../../../../types/VodType'
@@ -80,11 +81,18 @@ function List({
     const classList = classes?.split(',')
     return (
         <main className="px-4">
+            <SEO 
+				title={`${vodType?.typeName}-${vodClass}-${process.env.title}`} 
+				description={`${vodType?.typeName},${vodClass},${process.env.description}`} 
+				canonical={process.env.site_url} 
+			/>
             <div className="container py-4">
                 <div className="bg-white dark:bg-gray-900 shadow rounded-lg pb-5">
                     <div className="p-4 border-b border-gray-200 dark:border-gray-800">
-                        <h2 className="text-lg text-gray-700 dark:text-gray-300 inline-block">{vodType?.typeName}</h2>
-                        <Link href={`/list/${typeId}`}>
+                        <h2 className="text-lg text-gray-700 dark:text-gray-300 inline-block">
+                            {vodType?.typeName}
+                        </h2>
+                        <Link href={`/list/${typeId}/${ALL}/time`}>
                             <a className="text-sm text-gray-400 ml-2 cursor-pointer">重置筛选</a>
                         </Link>
                     </div>

@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "node server.js",
+    "dev": "next dev",
     "build": "next build",
     "start": "next start"
   },
@@ -21,18 +21,17 @@
     "next-seo": "^4.24.0",
     "react": "17.0.2",
     "react-dom": "17.0.2",
-    "react-hls-player": "2.0.0",
     "react-lazy-load-image-component": "^1.5.1",
-    "react-player": "^2.9.0",
     "react-redux": "^7.2.4",
-    "react-responsive-carousel": "^3.2.18",
+    "react-slick": "^0.28.1",
     "redux": "^4.1.0",
-    "redux-persist": "^6.0.0",
-    "redux-thunk": "^2.3.0"
+    "redux-thunk": "^2.3.0",
+    "slick-carousel": "^1.8.1"
   },
   "devDependencies": {
     "@types/react": "17.0.9",
     "@types/react-lazy-load-image-component": "^1.5.1",
+    "@types/react-slick": "^0.23.4",
     "autoprefixer": "^10.2.6",
     "express": "^4.17.1",
     "http-proxy-middleware": "^2.0.0",

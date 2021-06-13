@@ -1,4 +1,5 @@
 import { GetServerSideProps } from 'next'
+import Link from 'next/link'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faChevronRight } from '@fortawesome/free-solid-svg-icons'
 import Banner from '../components/Banner'
@@ -34,9 +35,9 @@ function Home({ vodsNewList }: HomeProps) {
 	return (
 		<main>
 			<SEO 
-				title={`巨硬AV`} 
-				description={`最新免费成人影片`} 
-				canonical={`https://jyavs.com/`} 
+				title={`${process.env.description}-${process.env.title}`} 
+				description={process.env.description as string} 
+				canonical={process.env.site_url} 
 			/>
 			<Banner></Banner>
 			<div className="container pt-4">
@@ -45,8 +46,12 @@ function Home({ vodsNewList }: HomeProps) {
 					<div className="mb-6" key={vodsNew.typeId}>
 						<div className="p-4">
 							<h2 className="text-lg text-gray-700 dark:text-gray-300 inline-block">最新{vodsNew.typeName}</h2>
-							<a className="text-sm text-gray-400 inline-block ml-2" href="#">更多</a>
-							<FontAwesomeIcon className="w-2 text-gray-400 inline-block " icon={faChevronRight}/>
+							<Link href={`/list/${vodsNew.typeId}/全部/time`}>
+								<a>
+									<span className="text-sm text-gray-400 inline-block ml-2">更多</span>
+									<FontAwesomeIcon className="w-2 text-gray-400 inline-block" icon={faChevronRight}/>
+								</a>
+							</Link>
 						</div>
 						<div className="px-4 grid gap-4 grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6">
 						{

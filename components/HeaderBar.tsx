@@ -44,6 +44,9 @@ function HeaderBar() {
         if (keyword) {
             router.push(`/search/${keyword}`)
         }
+        setTimeout(() => {
+            setShowMobileSearch(false)
+        }, 100)
     }
     const handleEnter = (e: KeyboardEvent) => {
         if (e.key === 'Enter') {
@@ -87,14 +90,18 @@ function HeaderBar() {
                 </a>
                 <ul className="flex-1 h-full clear-both hidden lg:block">
                     <li className={`float-left h-full px-4 flex items-center ${router.asPath === '/' ? 'text-purple-500' : 'text-gray-600 hover:text-purple-500'}`}>
-                        <Link href="/">首页</Link>
+                        <Link href="/">
+                            <a className="block">首页</a>
+                        </Link>
                     </li>
                     {
                         vodTypes.map((nav: VodType) => (
                             <li 
                                 className={`float-left h-full px-4 flex items-center ${isActive(nav.typeId) ? 'text-purple-500' : 'text-gray-600 dark:text-gray-500 hover:text-purple-500'}`} 
                                 key={nav.typeId}>
-                                <Link href={`/list/${nav.typeId}/全部/time`}><a>{nav.typeName}</a></Link>
+                                <Link href={`/list/${nav.typeId}/全部/time`}>
+                                    <a>{nav.typeName}</a>
+                                </Link>
                             </li>
                         ))
                     }
@@ -102,11 +109,14 @@ function HeaderBar() {
                 {
                     showNavs ? 
                     <div 
-                        className="w-full fixed left-0 top-12 right-0 bottom-0 bg-black bg-opacity-50 backdrop-filter backdrop-blur" 
+                        className="w-full fixed left-0 top-12 sm:top-16 right-0 bottom-0 bg-black bg-opacity-50 lg:hidden" 
                         onClick={() => setShowNavs(false)}>
-                        <ul className="w-full absolute left-0 top-0 sm:top-16 bg-gray-100 dark:bg-gray-800 shadow-md lg:hidden">
-                            <li className={`container h-14 px-4 flex items-center ${router.asPath === '/' ? 'text-purple-500' : 'text-gray-600'}`}>
-                                <Link href="/">首页</Link>
+                        <ul 
+                            className="w-full absolute left-0 top-0 bg-gray-100 dark:bg-gray-800 shadow-md">
+                            <li 
+                                onClick={() => router.push('/')}
+                                className={`container h-14 px-4 flex items-center ${router.asPath === '/' ? 'text-purple-500' : 'text-gray-600 dark:text-gray-500'}`}>
+                                首页
                             </li>
                             {
                                 vodTypes.map((nav: VodType) => (

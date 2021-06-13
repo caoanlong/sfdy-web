@@ -5,6 +5,7 @@ import VodApi from "../../services/VodApi"
 import Vod from "../../types/Vod"
 import VodType from "../../types/VodType"
 import VodItem from "../../components/VodItem"
+import SEO from '../../components/SEO'
 import { RefObject, useEffect, useRef } from "react"
 
 type PlayProps = {
@@ -48,6 +49,11 @@ function Play({ vod, likeList }: PlayProps) {
     
     return (
         <main>
+            <SEO 
+				title={`正在播放-${vod.vodName}-${process.env.title}`} 
+				description={`${vod.vodName},${process.env.description}`} 
+				canonical={process.env.site_url} 
+			/>
             <div className="container sm:py-4">
                 <div className="bg-white dark:bg-gray-900 shadow">
                     <div className="w-full">
