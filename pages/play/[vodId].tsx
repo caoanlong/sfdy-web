@@ -1,6 +1,5 @@
 import { GetServerSideProps } from "next"
 import { useStore } from "react-redux"
-// import ReactPlayer from 'react-player'
 import ReactHlsPlayer from 'react-hls-player'
 import VodApi from "../../services/VodApi"
 import Vod from "../../types/Vod"
@@ -48,27 +47,6 @@ function Play({ vod, likeList }: PlayProps) {
                     <div className="w-full">
                         <div className="aspectration" data-ratio="16:9">
                             <div className="con overflow-hidden">
-                                {/* <ReactPlayer 
-                                    url={vod.vodPlayUrl}
-                                    playing={false}
-                                    controls={true}
-                                    width="100%"
-                                    height="100%"
-                                    config={{
-                                        file: {
-                                            forceHLS: !isSafari,
-                                            forceVideo: true,
-                                            attributes: {
-                                                // poster: 'https://sfdy1.com/' + vod.vodPic,
-                                                disablePictureInPicture: true
-                                            }
-                                        }
-                                    }}
-                                    onError={(e) => {
-                                        console.log('onError', e)
-                                        alert('onError:' + e)
-                                    }}
-                                /> */}
                                 <ReactHlsPlayer
                                     playerRef={playerRef}
                                     src={vod.vodPlayUrl}
