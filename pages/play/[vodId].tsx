@@ -56,7 +56,6 @@ function Play({ vod, likeList }: PlayProps) {
                                         file: {
                                             forceHLS: !isSafari,
                                             forceVideo: true,
-                                            hlsVersion: '0.12.4',
                                             attributes: {
                                                 // poster: 'https://sfdy1.com/' + vod.vodPic,
                                                 disablePictureInPicture: true
