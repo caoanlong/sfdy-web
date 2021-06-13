@@ -1,11 +1,12 @@
 import { GetServerSideProps } from "next"
 import { useStore } from "react-redux"
-import ReactPlayer from 'react-player'
+// import ReactPlayer from 'react-player'
+import ReactHlsPlayer from 'react-hls-player'
 import VodApi from "../../services/VodApi"
 import Vod from "../../types/Vod"
 import VodType from "../../types/VodType"
 import VodItem from "../../components/VodItem"
-import { useEffect, useState } from "react"
+import { RefObject, useEffect, useRef, useState } from "react"
 
 type PlayProps = {
     vod: Vod,
@@ -35,6 +36,7 @@ function Play({ vod, likeList }: PlayProps) {
     const typeList = state.typeList
     const currentType: VodType = typeList.find((vodType: VodType) => vodType.typeId === vod.typeId)
     const [ isSafari, setIsSafari ] = useState(false)
+    const playerRef = useRef() as RefObject<HTMLVideoElement>
     useEffect(() => {
         setIsSafari(/^((?!chrome|android).)*safari/i.test(navigator.userAgent))
     })
@@ -46,7 +48,7 @@ function Play({ vod, likeList }: PlayProps) {
                     <div className="w-full">
                         <div className="aspectration" data-ratio="16:9">
                             <div className="con overflow-hidden">
-                                <ReactPlayer 
+                                {/* <ReactPlayer 
                                     url={vod.vodPlayUrl}
                                     playing={false}
                                     controls={true}
@@ -66,6 +68,14 @@ function Play({ vod, likeList }: PlayProps) {
                                         console.log('onError', e)
                                         alert('onError:' + e)
                                     }}
+                                /> */}
+                                <ReactHlsPlayer
+                                    playerRef={playerRef}
+                                    src={vod.vodPlayUrl}
+                                    autoPlay={false}
+                                    controls={true}
+                                    width="100%"
+                                    height="100%"
                                 />
                             </div>
                         </div>
