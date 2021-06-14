@@ -62,7 +62,7 @@ function Layout({children}: LayoutProps) {
                 <meta name='mobile-web-app-capable' content='yes' />
                 <meta name='msapplication-TileColor' content={process.env.theme_color} />
                 <meta name='msapplication-tap-highlight' content='no' />
-                <link rel="shortcut icon" href="/favicon.svg" />
+                <link rel="shortcut icon" href="/favicon.ico" />
                 <link rel='apple-touch-icon' href='/icons/apple-touch-icon.png' />
                 <link rel='apple-touch-icon' sizes='152x152' href='/icons/apple-touch-icon-152.png' />
                 <link rel='apple-touch-icon' sizes='180x180' href='/icons/apple-touch-icon-180.png' />
