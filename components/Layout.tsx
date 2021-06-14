@@ -50,11 +50,27 @@ function Layout({children}: LayoutProps) {
         <div className={theme}>
             <Head>
                 <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
-                <meta name="viewport" content="width=device-width,height=device-height,initial-scale=1.0,user-scalable=no,maximum-scale=1" key="viewport" />
+                <meta name="viewport" content="width=device-width,height=device-height,initial-scale=1.0,user-scalable=no,maximum-scale=1,viewport-fit=cover" />
                 <meta name="keywords" content={process.env.keywords} />
                 <meta name="renderer" content="webkit|ie-comp|ie-stand" />
                 <meta name="theme-color" content={process.env.theme_color} />
-                <link rel="icon" href="/favicon.svg" />
+                <meta name='application-name' content={process.env.title} />
+                <meta name='apple-mobile-web-app-capable' content='yes' />
+                <meta name='apple-mobile-web-app-status-bar-style' content='default' />
+                <meta name='apple-mobile-web-app-title' content={process.env.title} />
+                <meta name='format-detection' content='telephone=no' />
+                <meta name='mobile-web-app-capable' content='yes' />
+                <meta name='msapplication-TileColor' content={process.env.theme_color} />
+                <meta name='msapplication-tap-highlight' content='no' />
+                <link rel="shortcut icon" href="/favicon.svg" />
+                <link rel='apple-touch-icon' href='/icons/apple-touch-icon.png' />
+                <link rel='apple-touch-icon' sizes='152x152' href='/icons/apple-touch-icon-152.png' />
+                <link rel='apple-touch-icon' sizes='180x180' href='/icons/apple-touch-icon-180.png' />
+
+                <link rel='icon' type='image/png' sizes='32x32' href='/icons/favicon-32x32.png' />
+                <link rel='icon' type='image/png' sizes='16x16' href='/icons/favicon-16x16.png' />
+                <link rel='manifest' href='/manifest.json' />
+                <link rel='mask-icon' href='/icons/safari-pinned-tab.svg' color={process.env.theme_color} />
             </Head>
             <div className="bg-gray-50 dark:bg-gray-800">
                 <HeaderBar></HeaderBar>

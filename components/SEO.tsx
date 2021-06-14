@@ -17,8 +17,16 @@ function SEO({ title, description, canonical }: SEOProps) {
                     title,
                     description,
                     url: canonical,
-                    locale: 'zh-CN',
-                    site_name: '巨硬AV'
+                    locale: process.env.lang,
+                    site_name: process.env.title,
+                    images: [
+                        {
+                            url: '/icons/og-image.png',
+                            width: 512,
+                            height: 512,
+                            alt: process.env.title,
+                        }
+                    ]
                 }}>
             </NextSeo>
         </>

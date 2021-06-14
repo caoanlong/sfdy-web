@@ -7,7 +7,11 @@ function Custom404() {
         router.push('/')
     })
     return (
-        <h1>404 - Page Not Found</h1>
+        <h1 
+            className="flex justify-center items-center text-3xl text-gray-600"
+            style={{minHeight: '540px'}}>
+            404 - Page Not Found
+        </h1>
     )
 }
 

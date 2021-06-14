@@ -46,7 +46,7 @@ function Search({ keyword, vodList, pageIndex, pageSize, pages }: SearchProps) {
     return (
         <main className="px-4">
             <SEO 
-				title={`${keyword}-${process.env.title}`} 
+				title={`${keyword}搜索结果-${process.env.title}`} 
 				description={`${keyword},${process.env.description}`} 
 				canonical={process.env.site_url} 
 			/>
