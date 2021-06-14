@@ -54,7 +54,7 @@ function Layout({children}: LayoutProps) {
                 <meta name="keywords" content={process.env.keywords} />
                 <meta name="renderer" content="webkit|ie-comp|ie-stand" />
                 <meta name="theme-color" content={process.env.theme_color} />
-                <link rel="icon" href="/favicon.ico" />
+                <link rel="icon" href="/favicon.svg" />
             </Head>
             <div className="bg-gray-50 dark:bg-gray-800">
                 <HeaderBar></HeaderBar>

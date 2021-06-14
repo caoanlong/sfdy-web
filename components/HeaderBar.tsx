@@ -86,7 +86,7 @@ function HeaderBar() {
                     <FontAwesomeIcon className="w-6 h-6 text-gray-600 cursor-pointer" icon={faBars}/>
                 </div>
                 <a className="h-full py-2" style={{width: '160px'}} href="/">
-                    <img className="h-full" src="/images/logo.png" alt="LOGO" />
+                    <img className="h-full" src="/images/logo.svg" alt="LOGO" />
                 </a>
                 <ul className="flex-1 h-full clear-both hidden lg:block">
                     <li className={`float-left h-full px-4 flex items-center ${router.asPath === '/' ? 'text-purple-500' : 'text-gray-600 hover:text-purple-500'}`}>
