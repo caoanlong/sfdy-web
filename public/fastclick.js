@@ -840,7 +840,8 @@
 	}
 }());
 
-if (!document.addEventListener) return;
-document.addEventListener('DOMContentLoaded', function() {
-	FastClick.attach(document.body);//解决手机浏览器点击事件300ms延迟的bug
-}, false)
+if (document.addEventListener) {
+	document.addEventListener('DOMContentLoaded', function() {
+		FastClick.attach(document.body);//解决手机浏览器点击事件300ms延迟的bug
+	}, false)
+}
