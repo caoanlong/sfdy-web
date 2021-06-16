@@ -46,7 +46,7 @@ function Home({ vodsNewList }: HomeProps) {
 					<div className="mb-6" key={vodsNew.typeId}>
 						<div className="p-4">
 							<h2 className="text-lg text-gray-700 dark:text-gray-300 inline-block">最新{vodsNew.typeName}</h2>
-							<Link href={`/list/${vodsNew.typeId}/全部/time`}>
+							<Link href={`/list/${vodsNew.typeId}/全部?orderBy=time`}>
 								<a>
 									<span className="text-sm text-gray-400 inline-block ml-2">更多</span>
 									<FontAwesomeIcon className="w-2 text-gray-400 inline-block" icon={faChevronRight}/>
