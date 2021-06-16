@@ -1,7 +1,7 @@
 import { GetServerSideProps } from "next"
 import dayjs from 'dayjs'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faChevronRight } from '@fortawesome/free-solid-svg-icons'
+import { faChevronRight, faStar, faStarHalf } from '@fortawesome/free-solid-svg-icons'
 import VodApi from '../../services/VodApi'
 import Vod from "../../types/Vod"
 import { useStore } from "react-redux"
@@ -9,6 +9,34 @@ import VodType from "../../types/VodType"
 import Link from "next/link"
 import VodItem from "../../components/VodItem"
 import SEO from '../../components/SEO'
+
+
+function scoreToStars(score: number) {
+    const min = Math.floor(score / 2)
+    const max = Math.ceil(score / 2)
+    const list: Array<JSX.Element> = []
+    for (let i = 0; i < min; i++) {
+        list.push(
+            <FontAwesomeIcon
+                key={i}
+                className="w-4 h-4 inline-block text-yellow-500" 
+                icon={faStar}/>
+        )
+    }
+    if (max > min) {
+        list.push(
+            <FontAwesomeIcon
+                key="-1"
+                className="w-4 h-4 inline-block text-yellow-500" 
+                icon={faStarHalf}/>
+        )
+    }
+    return list
+}
+
+function numberToString(num: number) {
+    return num.toFixed(2).slice(0, -1)
+}
 
 type DetailProps = {
     vod: Vod,
@@ -69,7 +97,7 @@ function Detail({ vod, likeList }: DetailProps) {
                                 <div className="con overflow-hidden rounded">
                                     <img 
                                         className="h-full w-full object-cover transition duration-500 transform hover:scale-125" 
-                                        src={'https://sfdy1.com/' + vod.vodPic} 
+                                        src={process.env.site_url + '/' + vod.vodPic} 
                                         alt={vod.vodName} />
                                 </div>
                             </div>
@@ -81,7 +109,12 @@ function Detail({ vod, likeList }: DetailProps) {
                             </h1>
                             <p>
                                 <span>评分：</span>
-                                <span>{vod.vodScore}</span>
+                                <span className="relative" style={{top: '-2px'}}>
+                                    { scoreToStars(vod.vodScore) }
+                                </span>
+                                <span className="text-yellow-500 text-base ml-1">
+                                    { numberToString(vod.vodScore) }
+                                </span>
                             </p>
                             <p>
                                 <span>分类：</span>

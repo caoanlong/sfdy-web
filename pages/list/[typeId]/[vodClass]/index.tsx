@@ -1,14 +1,14 @@
 import { GetServerSideProps } from 'next'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
-import VodItem from '../../../../../components/VodItem'
-import PaginationBar from '../../../../../components/PaginationBar'
-import SEO from '../../../../../components/SEO'
-import VodApi, { VodFindListParams } from '../../../../../services/VodApi'
-import Vod from '../../../../../types/Vod'
-import VodType from '../../../../../types/VodType'
+import VodItem from '../../../../components/VodItem'
+import PaginationBar from '../../../../components/PaginationBar'
+import SEO from '../../../../components/SEO'
+import VodApi, { VodFindListParams } from '../../../../services/VodApi'
+import Vod from '../../../../types/Vod'
+import VodType from '../../../../types/VodType'
 import { useSelector } from 'react-redux'
-import { State } from '../../../../../store'
+import { State } from '../../../../store'
 
 const ALL = '全部'
 const SORTLIST: Array<SortItem> = [
@@ -92,7 +92,7 @@ function List({
                         <h2 className="text-lg text-gray-700 dark:text-gray-300 inline-block">
                             {vodType?.typeName}
                         </h2>
-                        <Link href={`/list/${typeId}/${ALL}/time`}>
+                        <Link href={`/list/${typeId}/${ALL}?orderBy=time`}>
                             <a className="text-sm text-gray-400 ml-2 cursor-pointer">重置筛选</a>
                         </Link>
                     </div>
@@ -107,7 +107,7 @@ function List({
                                             `float-left text-xs sm:text-sm px-5 h-8 flex justify-center items-center rounded-md cursor-pointer ${cls === vodClass ? 'bg-purple-500 text-white shadow-lg' : 'text-gray-600 hover:text-purple-500' }`
                                         }>
                                         <Link 
-                                            href={`/list/${typeId}/${cls}/${orderBy}?pageIndex=1&pageSize=${pageSize}`}>
+                                            href={`/list/${typeId}/${cls}?orderBy=${orderBy}&pageIndex=1&pageSize=${pageSize}`}>
                                             <a>{cls}</a>
                                         </Link>
                                     </li>
@@ -124,7 +124,7 @@ function List({
                                         key={item.code}
                                         className={`float-left text-xs sm:text-sm px-5 h-8 flex justify-center items-center rounded-md cursor-pointer ${orderBy === item.code ? 'bg-purple-500 text-white shadow-lg' : 'text-gray-600 hover:text-purple-500'}`}>
                                         <Link 
-                                            href={`/list/${typeId}/${vodClass}/${item.code}?pageIndex=1&pageSize=${pageSize}`}>
+                                            href={`/list/${typeId}/${vodClass}?orderBy=${item.code}&pageIndex=1&pageSize=${pageSize}`}>
                                             <a>{item.name}</a>
                                         </Link>
                                     </li>
@@ -142,7 +142,7 @@ function List({
                     pageIndex={pageIndex} 
                     pageSize={pageSize} 
                     pages={pages} 
-                    baseUrl={`/list/${typeId}/${vodClass}/${orderBy}`}/>
+                    baseUrl={`/list/${typeId}/${vodClass}?orderBy=${orderBy}`}/>
             </div>
         </main>
     )

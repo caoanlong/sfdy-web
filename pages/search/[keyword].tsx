@@ -69,7 +69,7 @@ function Search({ keyword, vodList, pageIndex, pageSize, pages }: SearchProps) {
                     pageIndex={pageIndex} 
                     pageSize={pageSize} 
                     pages={pages} 
-                    baseUrl={`/search/${keyword}`}/>
+                    baseUrl={`/search/${keyword}?a=1`}/>
             </div>
         </main>
     )

@@ -1,5 +1,6 @@
 import { useRouter } from "next/router"
 import { useEffect } from "react"
+import SEO from '../components/SEO'
 
 function Custom404() {
     const router = useRouter()
@@ -7,11 +8,16 @@ function Custom404() {
         router.push('/')
     })
     return (
-        <h1 
-            className="flex justify-center items-center text-3xl text-gray-600"
-            style={{minHeight: '540px'}}>
-            404 - Page Not Found
-        </h1>
+        <main className="flex justify-center items-center text-3xl text-gray-600 min-h-screen">
+            <SEO 
+				title={`404-${process.env.title}`} 
+				description={process.env.description as string} 
+				canonical={process.env.site_url} 
+			/>
+            <h1>
+                404 - Page Not Found
+            </h1>
+        </main>
     )
 }
 

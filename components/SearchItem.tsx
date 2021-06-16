@@ -13,7 +13,7 @@ function SearchItem({ vod, index }: SearchItemProps) {
             <div className="w-36 sm:w-60 rounded-lg overflow-hidden">
                 <LazyLoadImage
                     className="h-full w-full object-cover"
-                    src={'https://sfdy1.com/' + vod.vodPic}>
+                    src={process.env.site_url + '/' + vod.vodPic}>
                 </LazyLoadImage>
             </div>
             <div className="flex-1 pl-4 flex flex-col justify-between overflow-hidden">

@@ -36,7 +36,7 @@ function HeaderBar() {
     const changePage = (e: MouseEvent<HTMLLIElement>, tId: number) => {
         e.stopPropagation()
         setShowNavs(false)
-        router.push(`/list/${tId}/全部/time`)
+        router.push(`/list/${tId}/全部?orderBy=time`)
     }
 
     const handleSearch = () => {
@@ -99,7 +99,7 @@ function HeaderBar() {
                             <li 
                                 className={`float-left h-full px-4 flex items-center ${isActive(nav.typeId) ? 'text-purple-500' : 'text-gray-600 dark:text-gray-500 hover:text-purple-500'}`} 
                                 key={nav.typeId}>
-                                <Link href={`/list/${nav.typeId}/全部/time`}>
+                                <Link href={`/list/${nav.typeId}/全部?orderBy=time`}>
                                     <a>{nav.typeName}</a>
                                 </Link>
                             </li>
