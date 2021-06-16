@@ -7,7 +7,3 @@ Host: https://jyavs.com
 
 # Sitemaps
 Sitemap: https://jyavs.com/sitemap.xml
-Sitemap: https://jyavs.com/sitemap1.xml
-Sitemap: https://jyavs.com/sitemap2.xml
-Sitemap: https://jyavs.com/sitemap3.xml
-Sitemap: https://jyavs.com/sitemap4.xml
