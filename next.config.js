@@ -1,9 +1,12 @@
-const withPWA = require('next-pwa')
+// const withPWA = require('next-pwa')
 
-module.exports = withPWA({
-    pwa: {
-        dest: 'public'
-    },
+// module.exports = withPWA({
+//     pwa: {
+//         dest: 'public'
+//     },
+    
+// })
+module.exports = {
     env: {
         lang: 'zh-CN',
         theme_color: '#111827',
@@ -22,4 +25,4 @@ module.exports = withPWA({
             }
         ]
     }
-})
+}
