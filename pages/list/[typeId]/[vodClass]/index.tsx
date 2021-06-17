@@ -133,16 +133,25 @@ function List({
                         </ul>
                     </div>
                 </div>
-                <div className="mt-4 grid gap-4 grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6">
-                    {
-                        vodList.map(vod => (<VodItem key={vod.vodId} vod={vod}/>))
-                    }
-                </div>
-                <PaginationBar 
-                    pageIndex={pageIndex} 
-                    pageSize={pageSize} 
-                    pages={pages} 
-                    baseUrl={`/list/${typeId}/${vodClass}?orderBy=${orderBy}`}/>
+                {
+                    vodList.length > 0
+                    ? <div className="mt-4 grid gap-4 grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6">
+                        {vodList.map(vod => (<VodItem key={vod.vodId} vod={vod}/>))}
+                    </div>
+                    : <div className="w-full h-64 flex justify-center items-center text-gray-400 dark:text-gray-600 text-xl">
+                        暂无数据
+                    </div>
+                }
+                {
+                    vodList.length > 0
+                    ? <PaginationBar 
+                        pageIndex={pageIndex} 
+                        pageSize={pageSize} 
+                        pages={pages} 
+                        baseUrl={`/list/${typeId}/${vodClass}?orderBy=${orderBy}`}/>
+                    : <></>
+                }
+                
             </div>
         </main>
     )

@@ -72,7 +72,7 @@ function Layout({children}: LayoutProps) {
                 <link rel='manifest' href='/manifest.json' />
                 <link rel='mask-icon' href='/icons/safari-pinned-tab.svg' color={process.env.theme_color} />
             </Head>
-            <div className="bg-gray-50 dark:bg-gray-800">
+            <div className="bg-gray-50 dark:bg-gray-800 min-h-screen">
                 <HeaderBar></HeaderBar>
                 <div className="pt-12 sm:pt-16">{children}</div>
                 <FooterBar></FooterBar>
