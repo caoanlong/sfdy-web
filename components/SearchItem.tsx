@@ -10,7 +10,7 @@ type SearchItemProps = {
 function SearchItem({ vod, index }: SearchItemProps) {
     return (
         <div className={`flex h-36 sm:h-52 p-4 ${index !== 0 ? 'border-t border-gray-200 dark:border-gray-800' : ''}`}>
-            <div className="w-36 sm:w-60 rounded-lg overflow-hidden">
+            <div className="w-32 sm:w-60 rounded-lg overflow-hidden">
                 <LazyLoadImage
                     className="h-full w-full object-cover"
                     src={process.env.site_url + '/' + vod.vodPic}>
@@ -42,12 +42,12 @@ function SearchItem({ vod, index }: SearchItemProps) {
                 </p>
                 <div className="flex">
                     <Link href={`/play/${vod.vodId}`}>
-                        <a className="h-6 sm:h-8 rounded shadow-md flex justify-center items-center px-4 bg-purple-500 text-white text-xs sm:text-sm mr-3">
+                        <a className="h-6 sm:h-8 rounded shadow-md flex justify-center items-center px-3 bg-purple-500 text-white text-xs sm:text-sm mr-3">
                             立即播放
                         </a>
                     </Link>
                     <Link href={`/detail/${vod.vodId}`}>
-                        <a className="h-6 sm:h-8 rounded shadow-md flex justify-center items-center px-4 bg-gray-200 dark:bg-gray-500 text-xs sm:text-sm">
+                        <a className="h-6 sm:h-8 rounded shadow-md flex justify-center items-center px-3 bg-gray-200 dark:bg-gray-500 text-xs sm:text-sm">
                             查看详情
                         </a>
                     </Link>

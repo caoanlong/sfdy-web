@@ -81,7 +81,7 @@ function Detail({ vod, likeList }: DetailProps) {
                             style={{top: '-2px'}}
                             className="w-2 h-2 text-gray-400 relative inline-block" 
                             icon={faChevronRight}/>
-                        <Link href={`/list/${currentType.typeId}/全部/time`}>
+                        <Link href={`/list/${currentType.typeId}/全部`}>
                             <a className="text-gray-700 dark:text-gray-400 px-1">{currentType.typeName}</a>
                         </Link>
                         <FontAwesomeIcon 
