@@ -1,6 +1,14 @@
 const withPWA = require('next-pwa')
+const withSitemap = require("next-with-sitemap")
 
-module.exports = withPWA({
+module.exports = withSitemap(withPWA({
+    sitemap: {
+        baseUrl: "https://jyavs.com",
+        dest: 'public',
+        pages: 'pages',
+        robots: true,
+        sitemap: true
+    },
     pwa: {
         dest: 'public'
     },
@@ -22,4 +30,4 @@ module.exports = withPWA({
             }
         ]
     }
-})
+}))
