@@ -58,7 +58,7 @@ class Mydocument extends Document {
                                       measurementId: "G-H0S6J67LXG"
                                     };
                                     firebase.initializeApp(firebaseConfig);
-                                    firebase.analytics();
+                                    window.analytics = firebase.analytics();
                                     `
                                 }} />
                             </>)
