@@ -15,14 +15,21 @@ class Mydocument extends Document {
                     {
                         process.env.NODE_ENV === 'production' 
                         ? (<>
-                                <script async src="https://www.googletagmanager.com/gtag/js?id=G-2XV487XEMB"></script>
+                                <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-app.js"></script>
+                                <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-analytics.js"></script>
                                 <script dangerouslySetInnerHTML={{
                                     __html: `
-                                        window.dataLayer = window.dataLayer || [];
-                                        function gtag(){dataLayer.push(arguments);}
-                                        gtag('js', new Date());
-                    
-                                        gtag('config', 'G-2XV487XEMB');
+                                    var firebaseConfig = {
+                                      apiKey: "AIzaSyBu0HZe7ZFXBh_gBkfqXoMwAP-hjZQ9jZ0",
+                                      authDomain: "jyav-3728d.firebaseapp.com",
+                                      projectId: "jyav-3728d",
+                                      storageBucket: "jyav-3728d.appspot.com",
+                                      messagingSenderId: "464543886366",
+                                      appId: "1:464543886366:web:23b57381b8d8aaf7fa920f",
+                                      measurementId: "G-H0S6J67LXG"
+                                    };
+                                    firebase.initializeApp(firebaseConfig);
+                                    firebase.analytics();
                                     `
                                 }} />
                             </>)
