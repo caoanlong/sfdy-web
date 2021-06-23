@@ -1,0 +1,1 @@
+interface Window { analytics: any, database: any }

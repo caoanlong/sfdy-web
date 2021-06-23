@@ -75,7 +75,7 @@ function HeaderBar() {
         return () => {
             keywordsRef.current?.removeEventListener('keyup', handleEnter)
         }
-    })
+    }, [])
 
     return (
         <div className="w-full h-12 sm:h-16 fixed z-50 shadow bg-white dark:bg-gray-900">

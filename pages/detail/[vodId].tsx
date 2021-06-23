@@ -9,6 +9,7 @@ import VodType from "../../types/VodType"
 import Link from "next/link"
 import VodItem from "../../components/VodItem"
 import SEO from '../../components/SEO'
+import { useEffect } from "react"
 
 
 function scoreToStars(score: number) {
@@ -63,6 +64,7 @@ function Detail({ vod, likeList }: DetailProps) {
     const state = store.getState()
     const typeList = state.typeList
     const currentType: VodType = typeList.find((vodType: VodType) => vodType.typeId === vod.typeId)
+
     return (
         <main>
             <SEO 

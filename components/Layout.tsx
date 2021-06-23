@@ -44,7 +44,7 @@ function Layout({children}: LayoutProps) {
                 localStorage.setItem('theme', 'light')
             }
         }
-    })
+    }, [])
     
     return (
         <div className={theme}>
