@@ -12,29 +12,6 @@ class Mydocument extends Document {
             <Html lang={process.env.lang}>
                 <Head>
                     <script async src="/fastclick.js" />
-                    {
-                        process.env.NODE_ENV === 'production' 
-                        ? (<>
-                                <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-app.js"></script>
-                                <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-analytics.js"></script>
-                                <script dangerouslySetInnerHTML={{
-                                    __html: `
-                                    var firebaseConfig = {
-                                      apiKey: "AIzaSyBu0HZe7ZFXBh_gBkfqXoMwAP-hjZQ9jZ0",
-                                      authDomain: "jyav-3728d.firebaseapp.com",
-                                      projectId: "jyav-3728d",
-                                      storageBucket: "jyav-3728d.appspot.com",
-                                      messagingSenderId: "464543886366",
-                                      appId: "1:464543886366:web:23b57381b8d8aaf7fa920f",
-                                      measurementId: "G-H0S6J67LXG"
-                                    };
-                                    firebase.initializeApp(firebaseConfig);
-                                    firebase.analytics();
-                                    `
-                                }} />
-                            </>)
-                        : <></>
-                    }
                     <script
                         dangerouslySetInnerHTML={{
                         __html: `
@@ -64,6 +41,29 @@ class Mydocument extends Document {
                 <body>
                     <Main />
                     <NextScript />
+                    {
+                        process.env.NODE_ENV === 'production' 
+                        ? (<>
+                                <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-app.js"></script>
+                                <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-analytics.js"></script>
+                                <script dangerouslySetInnerHTML={{
+                                    __html: `
+                                    var firebaseConfig = {
+                                      apiKey: "AIzaSyBu0HZe7ZFXBh_gBkfqXoMwAP-hjZQ9jZ0",
+                                      authDomain: "jyav-3728d.firebaseapp.com",
+                                      projectId: "jyav-3728d",
+                                      storageBucket: "jyav-3728d.appspot.com",
+                                      messagingSenderId: "464543886366",
+                                      appId: "1:464543886366:web:23b57381b8d8aaf7fa920f",
+                                      measurementId: "G-H0S6J67LXG"
+                                    };
+                                    firebase.initializeApp(firebaseConfig);
+                                    firebase.analytics();
+                                    `
+                                }} />
+                            </>)
+                        : <></>
+                    }
                 </body>
             </Html>
         )
