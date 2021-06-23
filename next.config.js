@@ -1,9 +1,6 @@
 const withPWA = require('next-pwa')
 
-module.exports = withPWA({
-    pwa: {
-        dest: 'public'
-    },
+const config = {
     env: {
         lang: 'zh-CN',
         theme_color: '#111827',
@@ -19,7 +16,18 @@ module.exports = withPWA({
                 source: '/404',
                 destination: '/',
                 permanent: true,
+            },{
+                source: '/500',
+                destination: '/',
+                permanent: true,
             }
         ]
     }
-})
+}
+if (process.env.NODE_ENV === 'production') {
+    config.pwa = {
+        dest: 'public'
+    }
+}
+
+module.exports = process.env.NODE_ENV === 'production' ? withPWA(config) : config
