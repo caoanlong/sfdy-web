@@ -23,18 +23,11 @@ function Layout({children}: LayoutProps) {
         })
 
         const prefersDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches
-        if (prefersDarkMode) {
-            dispatch({
-                type: 'SET_THEME',
-                payload: 'dark'
-            })
-        } else {
-            dispatch({
-                type: 'SET_THEME',
-                payload: 'light'
-            })
-        }
-    }, [])
+        dispatch({
+            type: 'SET_THEME',
+            payload: prefersDarkMode ? 'dark' : 'light'
+        })
+    })
     
     return (
         <div className={theme}>
