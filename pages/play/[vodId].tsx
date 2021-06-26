@@ -46,16 +46,6 @@ function Play({ vod, likeList }: PlayProps) {
             videoEle.setAttribute('src', vod.vodPlayUrl)
         }
     }, [])
-    useEffect(() => {
-        setTimeout(() => {
-            window.analytics.logEvent('click_play', {
-                vodId: vod.vodId,
-                vodName: vod.vodName,
-                vodType: currentType.typeName,
-                vodClass: vod.vodClass
-            })
-        }, 2000)
-    }, [])
     
     return (
         <main>
