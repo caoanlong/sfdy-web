@@ -15,7 +15,7 @@ const links = [
 ]
 function FooterBar() {
     return (
-        <footer className="bg-gray-700 dark:bg-gray-900 text-sm sm:text-base">
+        <footer className="bg-white dark:bg-black text-sm sm:text-base">
             <div className="container text-gray-400 dark:text-gray-600 text-center leading-loose py-8 md:py-14">
                 <div className="flex justify-center">
                     <div>友情链接：</div>

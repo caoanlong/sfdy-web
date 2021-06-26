@@ -73,7 +73,7 @@ function Detail({ vod, likeList }: DetailProps) {
 				canonical={process.env.site_url} 
 			/>
             <div className="container py-4">
-                <div className="bg-white dark:bg-gray-900 shadow p-3 sm:rounded-lg lg:p-5">
+                <div className="bg-white dark:bg-black shadow p-3 sm:rounded-lg lg:p-5">
                     <div className="text-xs text-gray-400 dark:text-gray-600 mb-2 sm:text-sm sm:mb-4">
                         <span>当前位置：</span>
                         <Link href="/">
@@ -144,7 +144,7 @@ function Detail({ vod, likeList }: DetailProps) {
                         </div>
                     </div>
                 </div>
-                <div className="bg-white dark:bg-gray-900 shadow p-3 my-4 sm:rounded-lg">
+                <div className="bg-white dark:bg-black shadow p-3 my-4 sm:rounded-lg">
                     <h1 className="text-lg py-2 dark:text-gray-400">猜你喜欢</h1>
                     <div className="grid gap-4 grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6">
                         {

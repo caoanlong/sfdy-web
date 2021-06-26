@@ -55,7 +55,7 @@ function Play({ vod, likeList }: PlayProps) {
 				canonical={process.env.site_url} 
 			/>
             <div className="container sm:py-4">
-                <div className="bg-white dark:bg-gray-900 shadow">
+                <div className="bg-white dark:bg-black shadow">
                     <div className="w-full">
                         <div className="aspectration" data-ratio="16:9">
                             <div className="con overflow-hidden">
@@ -74,7 +74,7 @@ function Play({ vod, likeList }: PlayProps) {
                         <span>{vod.vodClass}</span>
                     </p>
                 </div>
-                <div className="bg-white dark:bg-gray-900 shadow p-3 my-4 sm:rounded-lg">
+                <div className="bg-white dark:bg-black shadow p-3 my-4 sm:rounded-lg">
                     <h1 className="text-lg py-2 dark:text-gray-400">猜你喜欢</h1>
                     <div className="grid gap-4 grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6">
                         {

@@ -67,12 +67,12 @@ function HeaderBar() {
     }, [])
 
     return (
-        <div className="w-full h-12 sm:h-16 fixed z-50 shadow bg-white dark:bg-gray-900">
+        <div className="w-full h-12 sm:h-16 fixed z-50 shadow bg-white dark:bg-black">
             <div className="container h-full flex">
                 <div 
                     className="w-16 h-full flex justify-center items-center lg:hidden" 
                     onClick={() => setShowNavs(!showNavs)}>
-                    <FontAwesomeIcon className="w-6 h-6 text-gray-600 cursor-pointer" icon={faBars}/>
+                    <FontAwesomeIcon className="w-5 h-5 text-gray-600 cursor-pointer" icon={faBars}/>
                 </div>
                 <a className="h-full py-2" style={{width: '160px'}} href="/">
                     <img className="h-full" src="/images/logo.svg" alt="LOGO" />
@@ -98,10 +98,10 @@ function HeaderBar() {
                 {
                     showNavs ? 
                     <div 
-                        className="w-full fixed left-0 top-12 sm:top-16 right-0 bottom-0 bg-black bg-opacity-50 lg:hidden" 
+                        className="w-full fixed left-0 top-12 sm:top-16 right-0 bottom-0 bg-black bg-opacity-50 backdrop-filter backdrop-blur lg:hidden" 
                         onClick={() => setShowNavs(false)}>
                         <ul 
-                            className="w-full absolute left-0 top-0 bg-gray-100 dark:bg-gray-800 shadow-md">
+                            className="w-full absolute left-0 top-0 bg-white dark:bg-black shadow-md">
                             <li 
                                 onClick={() => router.push('/')}
                                 className={`container h-14 px-4 flex items-center ${router.asPath === '/' ? 'text-purple-500' : 'text-gray-600 dark:text-gray-500'}`}>
@@ -123,9 +123,9 @@ function HeaderBar() {
                 }
                 
                 <div 
-                    className="w-64 h-full bg-white dark:bg-gray-900 hidden sm:flex items-center relative">
+                    className="w-64 h-full bg-white dark:bg-black hidden sm:flex items-center relative">
                     <div 
-                        className="w-auto h-8 bg-gray-100 dark:bg-gray-700 border-gray-200 dark:border-gray-600 border rounded-3xl flex focus-within:ring-2 focus-within:border-purple-600">
+                        className="w-auto h-8 bg-gray-100 dark:bg-gray-900 border-gray-200 dark:border-gray-900 border rounded-3xl flex focus-within:ring-2 focus-within:border-purple-600">
                         <input 
                             ref={keywordsRef} 
                             className="flex-1 h-full px-3 bg-transparent outline-none dark:text-white" 
@@ -145,7 +145,7 @@ function HeaderBar() {
                     </div>
                     {
                         showHotList ? 
-                        <div className="absolute z-10 top-14 left-0 right-6 bg-white dark:bg-gray-800 shadow-lg rounded p-4">
+                        <div className="absolute z-10 top-14 left-0 right-6 bg-white dark:bg-gray-900 shadow-lg rounded p-4">
                             <p className="text-xs text-gray-400 pb-2">热门搜索</p>
                             <ul className="text-sm">
                                 {
@@ -171,9 +171,9 @@ function HeaderBar() {
                 {
                     showMobileSearch ? 
                     <div 
-                        className="w-full h-full items-center flex sm:w-64 absolute z-10 sm:hidden px-3 bg-white dark:bg-gray-900">
+                        className="w-full h-full items-center flex sm:w-64 absolute z-10 sm:hidden px-3 bg-white dark:bg-black">
                         <div 
-                            className="w-full h-8 bg-gray-100 dark:bg-gray-700 border-gray-200 dark:border-gray-600 border rounded-3xl flex focus-within:ring-2 focus-within:border-purple-600">
+                            className="w-full h-8 bg-gray-100 dark:bg-gray-900 border-gray-200 dark:border-gray-900 border rounded-3xl flex focus-within:ring-2 focus-within:border-purple-600">
                             <input 
                                 ref={keywordsRef} 
                                 className="flex-1 h-full px-3 bg-transparent outline-none dark:text-white" 
@@ -191,7 +191,7 @@ function HeaderBar() {
                         </div>
                         <div 
                             className="fixed top-12 left-0 right-0 bottom-0 bg-black bg-opacity-50 backdrop-filter backdrop-blur" onClick={() => setShowMobileSearch(false)}>
-                            <div className="bg-white dark:bg-gray-900 p-4">
+                            <div className="bg-white dark:bg-black p-4">
                                 <p className="text-xs text-gray-400 pb-2">热门搜索</p>
                                 <ul className="text-sm">
                                     {

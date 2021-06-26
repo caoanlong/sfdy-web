@@ -27,10 +27,11 @@ function Layout({children}: LayoutProps) {
             type: 'SET_THEME',
             payload: prefersDarkMode ? 'dark' : 'light'
         })
+        document.documentElement.className = prefersDarkMode ? 'dark' : 'light'
     })
     
     return (
-        <div className={theme}>
+        <div>
             <Head>
                 <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
                 <meta name="viewport" content="width=device-width,height=device-height,initial-scale=1.0,user-scalable=no,maximum-scale=1,viewport-fit=cover" />
@@ -55,7 +56,7 @@ function Layout({children}: LayoutProps) {
                 <link rel='manifest' href='/manifest.json' />
                 <link rel='mask-icon' href='/icons/safari-pinned-tab.svg' color={process.env.theme_color} />
             </Head>
-            <div className="bg-gray-50 dark:bg-gray-800 min-h-screen">
+            <div className="bg-gray-50 dark:bg-black min-h-screen">
                 <HeaderBar></HeaderBar>
                 <div className="pt-12 sm:pt-16">{children}</div>
                 <FooterBar></FooterBar>
