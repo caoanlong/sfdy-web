@@ -8,7 +8,6 @@ import SEO from '../components/SEO'
 import VodType from '../types/VodType'
 import Vod from '../types/Vod'
 import VodApi from '../services/VodApi'
-import { useEffect } from 'react'
 
 
 const getVodsNew = async (num=12) => {
