@@ -23,26 +23,16 @@ function Layout({children}: LayoutProps) {
         })
 
         const prefersDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches
-        const t = localStorage.getItem('theme')
-        if (t) {
+        if (prefersDarkMode) {
             dispatch({
                 type: 'SET_THEME',
-                payload: t
+                payload: 'dark'
             })
         } else {
-            if (prefersDarkMode) {
-                dispatch({
-                    type: 'SET_THEME',
-                    payload: 'dark'
-                })
-                localStorage.setItem('theme', 'dark')
-            } else {
-                dispatch({
-                    type: 'SET_THEME',
-                    payload: 'light'
-                })
-                localStorage.setItem('theme', 'light')
-            }
+            dispatch({
+                type: 'SET_THEME',
+                payload: 'light'
+            })
         }
     }, [])
     

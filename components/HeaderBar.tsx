@@ -6,7 +6,6 @@ import Link from 'next/link'
 import { useDispatch, useSelector } from 'react-redux'
 import { State } from '../store'
 import VodType from '../types/VodType'
-import Switch from '../components/Switch'
 
 const HOT_LIST = [
     '三上悠亚',
@@ -25,8 +24,6 @@ function HeaderBar() {
     const router = useRouter()
 
     const vodTypes = useSelector((state: State) => state.typeList)
-    const theme = useSelector((state: State) => state.theme)
-    const dispatch = useDispatch()
 
     const [ showNavs, setShowNavs ] = useState(false)
     const [ showMobileSearch, setShowMobileSearch ] = useState(false)
@@ -60,14 +57,6 @@ function HeaderBar() {
 
     const isActive = (typeId: number) => {
         return (router.pathname.includes('/list') && router.query.typeId === String(typeId))
-    }
-    const changeTheme = () => {
-        const t = theme === 'dark' ? 'light' : 'dark'
-        dispatch({
-            type: 'SET_THEME',
-            payload: t
-        })
-        localStorage.setItem('theme', t)
     }
 
     useEffect(() => {
@@ -231,11 +220,9 @@ function HeaderBar() {
                     : <></>
                 }
                 <div className="flex-1 lg:flex-none lg:w-40 h-full flex justify-end items-center px-4">
-                    <Switch text="切换主题" isOpen={theme === 'dark'} handleChange={changeTheme}></Switch>
                     <FontAwesomeIcon 
                         className="w-4 h-8 text-gray-600 mx-4 sm:hidden" 
                         icon={faSearch} onClick={() => setShowMobileSearch(true)}/>
-                    {/* <FontAwesomeIcon className="w-4 h-8 text-gray-600 cursor-pointer" icon={faUser}/> */}
                 </div>
             </div>
         </div>

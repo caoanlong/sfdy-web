@@ -44,6 +44,7 @@ class Mydocument extends Document {
                     {
                         process.env.NODE_ENV === 'production' 
                         ? (<>
+                              
                                 <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-app.js"></script>
                                 <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-analytics.js"></script>
                                 <script dangerouslySetInnerHTML={{
@@ -61,6 +62,16 @@ class Mydocument extends Document {
                                     window.analytics = firebase.analytics();
                                     `
                                 }} />
+                              <script async src="https://www.googletagmanager.com/gtag/js?id=G-2XV487XEMB"></script>
+                              <script dangerouslySetInnerHTML={{
+                                    __html: `
+                                      window.dataLayer = window.dataLayer || [];
+                                      function gtag(){dataLayer.push(arguments);}
+                                      gtag('js', new Date());
+                                      gtag('config', 'G-2XV487XEMB');
+                                    }}>
+                                    `
+                              }} />
                             </>)
                         : <></>
                     }
