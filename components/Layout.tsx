@@ -28,6 +28,7 @@ function Layout({children}: LayoutProps) {
             payload: prefersDarkMode ? 'dark' : 'light'
         })
         document.documentElement.className = prefersDarkMode ? 'dark' : 'light'
+        document.body.style.backgroundColor = prefersDarkMode ? '#000' : '#fff'
     })
     
     return (
