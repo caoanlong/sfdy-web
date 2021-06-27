@@ -99,7 +99,7 @@ function Detail({ vod, likeList }: DetailProps) {
                                 <div className="con overflow-hidden rounded">
                                     <img 
                                         className="h-full w-full object-cover transition duration-500 transform hover:scale-125" 
-                                        src={process.env.site_url + '/' + vod.vodPic} 
+                                        src={vod.vodPic.includes('http') ? vod.vodPic : process.env.site_url + '/' + vod.vodPic} 
                                         alt={vod.vodName} />
                                 </div>
                             </div>

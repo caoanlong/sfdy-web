@@ -38,12 +38,13 @@ function Play({ vod, likeList }: PlayProps) {
     const videoRef = useRef() as RefObject<HTMLVideoElement>
     useEffect(() => {
         const videoEle = videoRef.current as HTMLVideoElement
+        const URL = vod.vodPlayUrl?.replace('在线播放$', '')
         if (Hls.isSupported()) {
             const hls = new Hls()
-            hls.loadSource(vod.vodPlayUrl)
+            hls.loadSource(URL)
             hls.attachMedia(videoEle)
         } else if (videoEle?.canPlayType("application/vnd.apple.mpegurl")) {
-            videoEle.setAttribute('src', vod.vodPlayUrl)
+            videoEle.setAttribute('src', URL)
         }
     }, [])
     
