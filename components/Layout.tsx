@@ -24,11 +24,9 @@ function Layout({children}: LayoutProps) {
             document.getElementById('__next')?.scrollTo(0, 0)
         })
         const pwa = localStorage.getItem('pwa')
-        if (!pwa || now - +pwa > 3600000 * 24) {
-            if (isPWA()) {
-                localStorage.setItem('pwa', now.toString())
-                window.gtag && window.gtag('event', 'pwa', { value: 'pwa' })
-            }
+        if (!pwa && isPWA()) {
+            localStorage.setItem('pwa', now.toString())
+            window.gtag && window.gtag('event', 'pwa', { value: 'pwa' })
         }
 
         const prefersDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches
