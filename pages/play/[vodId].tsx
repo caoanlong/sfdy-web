@@ -36,15 +36,20 @@ function Play({ vod, likeList }: PlayProps) {
     const typeList = state.typeList
     const currentType: VodType = typeList.find((vodType: VodType) => vodType.typeId === vod.typeId)
     const videoRef = useRef() as RefObject<HTMLVideoElement>
+    let hls: Hls
     useEffect(() => {
         const videoEle = videoRef.current as HTMLVideoElement
-        const URL = vod.vodPlayUrl?.replace('在线播放$', '')
+        const URL = "http" + vod.vodPlayUrl?.split("http")[1]
         if (Hls.isSupported()) {
-            const hls = new Hls()
+            hls = new Hls()
             hls.loadSource(URL)
             hls.attachMedia(videoEle)
         } else if (videoEle?.canPlayType("application/vnd.apple.mpegurl")) {
             videoEle.setAttribute('src', URL)
+        }
+        return () => {
+            hls.detachMedia()
+            hls.destroy()
         }
     }, [])
     
