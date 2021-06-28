@@ -1,5 +1,3 @@
 export function isPWA() {
-    return ['fullscreen', 'standalone', 'minimal-ui'].some((displayMode) => {
-        return window.matchMedia('(display-mode: ' + displayMode + ')').matches
-    })
+    return window.navigator.standalone || window.matchMedia('(display-mode: standalone)').matches
 } 
