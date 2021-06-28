@@ -14,7 +14,6 @@ type LayoutProps = {
 function Layout({children}: LayoutProps) {
     const theme = useSelector((state: State) => state.theme)
     const dispatch = useDispatch()
-    const [ webType, setWebType ] = useState('browser')
 
     const router = useRouter()
 
@@ -24,19 +23,12 @@ function Layout({children}: LayoutProps) {
             // 因为html, body 都进行了定位，无法滚动
             document.getElementById('__next')?.scrollTo(0, 0)
         })
-        const web_type = localStorage.getItem('web_type')
-        if (!web_type || now - +web_type.split(':')[1] > 3600000 * 24) {
+        const pwa = localStorage.getItem('pwa')
+        if (!pwa || now - +pwa > 3600000 * 24) {
             if (isPWA()) {
-                localStorage.setItem('web_type', 'pwa:' + now)
-                setWebType('pwa')
-                window.gtag && window.gtag('event', 'web_type', { value: 'pwa' })
-            } else {
-                localStorage.setItem('web_type', 'browser:' + now)
-                setWebType('browser')
-                window.gtag && window.gtag('event', 'web_type', { value: 'browser' })
+                localStorage.setItem('pwa', now.toString())
+                window.gtag && window.gtag('event', 'pwa', { value: 'pwa' })
             }
-        } else {
-            setWebType(web_type)
         }
 
         const prefersDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches

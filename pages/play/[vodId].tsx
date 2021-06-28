@@ -51,6 +51,8 @@ function Play({ vod, likeList }: PlayProps) {
             console.log('Share success!')
         }).catch(err => {
             console.warn('Share failed!')
+        }).finally(() => {
+            window.gtag && window.gtag('event', 'share', { value: 'share' })
         })
     }
 
