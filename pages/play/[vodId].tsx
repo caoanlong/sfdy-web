@@ -48,11 +48,10 @@ function Play({ vod, likeList }: PlayProps) {
             url: document.location.href,
             text: vod.vodName
         }).then(res => {
+            window.gtag && window.gtag('event', 'share', { value: 'share' })
             console.log('Share success!')
         }).catch(err => {
             console.warn('Share failed!')
-        }).finally(() => {
-            window.gtag && window.gtag('event', 'share', { value: 'share' })
         })
     }
 
