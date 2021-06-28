@@ -1,10 +1,11 @@
-import React, { ReactNode, useEffect } from 'react'
+import React, { ReactNode, useEffect, useState } from 'react'
 import Head from "next/head"
 import HeaderBar from './HeaderBar'
 import FooterBar from './FooterBar'
 import { useDispatch, useSelector } from 'react-redux'
 import { State } from '../store'
 import { useRouter } from 'next/router'
+import { isPWA } from '../utils/tools'
 
 type LayoutProps = {
     children: ReactNode
@@ -13,14 +14,30 @@ type LayoutProps = {
 function Layout({children}: LayoutProps) {
     const theme = useSelector((state: State) => state.theme)
     const dispatch = useDispatch()
+    const [ webType, setWebType ] = useState('browser')
 
     const router = useRouter()
 
     useEffect(() => {
+        const now = new Date().getTime()
         router.events.on('routeChangeComplete', () => {
             // 因为html, body 都进行了定位，无法滚动
             document.getElementById('__next')?.scrollTo(0, 0)
         })
+        const web_type = localStorage.getItem('web_type')
+        if (!web_type || now - +web_type.split(':')[1] > 3600000 * 24) {
+            if (isPWA()) {
+                localStorage.setItem('web_type', 'pwa:' + now)
+                setWebType('pwa')
+                window.gtag && window.gtag('event', 'web_type', { value: 'pwa' })
+            } else {
+                localStorage.setItem('web_type', 'browser:' + now)
+                setWebType('browser')
+                window.gtag && window.gtag('event', 'web_type', { value: 'browser' })
+            }
+        } else {
+            setWebType(web_type)
+        }
 
         const prefersDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches
         dispatch({
