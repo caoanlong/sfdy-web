@@ -29,8 +29,7 @@ function Layout({children}: LayoutProps) {
             window.gtag && window.gtag('event', 'pwa', { value: 'pwa' })
         }
 
-        // const prefersDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches
-        const prefersDarkMode = false
+        const prefersDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches
         dispatch({
             type: 'SET_THEME',
             payload: prefersDarkMode ? 'dark' : 'light'
