@@ -29,7 +29,8 @@ function Layout({children}: LayoutProps) {
             window.gtag && window.gtag('event', 'pwa', { value: 'pwa' })
         }
 
-        const prefersDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches
+        // const prefersDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches
+        const prefersDarkMode = false
         dispatch({
             type: 'SET_THEME',
             payload: prefersDarkMode ? 'dark' : 'light'
@@ -64,7 +65,7 @@ function Layout({children}: LayoutProps) {
                 <link rel='manifest' href='/manifest.json' />
                 <link rel='mask-icon' href='/icons/safari-pinned-tab.svg' color={process.env.theme_color} />
             </Head>
-            <div className="bg-gray-50 dark:bg-black min-h-screen">
+            <div className="bg-white dark:bg-black min-h-screen">
                 <HeaderBar></HeaderBar>
                 <div className="pt-12 sm:pt-16">{children}</div>
                 <FooterBar></FooterBar>

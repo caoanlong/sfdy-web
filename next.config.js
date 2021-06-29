@@ -3,7 +3,7 @@ const withPWA = require('next-pwa')
 const config = {
     env: {
         lang: 'zh-CN',
-        theme_color: '#111827',
+        theme_color: '#000000',
         title: process.env.SITE_NAME,
         site_url: process.env.SITE_URL,
         api_url: process.env.API_URL,

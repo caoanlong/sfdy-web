@@ -37,7 +37,8 @@ function HeaderBar() {
     }
 
     const handleSearch = () => {
-        const keyword = keywordsRef.current?.value
+        const searchIpt = showMobileSearch ? document.getElementById('searchIptMobile') as HTMLInputElement : document.getElementById('searchIpt') as HTMLInputElement
+        const keyword = searchIpt?.value
         if (keyword) {
             router.push(`/search/${keyword}`)
         }
@@ -67,7 +68,7 @@ function HeaderBar() {
     }, [])
 
     return (
-        <div className="w-full h-12 sm:h-16 fixed z-50 shadow bg-white dark:bg-black">
+        <div className="w-full h-12 sm:h-16 fixed z-50 shadow bg-white dark:bg-black bg-opacity-80 dark:bg-opacity-80 backdrop-filter backdrop-blur">
             <div className="container h-full flex">
                 <div 
                     className="w-16 h-full flex justify-center items-center lg:hidden" 
@@ -123,11 +124,12 @@ function HeaderBar() {
                 }
                 
                 <div 
-                    className="w-64 h-full bg-white dark:bg-black hidden sm:flex items-center relative">
+                    className="w-64 h-full hidden sm:flex items-center relative">
                     <div 
                         className="w-auto h-8 bg-gray-100 dark:bg-gray-900 border-gray-200 dark:border-gray-900 border rounded-3xl flex focus-within:ring-2 focus-within:border-purple-600">
                         <input 
                             ref={keywordsRef} 
+                            id="searchIpt"
                             className="flex-1 h-full px-3 bg-transparent outline-none dark:text-white" 
                             type="text" 
                             placeholder="请输入关键字" 
@@ -176,6 +178,7 @@ function HeaderBar() {
                             className="w-full h-8 bg-gray-100 dark:bg-gray-900 border-gray-200 dark:border-gray-900 border rounded-3xl flex focus-within:ring-2 focus-within:border-purple-600">
                             <input 
                                 ref={keywordsRef} 
+                                id="searchIptMobile"
                                 className="flex-1 h-full px-3 bg-transparent outline-none dark:text-white" 
                                 type="text" 
                                 placeholder="请输入关键字" 
