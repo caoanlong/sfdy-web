@@ -45,7 +45,7 @@ function Home({ vodsNewList }: HomeProps) {
 				vodsNewList.map((vodsNew: VodType) => (
 					<div className="mb-6" key={vodsNew.typeId}>
 						<div className="p-4">
-							<h2 className="text-lg text-gray-700 dark:text-gray-300 inline-block">最新{vodsNew.typeName}</h2>
+							<h1 className="text-lg text-gray-700 dark:text-gray-300 inline-block">最新{vodsNew.typeName}</h1>
 							<Link href={`/list/${vodsNew.typeId}/全部?orderBy=time`}>
 								<a>
 									<span className="text-sm text-gray-400 inline-block ml-2">更多</span>

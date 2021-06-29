@@ -79,6 +79,12 @@ function Play({ vod, likeList }: PlayProps) {
 				title={`正在播放-${vod.vodName}-${process.env.title}`} 
 				description={`${vod.vodName},${process.env.description}`} 
 				canonical={process.env.site_url} 
+                type={'video.movie'}
+                image={{
+                    url: vod.vodPic.includes('http') ? vod.vodPic : process.env.site_url + '/' + vod.vodPic,
+                    alt: vod.vodName + '-' + process.env.title
+                }}
+                tCardType={'player'}
 			/>
             <div className="container sm:py-4">
                 <div className="bg-white dark:bg-black shadow">

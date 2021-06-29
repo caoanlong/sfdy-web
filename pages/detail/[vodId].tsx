@@ -71,6 +71,10 @@ function Detail({ vod, likeList }: DetailProps) {
 				title={`${vod.vodName}-${process.env.title}`} 
 				description={`${vod.vodName},${process.env.description}`} 
 				canonical={process.env.site_url} 
+                image={{
+                    url: vod.vodPic.includes('http') ? vod.vodPic : process.env.site_url + '/' + vod.vodPic,
+                    alt: vod.vodName + '-' + process.env.title
+                }}
 			/>
             <div className="container py-4">
                 <div className="bg-white dark:bg-black shadow p-3 sm:rounded-lg lg:p-5">

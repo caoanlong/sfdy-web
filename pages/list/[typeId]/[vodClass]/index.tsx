@@ -89,9 +89,9 @@ function List({
             <div className="container py-4">
                 <div className="bg-white dark:bg-gray-900 shadow rounded-lg pb-5">
                     <div className="p-4 border-b border-gray-200 dark:border-gray-800">
-                        <h2 className="text-lg text-gray-700 dark:text-gray-300 inline-block">
+                        <h1 className="text-lg text-gray-700 dark:text-gray-300 inline-block">
                             {vodType?.typeName}
-                        </h2>
+                        </h1>
                         <Link href={`/list/${typeId}/${ALL}?orderBy=time`}>
                             <a className="text-sm text-gray-400 ml-2 cursor-pointer">重置筛选</a>
                         </Link>

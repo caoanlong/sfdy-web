@@ -17,7 +17,8 @@ function VodItem({ vod, isInShadow }: VodItemProps) {
                     <div className={`con overflow-hidden ${isInShadow ? 'shadow-md rounded-lg' : ''}`}>
                         <LazyLoadImage
                             className={`h-full w-full object-cover ${isInShadow ? '' : 'rounded-t-lg'}`}
-                            src={vod.vodPic.includes('http') ? vod.vodPic : process.env.site_url + '/' + vod.vodPic}>
+                            src={vod.vodPic.startsWith('http') ? vod.vodPic : process.env.site_url + '/' + vod.vodPic} 
+                            alt={vod.vodName}>
                         </LazyLoadImage>
                     </div>
                 </div>

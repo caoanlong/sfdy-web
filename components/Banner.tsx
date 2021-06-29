@@ -43,7 +43,7 @@ function Banner() {
                 banners.map((item, i) => (
                     <Link key={i} href={item.url}>
                         <a className="block h-36 sm:h-48 md:h-60 lg:h-72 xl:h-80 2xl:h-96">
-                            <img className="w-full h-full object-cover" src={item.src} />
+                            <img className="w-full h-full object-cover" src={item.src} alt={process.env.title + '-' + process.env.description}/>
                         </a>
                     </Link>
                 ))
