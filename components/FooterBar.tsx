@@ -34,7 +34,7 @@ function FooterBar() {
                         }
                     </ul>
                 </div>
-                <p>商户合作请联系 Telegram:<a className="text-white dark:text-gray-400" href="https://t.me/jyavs" target="_blank">@jyavs</a></p>
+                <p>商户合作请联系 Telegram:<a className="text-gray-700 dark:text-gray-300" href="https://t.me/jyavs" target="_blank">@jyavs</a></p>
                 <p>Copyright © 2021 巨硬AV</p>
             </div>
         </footer>
