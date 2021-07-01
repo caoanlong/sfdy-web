@@ -4,12 +4,12 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faChevronRight, faStar, faStarHalf } from '@fortawesome/free-solid-svg-icons'
 import VodApi from '../../services/VodApi'
 import Vod from "../../types/Vod"
-import { useStore } from "react-redux"
+import { useSelector, useStore } from "react-redux"
 import VodType from "../../types/VodType"
 import Link from "next/link"
 import VodItem from "../../components/VodItem"
 import SEO from '../../components/SEO'
-import { useEffect } from "react"
+import { State } from "../../store"
 
 
 function scoreToStars(score: number) {
@@ -62,18 +62,19 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 function Detail({ vod, likeList }: DetailProps) {
     const store = useStore()
     const state = store.getState()
+    const seo = useSelector((s: State) => s.seo)
     const typeList = state.typeList
     const currentType: VodType = typeList.find((vodType: VodType) => vodType.typeId === vod.typeId)
 
     return (
         <main>
             <SEO 
-				title={`${vod.vodName}-${process.env.title}`} 
-				description={`${vod.vodName},${process.env.description}`} 
+				title={`${vod.vodName}-${seo?.seoTitle}`} 
+				description={`${vod.vodName},${seo?.seoDescription}`} 
 				canonical={process.env.site_url} 
                 image={{
                     url: vod.vodPic.includes('http') ? vod.vodPic : process.env.site_url + '/' + vod.vodPic,
-                    alt: vod.vodName + '-' + process.env.title
+                    alt: vod.vodName + '-' + seo?.seoTitle
                 }}
 			/>
             <div className="container py-4">

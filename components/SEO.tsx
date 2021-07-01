@@ -1,5 +1,7 @@
 import { NextSeo } from 'next-seo'
 import { OpenGraphImages } from 'next-seo/lib/types'
+import { useSelector } from 'react-redux'
+import { State } from '../store'
 
 type SEOProps = {
     title: string,
@@ -18,12 +20,13 @@ function SEO({
     image, 
     tCardType='summary' 
 }: SEOProps) {
+    const seo = useSelector((state: State) => state.seo)
     const images: Array<OpenGraphImages> = [
         {
             url: '/icons/og-image.png',
             width: 512,
             height: 512,
-            alt: process.env.title,
+            alt: seo?.seoTitle,
         }
     ]
     if (image) {
@@ -40,7 +43,7 @@ function SEO({
                     description,
                     url: canonical,
                     locale: process.env.lang,
-                    site_name: process.env.title,
+                    site_name: seo?.seoTitle,
                     type,
                     images
                 }} 

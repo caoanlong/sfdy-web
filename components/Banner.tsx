@@ -3,19 +3,13 @@ import "slick-carousel/slick/slick-theme.css"
 import Slider from 'react-slick'
 import Link from 'next/link'
 import { useState } from "react"
+import Banner from "../types/Banner"
 
-const banners = [
-    {
-        src: '/images/banner1.png',
-        url: '/detail/49070'
-    },{
-        src: '/images/banner2.png',
-        url: '/detail/44693'
-    }
-]
+type BannerProps = {
+    banners: Array<Banner>
+}
 
-
-function Banner() {
+function BannerCom({ banners }: BannerProps) {
     const [ slideIndex, setSlideIndex ] = useState(0)
 
     const settings = {
@@ -41,9 +35,9 @@ function Banner() {
         <Slider {...settings}>
             {
                 banners.map((item, i) => (
-                    <Link key={i} href={item.url}>
+                    <Link key={i} href={item.bannerLink || ''}>
                         <a className="block h-36 sm:h-48 md:h-60 lg:h-72 xl:h-80 2xl:h-96">
-                            <img className="w-full h-full object-cover" src={item.src} alt={process.env.title + '-' + process.env.description}/>
+                            <img className="w-full h-full object-cover" src={process.env.img_url + item.bannerUrl} alt={item.bannerName}/>
                         </a>
                     </Link>
                 ))
@@ -52,4 +46,4 @@ function Banner() {
     )
 }
 
-export default Banner
+export default BannerCom

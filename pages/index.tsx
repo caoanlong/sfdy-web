@@ -7,11 +7,13 @@ import VodItem from '../components/VodItem'
 import SEO from '../components/SEO'
 import VodType from '../types/VodType'
 import Vod from '../types/Vod'
-import VodApi from '../services/VodApi'
+import CommonApi from '../services/CommonApi'
+import { State } from '../store'
+import { useSelector } from 'react-redux'
 
 
 const getVodsNew = async (num=12) => {
-	const res = await VodApi.homeNew({ num })
+	const res = await CommonApi.home({ num })
 	if (!res.data || res.data.code != 200) {
 		return null
 	}
@@ -32,14 +34,16 @@ type HomeProps = {
 }
 
 function Home({ vodsNewList }: HomeProps) {
+	const seo = useSelector((state: State) => state.seo)
+	const banners = useSelector((state: State) => state.banners)
 	return (
 		<main>
 			<SEO 
-				title={`${process.env.description}-${process.env.title}`} 
-				description={process.env.description as string} 
+				title={`${seo?.seoDescription}-${seo?.seoTitle}`} 
+				description={seo?.seoDescription as string} 
 				canonical={process.env.site_url} 
 			/>
-			<Banner></Banner>
+			<Banner banners={banners}></Banner>
 			<div className="container pt-4">
 			{
 				vodsNewList.map((vodsNew: VodType) => (

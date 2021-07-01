@@ -2,7 +2,7 @@ import { GetServerSideProps } from "next"
 import Link from "next/link"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faChevronRight, faShare, faShareSquare, faShareAlt, faShareAltSquare } from '@fortawesome/free-solid-svg-icons'
-import { useStore } from "react-redux"
+import { useSelector, useStore } from "react-redux"
 import Hls from 'hls.js'
 import VodApi from "../../services/VodApi"
 import Vod from "../../types/Vod"
@@ -10,6 +10,7 @@ import VodType from "../../types/VodType"
 import VodItem from "../../components/VodItem"
 import SEO from '../../components/SEO'
 import { RefObject, useEffect, useRef, useState } from "react"
+import { State } from "../../store"
 
 type PlayProps = {
     vod: Vod,
@@ -37,6 +38,7 @@ function Play({ vod, likeList }: PlayProps) {
     const store = useStore()
     const state = store.getState()
     const typeList = state.typeList
+    const seo = useSelector((s: State) => s.seo)
     const currentType: VodType = typeList.find((vodType: VodType) => vodType.typeId === vod.typeId)
     const videoRef = useRef() as RefObject<HTMLVideoElement>
     const [ hasShare, setHasShare ] = useState(true)
@@ -76,13 +78,13 @@ function Play({ vod, likeList }: PlayProps) {
     return (
         <main>
             <SEO 
-				title={`正在播放-${vod.vodName}-${process.env.title}`} 
-				description={`${vod.vodName},${process.env.description}`} 
+				title={`正在播放-${vod.vodName}-${seo?.seoTitle}`} 
+				description={`${vod.vodName},${seo?.seoDescription}`} 
 				canonical={process.env.site_url} 
                 type={'video.movie'}
                 image={{
                     url: vod.vodPic.includes('http') ? vod.vodPic : process.env.site_url + '/' + vod.vodPic,
-                    alt: vod.vodName + '-' + process.env.title
+                    alt: vod.vodName + '-' + seo?.seoTitle
                 }}
                 tCardType={'player'}
 			/>

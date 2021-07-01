@@ -73,6 +73,7 @@ function List({
     pages 
 }: ListProps) {
     const router = useRouter()
+    const seo = useSelector((state: State) => state.seo)
     const { typeId, vodClass=ALL, orderBy=SORTLIST[0].code } = router.query
     const vodTypes = useSelector((state: State) => state.typeList)
     const vodType = vodTypes.find((item: VodType) => item.typeId === Number(typeId))
@@ -82,8 +83,8 @@ function List({
     return (
         <main className="px-4">
             <SEO 
-				title={`${vodType?.typeName}-${vodClass}-${process.env.title}`} 
-				description={`${vodType?.typeName},${vodClass},${process.env.description}`} 
+				title={`${vodType?.typeName}-${vodClass}-${seo?.seoTitle}`} 
+				description={`${vodType?.typeName},${vodClass},${seo?.seoDescription}`} 
 				canonical={process.env.site_url} 
 			/>
             <div className="container py-4">

@@ -1,19 +1,8 @@
-const links = [
-    {
-        name: '撸先生',
-        url: 'https://luxiansheng.life/'
-    },{
-        name: '上林仙馆',
-        url: 'https://fenglou11.com/'
-    },{
-        name: '绅士之家',
-        url: 'https://kksports.news/'
-    },{
-        name: '香蕉漫画',
-        url: 'https://xjmh.live/'
-    }
-]
+import { useSelector } from "react-redux"
+import { State } from "../store"
+
 function FooterBar() {
+    const links = useSelector((state: State) => state.friendLinks)
     return (
         <footer className="bg-white dark:bg-black text-sm sm:text-base">
             <div className="container text-gray-400 dark:text-gray-600 text-center leading-loose py-8 md:py-14">
@@ -26,8 +15,8 @@ function FooterBar() {
                                     <a 
                                         className="hover:text-gray-100" 
                                         target="_blank" 
-                                        href={link.url}>
-                                        {link.name}
+                                        href={link.linkUrl}>
+                                        {link.linkName}
                                     </a>
                                 </li>
                             ))

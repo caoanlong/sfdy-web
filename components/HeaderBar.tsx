@@ -47,7 +47,7 @@ function HeaderBar() {
         }, 100)
     }
     const handleEnter = (e: KeyboardEvent) => {
-        if (e.key === 'Enter') {
+        if (e.keyCode === 13) {
             handleSearch()
         }
     }
@@ -61,9 +61,9 @@ function HeaderBar() {
     }
 
     useEffect(() => {
-        keywordsRef.current?.addEventListener('keyup', handleEnter)
+        keywordsRef.current?.addEventListener('keydown', handleEnter)
         return () => {
-            keywordsRef.current?.removeEventListener('keyup', handleEnter)
+            keywordsRef.current?.removeEventListener('keydown', handleEnter)
         }
     }, [])
 

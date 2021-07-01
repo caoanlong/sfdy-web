@@ -5,6 +5,8 @@ import SEO from '../../components/SEO'
 import VodApi from '../../services/VodApi'
 import Vod from '../../types/Vod'
 import VodType from '../../types/VodType'
+import { useSelector } from 'react-redux'
+import { State } from '../../store'
 
 
 type SearchProps = {
@@ -43,11 +45,12 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 }
 
 function Search({ keyword, vodList, pageIndex, pageSize, pages }: SearchProps) {
+    const seo = useSelector((s: State) => s.seo)
     return (
         <main className="px-4">
             <SEO 
-				title={`${keyword}搜索结果-${process.env.title}`} 
-				description={`${keyword},${process.env.description}`} 
+				title={`${keyword}搜索结果-${seo?.seoTitle}`} 
+				description={`${keyword},${seo?.seoDescription}`} 
 				canonical={process.env.site_url} 
 			/>
             <div className="container py-4">

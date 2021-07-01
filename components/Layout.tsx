@@ -13,6 +13,7 @@ type LayoutProps = {
 
 function Layout({children}: LayoutProps) {
     const theme = useSelector((state: State) => state.theme)
+    const seo = useSelector((state: State) => state.seo)
     const dispatch = useDispatch()
 
     const router = useRouter()
@@ -43,13 +44,13 @@ function Layout({children}: LayoutProps) {
             <Head>
                 <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
                 <meta name="viewport" content="width=device-width,height=device-height,initial-scale=1.0,user-scalable=no,maximum-scale=1,viewport-fit=cover" />
-                <meta name="keywords" content={process.env.keywords} />
+                <meta name="keywords" content={seo?.seoKeywords} />
                 <meta name="renderer" content="webkit|ie-comp|ie-stand" />
                 <meta name="theme-color" content={process.env.theme_color} />
-                <meta name='application-name' content={process.env.title} />
+                <meta name='application-name' content={seo?.seoTitle} />
                 <meta name='apple-mobile-web-app-capable' content='yes' />
                 <meta name='apple-mobile-web-app-status-bar-style' content='default' />
-                <meta name='apple-mobile-web-app-title' content={process.env.title} />
+                <meta name='apple-mobile-web-app-title' content={seo?.seoTitle} />
                 <meta name='format-detection' content='telephone=no' />
                 <meta name='mobile-web-app-capable' content='yes' />
                 <meta name='msapplication-TileColor' content={process.env.theme_color} />
