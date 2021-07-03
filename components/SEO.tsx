@@ -48,7 +48,7 @@ function SEO({
                     images
                 }} 
                 twitter={{
-                    site: '@slxgshxc',
+                    site: '@jyavscom',
                     cardType: tCardType
                 }}>
             </NextSeo>
