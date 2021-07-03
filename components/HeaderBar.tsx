@@ -1,6 +1,6 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faUser, faSearch, faBars, faTimes } from '@fortawesome/free-solid-svg-icons'
-import { useState, MouseEvent, createRef, useEffect } from 'react'
+import { useState, MouseEvent, createRef, useEffect, FormEvent } from 'react'
 import { useRouter } from 'next/router'
 import Link from 'next/link'
 import { useDispatch, useSelector } from 'react-redux'
@@ -131,7 +131,7 @@ function HeaderBar() {
                             ref={keywordsRef} 
                             id="searchIpt"
                             className="flex-1 h-full px-3 bg-transparent outline-none dark:text-white" 
-                            type="text" 
+                            type="search" 
                             placeholder="请输入关键字" 
                             onFocus={() => setShowHotList(true)} 
                             onBlur={() => {
@@ -176,13 +176,18 @@ function HeaderBar() {
                         className="w-full h-full items-center flex sm:w-64 absolute z-10 sm:hidden px-3 bg-white dark:bg-black">
                         <div 
                             className="w-full h-8 bg-gray-100 dark:bg-gray-900 border-gray-200 dark:border-gray-900 border rounded-3xl flex focus-within:ring-2 focus-within:border-purple-600">
-                            <input 
-                                ref={keywordsRef} 
-                                id="searchIptMobile"
-                                className="flex-1 h-full px-3 bg-transparent outline-none dark:text-white" 
-                                type="text" 
-                                placeholder="请输入关键字" 
-                                onFocus={() => setShowHotList(true)}/>
+                            <form 
+                                className="flex-1 h-full"
+                                onSubmit={(e: FormEvent) => e.preventDefault()}>
+                                <input 
+                                    ref={keywordsRef} 
+                                    id="searchIptMobile"
+                                    className="w-full h-full px-3 bg-transparent outline-none dark:text-white" 
+                                    type="search" 
+                                    placeholder="请输入关键字" 
+                                    onFocus={() => setShowHotList(true)}/>
+                            </form>
+                            
                             <div 
                                 className="w-8 h-full flex justify-center items-center cursor-pointer" 
                                 onClick={handleSearch}>

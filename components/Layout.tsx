@@ -69,6 +69,11 @@ function Layout({children}: LayoutProps) {
                 <HeaderBar></HeaderBar>
                 <div className="pt-12 sm:pt-16">{children}</div>
                 <FooterBar></FooterBar>
+                {
+                    process.env.NODE_ENV === 'production'
+                    ? <div dangerouslySetInnerHTML={{__html: seo?.seoScript || ''}} />
+                    : <></>
+                }
             </div>
         </div>
     )
