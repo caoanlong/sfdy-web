@@ -1,11 +1,11 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faUser, faSearch, faBars, faTimes } from '@fortawesome/free-solid-svg-icons'
-import { useState, MouseEvent, createRef, useEffect, FormEvent } from 'react'
+import { faSearch, faBars, faTimes } from '@fortawesome/free-solid-svg-icons'
+import { useState, MouseEvent, useEffect, FormEvent, useRef } from 'react'
 import { useRouter } from 'next/router'
 import Link from 'next/link'
-import { useDispatch, useSelector } from 'react-redux'
-import { State } from '../store'
+import { useSelector } from 'react-redux'
 import VodType from '../types/VodType'
+import { RootState } from '../store'
 
 const HOT_LIST = [
     '三上悠亚',
@@ -23,12 +23,12 @@ const HOT_LIST = [
 function HeaderBar() {
     const router = useRouter()
 
-    const vodTypes = useSelector((state: State) => state.typeList)
+    const vodTypes = useSelector((state: RootState) => state.config.typeList)
 
     const [ showNavs, setShowNavs ] = useState(false)
     const [ showMobileSearch, setShowMobileSearch ] = useState(false)
     const [ showHotList, setShowHotList ] = useState(false)
-    const keywordsRef = createRef<HTMLInputElement>()
+    const keywordsRef = useRef<HTMLInputElement>(null)
     
     const changePage = (e: MouseEvent<HTMLLIElement>, tId: number) => {
         e.stopPropagation()
@@ -37,8 +37,7 @@ function HeaderBar() {
     }
 
     const handleSearch = () => {
-        const searchIpt = showMobileSearch ? document.getElementById('searchIptMobile') as HTMLInputElement : document.getElementById('searchIpt') as HTMLInputElement
-        const keyword = searchIpt?.value
+        const keyword = keywordsRef.current?.value
         if (keyword) {
             router.push(`/search/${keyword}`)
         }
@@ -129,7 +128,6 @@ function HeaderBar() {
                         className="w-auto h-8 bg-gray-100 dark:bg-gray-900 border-gray-200 dark:border-gray-900 border rounded-3xl flex focus-within:ring-2 focus-within:border-purple-600">
                         <input 
                             ref={keywordsRef} 
-                            id="searchIpt"
                             className="flex-1 h-full px-3 bg-transparent outline-none dark:text-white" 
                             type="search" 
                             placeholder="请输入关键字" 
@@ -181,7 +179,6 @@ function HeaderBar() {
                                 onSubmit={(e: FormEvent) => e.preventDefault()}>
                                 <input 
                                     ref={keywordsRef} 
-                                    id="searchIptMobile"
                                     className="w-full h-full px-3 bg-transparent outline-none dark:text-white" 
                                     type="search" 
                                     placeholder="请输入关键字" 
@@ -231,6 +228,7 @@ function HeaderBar() {
                     <FontAwesomeIcon 
                         className="w-4 h-8 text-gray-600 mx-4 sm:hidden" 
                         icon={faSearch} onClick={() => setShowMobileSearch(true)}/>
+                    <div className="bg-purple-500 py-1 sm:py-2 px-4 sm:px-10 text-center text-white rounded shadow-lg cursor-pointer">登录</div>
                 </div>
             </div>
         </div>

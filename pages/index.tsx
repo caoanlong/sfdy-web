@@ -2,14 +2,16 @@ import { GetServerSideProps } from 'next'
 import Link from 'next/link'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faChevronRight } from '@fortawesome/free-solid-svg-icons'
-import Banner from '../components/Banner'
+import BannerCom from '../components/Banner'
 import VodItem from '../components/VodItem'
 import SEO from '../components/SEO'
 import VodType from '../types/VodType'
 import Vod from '../types/Vod'
 import CommonApi from '../services/CommonApi'
-import { State } from '../store'
 import { useSelector } from 'react-redux'
+import { RootState } from '../store'
+import Banner from '../types/Banner'
+import Seo from '../types/Seo'
 
 
 const getVodsNew = async (num=12) => {
@@ -30,12 +32,12 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 }
 
 type HomeProps = {
-  vodsNewList: Array<VodType>
+  vodsNewList: VodType[]
 }
 
 function Home({ vodsNewList }: HomeProps) {
-	const seo = useSelector((state: State) => state.seo)
-	const banners = useSelector((state: State) => state.banners)
+	const seo: Seo = useSelector((state: RootState) => state.config.seo)
+	const banners: Banner[] = useSelector((state: RootState) => state.config.banners)
 	return (
 		<main>
 			<SEO 
@@ -43,7 +45,7 @@ function Home({ vodsNewList }: HomeProps) {
 				description={seo?.seoDescription as string} 
 				canonical={process.env.site_url} 
 			/>
-			<Banner banners={banners}></Banner>
+			<BannerCom banners={banners}></BannerCom>
 			<div className="container pt-4">
 			{
 				vodsNewList.map((vodsNew: VodType) => (

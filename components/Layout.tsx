@@ -3,17 +3,17 @@ import Head from "next/head"
 import HeaderBar from './HeaderBar'
 import FooterBar from './FooterBar'
 import { useDispatch, useSelector } from 'react-redux'
-import { State } from '../store'
 import { useRouter } from 'next/router'
 import { isPWA } from '../utils/tools'
+import { RootState } from '../store'
 
 type LayoutProps = {
     children: ReactNode
 }
 
 function Layout({children}: LayoutProps) {
-    const theme = useSelector((state: State) => state.theme)
-    const seo = useSelector((state: State) => state.seo)
+    const theme = useSelector((state: RootState) => state.config.theme)
+    const seo = useSelector((state: RootState) => state.config.seo)
     const dispatch = useDispatch()
 
     const router = useRouter()

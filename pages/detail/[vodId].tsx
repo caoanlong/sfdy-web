@@ -4,12 +4,12 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faChevronRight, faStar, faStarHalf } from '@fortawesome/free-solid-svg-icons'
 import VodApi from '../../services/VodApi'
 import Vod from "../../types/Vod"
-import { useSelector, useStore } from "react-redux"
+import { useSelector } from "react-redux"
 import VodType from "../../types/VodType"
 import Link from "next/link"
 import VodItem from "../../components/VodItem"
 import SEO from '../../components/SEO'
-import { State } from "../../store"
+import { RootState } from "../../store"
 
 
 function scoreToStars(score: number) {
@@ -60,11 +60,9 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 }
 
 function Detail({ vod, likeList }: DetailProps) {
-    const store = useStore()
-    const state = store.getState()
-    const seo = useSelector((s: State) => s.seo)
-    const typeList = state.typeList
-    const currentType: VodType = typeList.find((vodType: VodType) => vodType.typeId === vod.typeId)
+    const seo = useSelector((state: RootState) => state.config.seo)
+    const typeList = useSelector((state: RootState) => state.config.typeList)
+    const currentType = typeList.find((vodType: VodType) => vodType.typeId === vod.typeId)
 
     return (
         <main>
@@ -88,8 +86,8 @@ function Detail({ vod, likeList }: DetailProps) {
                             style={{top: '-2px'}}
                             className="w-2 h-2 text-gray-400 relative inline-block" 
                             icon={faChevronRight}/>
-                        <Link href={`/list/${currentType.typeId}/全部`}>
-                            <a className="text-gray-700 dark:text-gray-400 px-1">{currentType.typeName}</a>
+                        <Link href={`/list/${currentType?.typeId}/全部`}>
+                            <a className="text-gray-700 dark:text-gray-400 px-1">{currentType?.typeName}</a>
                         </Link>
                         <FontAwesomeIcon 
                             style={{top: '-2px'}}
@@ -125,7 +123,7 @@ function Detail({ vod, likeList }: DetailProps) {
                             </p>
                             <p>
                                 <span>分类：</span>
-                                <span className="border-r dark:border-gray-700 pr-2">{currentType.typeName}</span>
+                                <span className="border-r dark:border-gray-700 pr-2">{currentType?.typeName}</span>
                                 <span className="pl-2">{vod.vodClass}</span>
                             </p>
                             <p>

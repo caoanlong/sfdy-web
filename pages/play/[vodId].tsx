@@ -1,8 +1,8 @@
 import { GetServerSideProps } from "next"
 import Link from "next/link"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faChevronRight, faShare, faShareSquare, faShareAlt, faShareAltSquare } from '@fortawesome/free-solid-svg-icons'
-import { useSelector, useStore } from "react-redux"
+import { faChevronRight, faShareSquare } from '@fortawesome/free-solid-svg-icons'
+import { useSelector } from "react-redux"
 import Hls from 'hls.js'
 import VodApi from "../../services/VodApi"
 import Vod from "../../types/Vod"
@@ -10,7 +10,7 @@ import VodType from "../../types/VodType"
 import VodItem from "../../components/VodItem"
 import SEO from '../../components/SEO'
 import { RefObject, useEffect, useRef, useState } from "react"
-import { State } from "../../store"
+import { RootState } from "../../store"
 
 type PlayProps = {
     vod: Vod,
@@ -35,10 +35,8 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 
 
 function Play({ vod, likeList }: PlayProps) {
-    const store = useStore()
-    const state = store.getState()
-    const typeList = state.typeList
-    const seo = useSelector((s: State) => s.seo)
+    const typeList = useSelector((state: RootState) => state.config.typeList)
+    const seo = useSelector((state: RootState) => state.config.seo)
     const currentType: VodType = typeList.find((vodType: VodType) => vodType.typeId === vod.typeId)
     const videoRef = useRef() as RefObject<HTMLVideoElement>
     const [ hasShare, setHasShare ] = useState(true)
