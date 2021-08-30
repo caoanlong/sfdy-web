@@ -25,7 +25,7 @@ export const login = ({ mobile, email, password, cb }: LoginProps & { cb?: () =>
             Toast.hide()
             dispatch({
                 type: 'SET_TOKEN',
-                payload: res.headers['Authorization']
+                payload: res.headers['authorization']
             })
             cb && cb()
         }).catch(() => {
@@ -41,7 +41,7 @@ export const register = ({ mobile, email, password, code, cb }: RegisterProps & 
             Toast.hide()
             dispatch({
                 type: 'SET_TOKEN',
-                payload: res.headers['Authorization']
+                payload: res.headers['authorization']
             })
             cb && cb()
         }).catch(() => {
