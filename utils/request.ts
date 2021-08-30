@@ -1,14 +1,16 @@
 import axios, { AxiosRequestConfig, AxiosResponse, AxiosError } from 'axios'
 import Toast from 'light-toast'
 
+const isServer = typeof window === 'undefined'
+
 const service = axios.create({
     baseURL: process.env.api_url,
     timeout: 15000
 })
 
 service.interceptors.request.use((config: AxiosRequestConfig) => {
-    if (window && window.localStorage) {
-        const token = window.localStorage.getItem('_t')
+    if (!isServer) {
+        const token = localStorage.getItem('_t')
         if (token) {
             config.headers['Authorization'] = 'Bearer ' + token
         }
