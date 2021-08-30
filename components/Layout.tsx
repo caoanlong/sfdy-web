@@ -72,11 +72,6 @@ function Layout({children}: LayoutProps) {
                 <div className="pt-12 sm:pt-16">{children}</div>
                 { showLogin ? <LoginModal /> : <></>}
                 <FooterBar></FooterBar>
-                {
-                    process.env.NODE_ENV === 'production'
-                    ? <div dangerouslySetInnerHTML={{__html: seo?.seoScript || ''}} />
-                    : <></>
-                }
             </div>
         </div>
     )
