@@ -1,9 +1,9 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faSearch, faBars, faTimes } from '@fortawesome/free-solid-svg-icons'
+import { faSearch, faBars, faTimes, faUser } from '@fortawesome/free-solid-svg-icons'
 import { useState, MouseEvent, useEffect, FormEvent, useRef } from 'react'
 import { useRouter } from 'next/router'
 import Link from 'next/link'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import VodType from '../types/VodType'
 import { RootState } from '../store'
 
@@ -22,8 +22,9 @@ const HOT_LIST = [
 
 function HeaderBar() {
     const router = useRouter()
-
+    const dispatch = useDispatch()
     const vodTypes = useSelector((state: RootState) => state.config.typeList)
+    const token = useSelector((state: RootState) => state.member.token)
 
     const [ showNavs, setShowNavs ] = useState(false)
     const [ showMobileSearch, setShowMobileSearch ] = useState(false)
@@ -67,7 +68,8 @@ function HeaderBar() {
     }, [])
 
     return (
-        <div className="w-full h-12 sm:h-16 fixed z-50 shadow bg-white dark:bg-black bg-opacity-80 dark:bg-opacity-80 backdrop-filter backdrop-blur">
+        <div 
+            className="w-full h-12 sm:h-16 fixed z-50 shadow bg-white dark:bg-black bg-opacity-80 dark:bg-opacity-80 backdrop-filter backdrop-blur">
             <div className="container h-full flex">
                 <div 
                     className="w-16 h-full flex justify-center items-center lg:hidden" 
@@ -227,8 +229,21 @@ function HeaderBar() {
                 <div className="flex-1 lg:flex-none lg:w-40 h-full flex justify-end items-center px-4">
                     <FontAwesomeIcon 
                         className="w-4 h-8 text-gray-600 mx-4 sm:hidden" 
-                        icon={faSearch} onClick={() => setShowMobileSearch(true)}/>
-                    <div className="bg-purple-500 py-1 sm:py-2 px-4 sm:px-10 text-center text-white rounded shadow-lg cursor-pointer">登录</div>
+                        icon={faSearch} 
+                        onClick={() => setShowMobileSearch(true)}
+                    />
+                    {
+                        token ? 
+                            <FontAwesomeIcon 
+                                className="w-4 h-8 text-gray-600 mx-4 sm:hidden" 
+                                icon={faUser}
+                            /> :
+                            <div 
+                                onClick={() => dispatch({ type: 'SET_LOGIN_MODAL', payload: true })}
+                                className="bg-purple-500 py-1 sm:py-2 px-4 sm:px-10 text-center text-white rounded shadow-lg cursor-pointer">
+                                登录
+                            </div>
+                    }
                 </div>
             </div>
         </div>

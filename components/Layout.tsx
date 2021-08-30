@@ -1,4 +1,4 @@
-import React, { ReactNode, useEffect, useState } from 'react'
+import React, { ReactNode, useEffect } from 'react'
 import Head from "next/head"
 import HeaderBar from './HeaderBar'
 import FooterBar from './FooterBar'
@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { useRouter } from 'next/router'
 import { isPWA } from '../utils/tools'
 import { RootState } from '../store'
+import LoginModal from './LoginModal'
 
 type LayoutProps = {
     children: ReactNode
@@ -14,6 +15,7 @@ type LayoutProps = {
 function Layout({children}: LayoutProps) {
     const theme = useSelector((state: RootState) => state.config.theme)
     const seo = useSelector((state: RootState) => state.config.seo)
+    const showLogin = useSelector((state: RootState) => state.config.showLogin)
     const dispatch = useDispatch()
 
     const router = useRouter()
@@ -68,6 +70,7 @@ function Layout({children}: LayoutProps) {
             <div className="bg-white dark:bg-black min-h-screen">
                 <HeaderBar></HeaderBar>
                 <div className="pt-12 sm:pt-16">{children}</div>
+                { showLogin ? <LoginModal /> : <></>}
                 <FooterBar></FooterBar>
                 {
                     process.env.NODE_ENV === 'production'

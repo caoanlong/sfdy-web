@@ -1,6 +1,7 @@
 import { Dispatch } from "react"
 import { AnyAction } from "redux"
 import { RootState } from ".."
+import Toast from 'light-toast'
 import MemberApi from "../../services/MemberApi"
 
 export type LoginProps = {
@@ -9,13 +10,42 @@ export type LoginProps = {
     password: string
 }
 
-export const login = ({ mobile, email, password }: LoginProps) => {
+export type RegisterProps = LoginProps & {
+    code: string
+}
+
+export type GetCodeProps = {
+    account: string
+}
+
+export const login = ({ mobile, email, password, cb }: LoginProps & { cb?: () => void }) => {
     return function(dispatch: Dispatch<AnyAction>, getState: RootState) {
+        Toast.loading('加载中...')
         MemberApi.login({ mobile, email, password }).then(res => {
+            Toast.hide()
             dispatch({
                 type: 'SET_TOKEN',
                 payload: res.headers['Authorization']
             })
+            cb && cb()
+        }).catch(() => {
+            Toast.hide()
+        })
+    }
+}
+
+export const register = ({ mobile, email, password, code, cb }: RegisterProps & { cb?: () => void }) => {
+    return function(dispatch: Dispatch<AnyAction>, getState: RootState) {
+        Toast.loading('加载中...')
+        MemberApi.register({ mobile, email, password, code }).then(res => {
+            Toast.hide()
+            dispatch({
+                type: 'SET_TOKEN',
+                payload: res.headers['Authorization']
+            })
+            cb && cb()
+        }).catch(() => {
+            Toast.hide()
         })
     }
 }

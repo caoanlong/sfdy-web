@@ -1,4 +1,4 @@
-import { LoginProps } from '../store/actions/userActions'
+import { GetCodeProps, LoginProps, RegisterProps } from '../store/actions/userActions'
 import request from '../utils/request'
 
 class MemberApi {
@@ -14,6 +14,27 @@ class MemberApi {
             url: this.url + '/login',
             method: 'post',
             data
+        })
+    }
+
+    static register(data: RegisterProps) {
+        if (!this.isClick) return Promise.reject('REPEAT_POST')
+        this.isClick = false
+        setTimeout(() => { this.isClick = true }, this.delay)
+        return request({
+            url: this.url + '/register',
+            method: 'post',
+            data
+        })
+    }
+
+    static getCode(params: GetCodeProps) {
+        if (!this.isClick) return Promise.reject('REPEAT_POST')
+        this.isClick = false
+        setTimeout(() => { this.isClick = true }, this.delay)
+        return request({
+            url: this.url + '/getCode',
+            params
         })
     }
 

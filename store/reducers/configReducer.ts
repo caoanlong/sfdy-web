@@ -10,7 +10,8 @@ export interface ConfigState {
     typeList: VodType[],
     seo: Seo | undefined,
     friendLinks: FriendLink[],
-    banners: Banner[]
+    banners: Banner[],
+    showLogin: boolean
 }
 
 const initState: ConfigState = {
@@ -18,7 +19,8 @@ const initState: ConfigState = {
     typeList: [],
     seo: undefined,
     friendLinks: [],
-    banners: []
+    banners: [],
+    showLogin: false
 }
 
 const reducer = (state: ConfigState = initState, action: AnyAction) => {
@@ -33,6 +35,8 @@ const reducer = (state: ConfigState = initState, action: AnyAction) => {
             return { ...state, friendLinks: action.payload }
         case 'SET_BANNERS':
             return { ...state, banners: action.payload }
+        case 'SET_LOGIN_MODAL':
+            return { ...state, showLogin: action.payload }
         default:
             return state
     }
