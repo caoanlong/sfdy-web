@@ -7,6 +7,10 @@ const service = axios.create({
 })
 
 service.interceptors.request.use((config: AxiosRequestConfig) => {
+    const token = localStorage.getItem('_t')
+    if (token) {
+        config.headers['Authorization'] = 'Bearer ' + token
+    }
     return config
 })
 

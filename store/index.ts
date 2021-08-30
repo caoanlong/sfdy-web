@@ -1,6 +1,6 @@
 import {createStore, applyMiddleware, Middleware} from 'redux'
 import thunk from 'redux-thunk'
-import {createWrapper, Context} from 'next-redux-wrapper'
+import {createWrapper} from 'next-redux-wrapper'
 import reducers from './reducers'
 
 
@@ -12,7 +12,7 @@ const bindMiddleware = (middleware: Middleware<any, any, any>[]) => {
     return applyMiddleware(...middleware)
 }
 
-const makeStore = (context: Context) => {
+const makeStore = () => {
     const isServer = typeof window === 'undefined'
     if (isServer) return createStore(reducers, bindMiddleware([thunk]))
     const { persistStore, persistReducer } = require('redux-persist')
@@ -31,3 +31,4 @@ const makeStore = (context: Context) => {
 export type RootState = ReturnType<typeof reducers>
 
 export const wrapper = createWrapper(makeStore)
+
