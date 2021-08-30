@@ -23,7 +23,7 @@ export const login = ({ mobile, email, password, cb }: LoginProps & { cb?: () =>
         Toast.loading('加载中...')
         MemberApi.login({ mobile, email, password }).then(res => {
             Toast.hide()
-            localStorage && localStorage.setItem('_t', res.headers['authorization'])
+            window && window.localStorage && window.localStorage.setItem('_t', res.headers['authorization'])
             dispatch({
                 type: 'SET_TOKEN',
                 payload: res.headers['authorization']
@@ -40,7 +40,7 @@ export const register = ({ mobile, email, password, code, cb }: RegisterProps & 
         Toast.loading('加载中...')
         MemberApi.register({ mobile, email, password, code }).then(res => {
             Toast.hide()
-            localStorage && localStorage.setItem('_t', res.headers['authorization'])
+            window && window.localStorage && window.localStorage.setItem('_t', res.headers['authorization'])
             dispatch({
                 type: 'SET_TOKEN',
                 payload: res.headers['authorization']

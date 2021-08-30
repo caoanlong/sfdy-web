@@ -24,6 +24,7 @@ service.interceptors.response.use((res: AxiosResponse) => {
     }
     return res
 }, (err: AxiosError) => {
+    console.log(err)
     if (!err.response) {
         const msg = (err.toJSON() as any).message
         process.browser && Toast.fail(msg)
