@@ -34,7 +34,6 @@ const reducer = (state: MemberState = initState, action: AnyAction) => {
         case 'SET_MEMBER':
             return { ...state, ...action.payload }
         case 'SET_TOKEN':
-            console.log('SET_TOKEN', action.payload)
             return { ...state, token: action.payload }
         default:
             return state

@@ -22,7 +22,6 @@ export const login = ({ mobile, email, password, cb }: LoginProps & { cb?: () =>
     return function(dispatch: Dispatch<AnyAction>, getState: RootState) {
         Toast.loading('加载中...')
         MemberApi.login({ mobile, email, password }).then(res => {
-            console.log('authorization', res, res.headers['authorization'])
             Toast.hide()
             dispatch({
                 type: 'SET_TOKEN',
