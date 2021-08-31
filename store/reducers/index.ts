@@ -11,7 +11,8 @@ export type State = {
 const reducers = (state: State | undefined, action: AnyAction) => {
     switch (action.type) {
         case HYDRATE:
-            return { ...state, config: action.payload.config }
+            if (action.payload.member?.memberId === 0) delete action.payload.member
+            return { ...state, ...action.payload }
         default:
             const combineReducer = combineReducers({
                 member: memberReducer,
