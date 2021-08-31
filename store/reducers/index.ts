@@ -11,7 +11,7 @@ export type State = {
 const reducers = (state: State | undefined, action: AnyAction) => {
     switch (action.type) {
         case HYDRATE:
-            return action.payload
+            return { ...state, config: action.payload.config }
         default:
             const combineReducer = combineReducers({
                 member: memberReducer,

@@ -7,7 +7,7 @@ const dev = process.env.NODE_ENV !== 'production'
 const app = next({ dev })
 const handle = app.getRequestHandler()
 
-const apiPaths = {
+const devProxy = {
     '/app': {
         target: 'https://jyavs.com/', 
         pathRewrite: {
@@ -20,8 +20,10 @@ const apiPaths = {
 app.prepare().then(() => {
   const server = express()
  
-  if (dev) {
-    server.use('/app', createProxyMiddleware(apiPaths['/app']));
+  if (dev && devProxy) {
+    Object.keys(devProxy).forEach(function(context) {
+        server.use(createProxyMiddleware (context, devProxy[context]))
+    })
   }
 
   server.all('*', (req, res) => {

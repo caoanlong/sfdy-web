@@ -4,7 +4,7 @@ import Toast from 'light-toast'
 const isServer = typeof window === 'undefined'
 
 const service = axios.create({
-    baseURL: process.env.api_url,
+    baseURL: isServer ? process.env.api_url : '/app',
     timeout: 15000
 })
 
@@ -21,7 +21,7 @@ service.interceptors.request.use((config: AxiosRequestConfig) => {
 
 service.interceptors.response.use((res: AxiosResponse) => {
     if (res.data.code !== 200) {
-        process.browser && Toast.fail(res.data.msg)
+        process.browser && Toast.fail(res.data.message)
         return Promise.reject(res)
     }
     return res
