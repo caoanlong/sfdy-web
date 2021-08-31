@@ -235,7 +235,7 @@ function HeaderBar() {
                     {
                         token ? 
                             <FontAwesomeIcon 
-                                className="w-4 h-8 text-gray-600 mx-4 sm:hidden" 
+                                className="w-4 h-8 text-gray-600 mx-4" 
                                 icon={faUser}
                             /> :
                             <div 
