@@ -9,6 +9,7 @@ const isServer = typeof window === 'undefined'
 export type LoginProps = {
     mobile?: string,
     email?: string,
+    memberName?: string,
     password: string
 }
 
@@ -20,10 +21,10 @@ export type GetCodeProps = {
     account: string
 }
 
-export const login = ({ mobile, email, password, cb }: LoginProps & { cb?: () => void }) => {
+export const login = ({ mobile, email, memberName, password, cb }: LoginProps & { cb?: () => void }) => {
     return function(dispatch: Dispatch<AnyAction>, getState: RootState) {
         Toast.loading('加载中...')
-        MemberApi.login({ mobile, email, password }).then(res => {
+        MemberApi.login({ mobile, email, memberName, password }).then(res => {
             Toast.hide()
             !isServer && localStorage.setItem('_t', res.headers['authorization'])
             dispatch({

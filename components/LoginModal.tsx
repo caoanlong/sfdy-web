@@ -1,7 +1,9 @@
 import React, { useState, MouseEvent, ChangeEvent } from "react"
 import { Form, Field } from 'react-final-form'
 import { useDispatch } from "react-redux"
+import Toast from 'light-toast'
 import { getInfo, login, LoginProps, register, RegisterProps } from "../store/actions/userActions"
+import { checkEmail, checkMobile, checkUserName } from "../utils/validators"
 import ButtonCom from "./ButtonCom"
 import GetCodeBtn from "./GetCodeBtn"
 import InputCom from "./InputCom"
@@ -36,10 +38,14 @@ const Login = () => {
                 dispatch({ type: 'SET_LOGIN_MODAL', payload: false })
             }
         }
-        if (account.includes('@')) {
+        if (checkEmail(account)) {
             data.email = account
-        } else {
+        } else if (checkMobile(account)) {
             data.mobile = account
+        } else if (checkUserName(account)) {
+            data.memberName = account
+        } else {
+            return Toast.fail('用户名格式错误！')
         }
         dispatch(login(data))
     }

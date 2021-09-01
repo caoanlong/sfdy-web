@@ -21,6 +21,7 @@ const WrappedApp = ({ Component, pageProps }: AppProps) => {
 
 WrappedApp.getInitialProps = wrapper.getInitialAppProps(store => async ({ Component, ctx }: AppContext): Promise<any> => {
 	const state = store.getState()
+	// 服务端获取不到store-state
 	if (!state.config.typeList || state.config.typeList.length === 0) {
 		const { data } = await CommonApi.info()
 		if (data.code === 200) {

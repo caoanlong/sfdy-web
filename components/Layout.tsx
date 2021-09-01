@@ -7,6 +7,7 @@ import { useRouter } from 'next/router'
 import { isPWA } from '../utils/tools'
 import { RootState } from '../store'
 import LoginModal from './LoginModal'
+import { getInfo } from '../store/actions/userActions'
 
 type LayoutProps = {
     children: ReactNode
@@ -14,11 +15,21 @@ type LayoutProps = {
 
 function Layout({children}: LayoutProps) {
     const theme = useSelector((state: RootState) => state.config.theme)
+    const token = useSelector((state: RootState) => state.member.token)
     const seo = useSelector((state: RootState) => state.config.seo)
     const showLogin = useSelector((state: RootState) => state.config.showLogin)
     const dispatch = useDispatch()
 
     const router = useRouter()
+
+    const authPath = ['/mine']
+    for (let i = 0; i < authPath.length; i++) {
+        if (!token && router.pathname.startsWith(authPath[i])) {
+            dispatch({ type: 'SET_LOGIN_MODAL', payload: true })
+            router.push('/')
+            break
+        }
+    }
 
     useEffect(() => {
         const now = new Date().getTime()
@@ -26,6 +37,7 @@ function Layout({children}: LayoutProps) {
             // 因为html, body 都进行了定位，无法滚动
             document.getElementById('__next')?.scrollTo(0, 0)
         })
+        dispatch(getInfo())
         const pwa = localStorage.getItem('pwa')
         if (!pwa && isPWA()) {
             localStorage.setItem('pwa', now.toString())
@@ -39,7 +51,7 @@ function Layout({children}: LayoutProps) {
         })
         document.documentElement.className = prefersDarkMode ? 'dark' : 'light'
         document.body.style.backgroundColor = prefersDarkMode ? '#000' : '#fff'
-    })
+    }, [])
     
     return (
         <div>

@@ -9,7 +9,8 @@ const handle = app.getRequestHandler()
 
 const devProxy = {
     '/app': {
-        target: 'https://jyavs.com/', 
+        target: 'http://localhost:8100/', 
+        // target: 'https://jyavs.com/', 
         pathRewrite: {
             '^/app': '/app'
         },

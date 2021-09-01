@@ -234,10 +234,14 @@ function HeaderBar() {
                     />
                     {
                         token ? 
-                            <FontAwesomeIcon 
-                                className="w-4 h-8 text-gray-600 mx-4" 
-                                icon={faUser}
-                            /> :
+                            <Link href={'/mine'}>
+                                <a>
+                                    <FontAwesomeIcon 
+                                        className="w-4 h-8 text-gray-600 mx-4" 
+                                        icon={faUser}
+                                    />
+                                </a>
+                            </Link> :
                             <div 
                                 onClick={() => dispatch({ type: 'SET_LOGIN_MODAL', payload: true })}
                                 className="bg-purple-500 py-1 sm:py-2 px-4 sm:px-10 text-center text-white rounded shadow-lg cursor-pointer">
