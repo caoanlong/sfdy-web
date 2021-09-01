@@ -37,7 +37,7 @@ function Layout({children}: LayoutProps) {
             // 因为html, body 都进行了定位，无法滚动
             document.getElementById('__next')?.scrollTo(0, 0)
         })
-        dispatch(getInfo())
+        token && dispatch(getInfo())
         const pwa = localStorage.getItem('pwa')
         if (!pwa && isPWA()) {
             localStorage.setItem('pwa', now.toString())
