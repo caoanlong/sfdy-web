@@ -114,87 +114,85 @@ const Register = () => {
                 dispatch({ type: 'SET_LOGIN_MODAL', payload: false })
             }
         }
-        if (account.includes('@')) {
+        if (checkEmail(account)) {
             data.email = account
-        } else {
+        } else if (checkMobile(account)) {
             data.mobile = account
         }
         dispatch(register(data))
     }
 
     return (
-        <div>
-            <Form 
-                onSubmit={onSubmit}
-                initialValues={formData}
-                validate={(values) => {
-                    const errors: any = {}
-                    if (!values.account) {
-                        errors.account = '账号不能为空'
-                    }
-                    if (!values.password) {
-                        errors.password = '密码不能为空'
-                    }
-                    if (!values.code) {
-                        errors.code = '验证码不能为空'
-                    }
-                    return errors
-                }}
-                render={({ handleSubmit, form, submitting, pristine, values }) => (
-                    <form onSubmit={handleSubmit}>
-                        <Field name="account">
-                            {({ input, meta }) => (
-                                <InputCom 
-                                    {...input} 
-                                    type="text" 
-                                    placeholder="请输入邮箱"
-                                    tips={meta.touched && meta.error && <span>{meta.error}</span>}
-                                />
-                            )}
-                        </Field>
-                        <Field name="password">
-                            {({ input, meta }) => (
-                                <InputCom 
-                                    {...input} 
-                                    type="password" 
-                                    placeholder="请输入密码" 
-                                    tips={meta.touched && meta.error && <span>{meta.error}</span>}
-                                />
-                            )}
-                        </Field>
-                        <Field name="code">
-                            {({ input, meta }) => (
-                                <InputCom 
-                                    {...input} 
-                                    type="number" 
-                                    placeholder="请输入验证码" 
-                                    right={
-                                        <div className="h-full flex justify-center items-center text-sm text-yellow-500">
-                                            <GetCodeBtn 
-                                                key={values.account}
-                                                account={values.account}
-                                            />
-                                        </div>
-                                    }
-                                    onChange={(e: ChangeEvent<HTMLInputElement>) => {
-                                        setFormData({
-                                            ...values,
-                                            code: e.target.value
-                                        })
-                                    }}
-                                    tips={meta.touched && meta.error && <span>{meta.error}</span>}
-                                />
-                            )}
-                        </Field>
-                        <ButtonCom 
-                            text="注册" 
-                            type="submit" 
-                            disabled={!values.account || !values.password || !values.code} 
-                        />
-                    </form>
-                )}>
-            </Form>
-        </div>
+        <Form 
+            onSubmit={onSubmit}
+            initialValues={formData}
+            validate={(values) => {
+                const errors: any = {}
+                if (!values.account) {
+                    errors.account = '账号不能为空'
+                }
+                if (!values.password) {
+                    errors.password = '密码不能为空'
+                }
+                if (!values.code) {
+                    errors.code = '验证码不能为空'
+                }
+                return errors
+            }}
+            render={({ handleSubmit, form, submitting, pristine, values }) => (
+                <form onSubmit={handleSubmit}>
+                    <Field name="account">
+                        {({ input, meta }) => (
+                            <InputCom 
+                                {...input} 
+                                type="text" 
+                                placeholder="请输入邮箱"
+                                tips={meta.touched && meta.error && <span>{meta.error}</span>}
+                            />
+                        )}
+                    </Field>
+                    <Field name="password">
+                        {({ input, meta }) => (
+                            <InputCom 
+                                {...input} 
+                                type="password" 
+                                placeholder="请输入密码" 
+                                tips={meta.touched && meta.error && <span>{meta.error}</span>}
+                            />
+                        )}
+                    </Field>
+                    <Field name="code">
+                        {({ input, meta }) => (
+                            <InputCom 
+                                {...input} 
+                                type="number" 
+                                placeholder="请输入验证码" 
+                                right={
+                                    <div className="h-full flex justify-center items-center text-sm text-yellow-500">
+                                        <GetCodeBtn 
+                                            key={values.account}
+                                            account={values.account}
+                                        />
+                                    </div>
+                                }
+                                onChange={(e: ChangeEvent<HTMLInputElement>) => {
+                                    setFormData({
+                                        ...values,
+                                        code: e.target.value
+                                    })
+                                }}
+                                tips={meta.touched && meta.error && <span>{meta.error}</span>}
+                            />
+                        )}
+                    </Field>
+                    <ButtonCom 
+                        text="注册" 
+                        type="submit" 
+                        disabled={!values.account || !values.password || !values.code} 
+                    />
+                </form>
+            )}>
+        </Form>
     )
 }
 

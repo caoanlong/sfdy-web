@@ -33,6 +33,8 @@ const reducer = (state: MemberState = initState, action: AnyAction) => {
     switch (action.type) {
         case 'SET_MEMBER':
             return { ...state, ...action.payload }
+        case 'DEL_MEMBER':
+            return { ...initState }
         case 'SET_TOKEN':
             return { ...state, token: action.payload }
         default:

@@ -14,7 +14,12 @@ export type LoginProps = {
 }
 
 export type RegisterProps = LoginProps & {
+    randomCode?: string,
     code: string
+}
+
+export type UpdateProps = {
+    formData: FormData
 }
 
 export type GetCodeProps = {
@@ -38,16 +43,28 @@ export const login = ({ mobile, email, memberName, password, cb }: LoginProps & 
     }
 }
 
-export const register = ({ mobile, email, password, code, cb }: RegisterProps & { cb?: () => void }) => {
+export const register = ({ randomCode, mobile, email, password, code, cb }: RegisterProps & { cb?: () => void }) => {
     return function(dispatch: Dispatch<AnyAction>, getState: RootState) {
         Toast.loading('加载中...')
-        MemberApi.register({ mobile, email, password, code }).then(res => {
+        MemberApi.register({ randomCode, mobile, email, password, code }).then(res => {
             Toast.hide()
             !isServer && localStorage.setItem('_t', res.headers['authorization'])
             dispatch({
                 type: 'SET_TOKEN',
                 payload: res.headers['authorization']
             })
+            cb && cb()
+        }).catch(() => {
+            Toast.hide()
+        })
+    }
+}
+
+export const updateMember = ({ formData, cb }: UpdateProps & { cb?: () => void }) => {
+    return function(dispatch: Dispatch<AnyAction>, getState: RootState) {
+        Toast.loading('加载中...')
+        MemberApi.update(formData).then(res => {
+            Toast.hide()
             cb && cb()
         }).catch(() => {
             Toast.hide()
@@ -62,6 +79,17 @@ export const getInfo = () => {
                 type: 'SET_MEMBER',
                 payload: res.data.data
             })
+        }).catch(err => {
+            if (err.data && err.data.code === 403) {
+                dispatch({ type: 'DEL_MEMBER' })
+            }
         })
+    }
+}
+
+export const logout = () => {
+    return function(dispatch: Dispatch<AnyAction>, getState: RootState) {
+        dispatch({ type: 'DEL_MEMBER' })
+        localStorage.removeItem('_t')
     }
 }

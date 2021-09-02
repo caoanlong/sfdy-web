@@ -38,6 +38,18 @@ class MemberApi {
         })
     }
 
+    static update(data: FormData) {
+        if (!this.isClick) return Promise.reject('REPEAT_POST')
+        this.isClick = false
+        setTimeout(() => { this.isClick = true }, this.delay)
+        return request({
+            url: this.url + '/update',
+            method: 'post',
+            data,
+            headers: { 'Content-type': 'multipart/form-data;charset=UTF-8' }
+        })
+    }
+
     static info() {
         return request({
             url: this.url + '/info'
