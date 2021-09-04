@@ -11,6 +11,7 @@ import { formDataReq } from "../../utils/tools"
 import ButtonCom from "../../components/ButtonCom"
 import { useRouter } from "next/router"
 import ClipboardJS from 'clipboard'
+import dayjs from "dayjs"
 
 function Mine() {
     const dispatch = useDispatch()
@@ -68,7 +69,15 @@ function Mine() {
             <div className="px-4 sm:w-2/4 sm:mx-auto">
                 <CellItem label="名称" value={member.memberName} underLine={true} />
                 <CellItem label="手机" value={member.mobile} underLine={true} />
-                <CellItem label="邮箱" value={member.email}/>
+                <CellItem label="邮箱" value={member.email} underLine={true} />
+                <CellItem 
+                    label="VIP" 
+                    value={
+                        member.vipEndTime 
+                            ? dayjs(member.vipEndTime).format('YYYY-MM-DD HH:mm:ss') + ' 到期'
+                            : '否'
+                    }
+                />
             </div>
             <div className="mt-4 px-4 sm:w-2/4 sm:mx-auto break-words">
                 <div className="py-2 sm:inline-block">

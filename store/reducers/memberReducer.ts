@@ -26,7 +26,8 @@ const initState: MemberState = {
     loginTime: undefined,
     lastLoginTime: undefined,
     createTime: undefined,
-    updateTime: undefined
+    updateTime: undefined,
+    vipEndTime: 0
 }
 
 const reducer = (state: MemberState = initState, action: AnyAction) => {

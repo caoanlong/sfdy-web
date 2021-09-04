@@ -3,6 +3,7 @@ import { AnyAction } from "redux"
 import { RootState } from ".."
 import Toast from 'light-toast'
 import MemberApi from "../../services/MemberApi"
+import dayjs from "dayjs"
 
 const isServer = typeof window === 'undefined'
 
@@ -75,12 +76,24 @@ export const updateMember = ({ formData, cb }: UpdateProps & { cb?: () => void }
 export const getInfo = () => {
     return function(dispatch: Dispatch<AnyAction>, getState: RootState) {
         MemberApi.info().then(res => {
+            const vips = res.data.data.vips
+            let t = 0
+            for (let i = 0; i < vips.length; i++) {
+                vips[i].endTimeTS = dayjs(dayjs(vips[i].startTime).valueOf() + vips[i].validDays * 86400000).valueOf()
+                if (vips[i].endTimeTS > t) {
+                    t = vips[i].endTimeTS
+                }
+            }
             dispatch({
                 type: 'SET_MEMBER',
-                payload: res.data.data
+                payload: {
+                    ...res.data.data, 
+                    vipEndTime: t
+                }
             })
         }).catch(err => {
             if (err.data && err.data.code === 403) {
+                localStorage.removeItem('_t')
                 dispatch({ type: 'DEL_MEMBER' })
             }
         })

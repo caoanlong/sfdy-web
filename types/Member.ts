@@ -17,7 +17,8 @@ interface Member {
     loginTime?: Date,
     lastLoginTime?: Date,
     createTime?: Date,
-    updateTime?: Date
+    updateTime?: Date,
+    vipEndTime?: number
 }
 
 export default Member
