@@ -12,10 +12,12 @@ import ButtonCom from "../../components/ButtonCom"
 import { useRouter } from "next/router"
 import ClipboardJS from 'clipboard'
 import dayjs from "dayjs"
+import SEO from "../../components/SEO"
 
 function Mine() {
     const dispatch = useDispatch()
     const router = useRouter()
+    const seo = useSelector((state: RootState) => state.config.seo)
     const member: Member = useSelector((state: RootState) => state.member)
 
     const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -45,7 +47,12 @@ function Mine() {
         })
     }, [])
     return (
-        <div>
+        <main>
+            <SEO 
+				title={`我的-${seo?.seoTitle}`} 
+				description={seo?.seoDescription} 
+				canonical={process.env.site_url}
+			/>
             <div 
                 className="w-28 h-28 sm:w-40 sm:h-40 text-6xl text-center overflow-hidden rounded-full bg-gray-200 mx-auto mt-8 relative">
                 <input 
@@ -100,7 +107,7 @@ function Mine() {
                     router.push('/')
                 }}/>
             </div>
-        </div>
+        </main>
     )
 }
 
