@@ -54,6 +54,7 @@ function Mine({ member }: MineProps) {
     const dispatch = useDispatch()
     const router = useRouter()
     const seo = useSelector((state: RootState) => state.config.seo)
+    const mem = useSelector((state: RootState) => state.member)
 
     const [ active, setActive ] = useState<Seg>(tabs[0])
     const [ vipList, setVipList ] = useState<Vip[]>([])
@@ -86,14 +87,14 @@ function Mine({ member }: MineProps) {
             Toast.hide()
         })
     }
+    const getList = (i: number) => {
+        if (i === 1) getVipList()
+        if (i === 2) getOrderList()
+    }
 
     useEffect(() => {
-        dispatch({
-            type: 'SET_MEMBER',
-            payload: member
-        })
-        if (active.id === 1) getVipList()
-        if (active.id === 2) getOrderList()
+        dispatch({ type: 'SET_MEMBER', payload: member })
+        getList(active.id)
     }, [])
 
     useEffect(() => {
@@ -115,7 +116,7 @@ function Mine({ member }: MineProps) {
                     <div className="flex">
                         <div className="w-24 h-24">
                             <Avatar 
-                                image={member.avatar}
+                                image={mem.avatar}
                                 changCallback={(formData: FormData) => {
                                     dispatch(updateMember({ formData, cb: () => {
                                         dispatch(getInfo())
@@ -127,27 +128,27 @@ function Mine({ member }: MineProps) {
                             <div className="flex">
                                 <div className="w-12 text-black dark:text-gray-100">账号：</div>
                                 <div className="flex-1 text-gray-600 dark:text-gray-400">
-                                    {member.memberName || '无'}
+                                    {mem.memberName || '无'}
                                 </div>
                             </div>
                             <div className="flex">
                                 <div className="w-12 text-black dark:text-gray-100">手机：</div>
                                 <div className="flex-1 text-gray-600 dark:text-gray-400">
-                                    {member.mobile || '无'}
+                                    {mem.mobile || '无'}
                                 </div>
                             </div>
                             <div className="flex">
                                 <div className="w-12 text-black dark:text-gray-100">邮箱：</div>
                                 <div className="flex-1 text-gray-600 dark:text-gray-400">
-                                    {member.email || '无'}
+                                    {mem.email || '无'}
                                 </div>
                             </div>
                             <div className="flex">
                                 <div className="w-12 text-black dark:text-gray-100">VIP：</div>
                                 <div className="flex-1 text-gray-600 dark:text-gray-400">
                                     {
-                                        member.vipEndTime 
-                                        ? dayjs(member.vipEndTime).format('YYYY-MM-DD HH:mm:ss') + ' 到期'
+                                        mem.vipEndTime 
+                                        ? dayjs(mem.vipEndTime).format('YYYY-MM-DD HH:mm:ss') + ' 到期'
                                         : '无'
                                     }
                                 </div>
@@ -172,13 +173,13 @@ function Mine({ member }: MineProps) {
                         <span 
                             className="bg-pink-500 text-white text-sm px-4 py-1 rounded" 
                             id="copyBtn" 
-                            data-clipboard-text={process.env.site_url + '/register/' + member.randomCode}>
+                            data-clipboard-text={process.env.site_url + '/register/' + mem.randomCode}>
                             复制链接
                         </span>
                     </div>
                     <p 
                         className="text-pink-500 sm:inline-block sm:ml-3">
-                        {process.env.site_url + '/register/' + member.randomCode}
+                        {process.env.site_url + '/register/' + mem.randomCode}
                     </p>
                 </div>
                 <div className="px-4 mt-3">
@@ -190,11 +191,7 @@ function Mine({ member }: MineProps) {
                         active={active} 
                         onChange={(item: Seg) => {
                             setActive(item)
-                            if (item.id === 2) {
-                                getVipList()
-                            } else if (item.id === 3) {
-                                getOrderList()
-                            }
+                            getList(item.id)
                         }} 
                     />
                     <div className="mt-3">
