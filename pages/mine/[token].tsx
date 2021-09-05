@@ -12,18 +12,17 @@ import Avatar from "../../components/Avatar"
 import { GetServerSideProps } from "next"
 import MemberApi from "../../services/MemberApi"
 import Vip from "../../types/Vip"
-import MyVipItem from "../../components/MyVipItem"
 import Segement, { Seg } from "../../components/Segement"
-import MyVips from "../../components/MyVips"
 import Vips from "../../components/Vips"
 import MyOrders from "../../components/MyOrders"
 import VipApi from "../../services/VipApi"
 import Order from "../../types/Order"
 
 const tabs: Seg[] = [
-    { id: 1, path: '', name: '我的VIP' },
-    { id: 2, path: '', name: '购买VIP' },
-    { id: 3, path: '', name: '账单记录' }
+    { id: 1, path: '', name: '购买VIP' },
+    { id: 2, path: '', name: '账单记录' },
+    { id: 3, path: '', name: '注册人数' },
+    { id: 4, path: '', name: '付费人数' }
 ]
 
 type MineProps = {
@@ -61,9 +60,8 @@ function Mine({ member }: MineProps) {
     const [ orderList, setOrderList ] = useState<Order[]>([])
 
     const Record = () => {
-        if (active.id === 1) return <MyVips vips={member.vips}/>
-        if (active.id === 2) return <Vips vipList={vipList}/>
-        if (active.id === 3) return <MyOrders orderList={orderList}/>
+        if (active.id === 1) return <Vips vipList={vipList}/>
+        if (active.id === 2) return <MyOrders orderList={orderList}/>
         return <></>
     }
 
@@ -94,6 +92,8 @@ function Mine({ member }: MineProps) {
             type: 'SET_MEMBER',
             payload: member
         })
+        if (active.id === 1) getVipList()
+        if (active.id === 2) getOrderList()
     }, [])
 
     useEffect(() => {
@@ -125,25 +125,25 @@ function Mine({ member }: MineProps) {
                         </div>
                         <div className="flex-1 pl-3 text-sm flex flex-col justify-center">
                             <div className="flex">
-                                <div className="w-16 text-black dark:text-gray-100">账号：</div>
+                                <div className="w-12 text-black dark:text-gray-100">账号：</div>
                                 <div className="flex-1 text-gray-600 dark:text-gray-400">
                                     {member.memberName || '无'}
                                 </div>
                             </div>
                             <div className="flex">
-                                <div className="w-16 text-black dark:text-gray-100">手机：</div>
+                                <div className="w-12 text-black dark:text-gray-100">手机：</div>
                                 <div className="flex-1 text-gray-600 dark:text-gray-400">
                                     {member.mobile || '无'}
                                 </div>
                             </div>
                             <div className="flex">
-                                <div className="w-16 text-black dark:text-gray-100">邮箱：</div>
+                                <div className="w-12 text-black dark:text-gray-100">邮箱：</div>
                                 <div className="flex-1 text-gray-600 dark:text-gray-400">
                                     {member.email || '无'}
                                 </div>
                             </div>
                             <div className="flex">
-                                <div className="w-16 text-black dark:text-gray-100">VIP：</div>
+                                <div className="w-12 text-black dark:text-gray-100">VIP：</div>
                                 <div className="flex-1 text-gray-600 dark:text-gray-400">
                                     {
                                         member.vipEndTime 
@@ -182,6 +182,9 @@ function Mine({ member }: MineProps) {
                     </p>
                 </div>
                 <div className="px-4 mt-3">
+                    <p className="text-xs text-gray-400 dark:text-gray-600 pb-2">
+                        注：注册人数和付费人数均为通过您的推广链接注册的用户
+                    </p>
                     <Segement 
                         list={tabs} 
                         active={active} 
@@ -198,7 +201,7 @@ function Mine({ member }: MineProps) {
                         <Record />
                     </div>
                 </div>
-                <div className="px-4 my-6 sm:hidden">
+                <div className="px-4 mt-20 mb-6 sm:hidden">
                     <div 
                         onClick={() => {
                             dispatch(logout())
