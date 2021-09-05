@@ -10,7 +10,7 @@ type MemberItemProps = {
 
 function MemberItem({ member }: MemberItemProps) {
     return (
-        <div className="flex items-center p-3 bg-white shadow-md rounded-lg mb-4">
+        <div className="flex items-center p-3 bg-white dark:bg-gray-900 shadow-md rounded-lg mb-4">
             <div className="w-16">
                 <div className="w-16 h-16 rounded-full overflow-hidden">
                 {
