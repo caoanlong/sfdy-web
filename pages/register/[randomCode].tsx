@@ -22,9 +22,7 @@ type RegisterForm = {
 }
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-    const query = context.query
-    const randomCode = query.randomCode
-    
+    const { randomCode } = context.query
     return {
         props: {
             randomCode

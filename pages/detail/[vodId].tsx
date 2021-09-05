@@ -1,7 +1,5 @@
 import { GetServerSideProps } from "next"
 import dayjs from 'dayjs'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faChevronRight, faStar, faStarHalf } from '@fortawesome/free-solid-svg-icons'
 import VodApi from '../../services/VodApi'
 import Vod from "../../types/Vod"
 import { useSelector } from "react-redux"
@@ -10,6 +8,8 @@ import Link from "next/link"
 import VodItem from "../../components/VodItem"
 import SEO from '../../components/SEO'
 import { RootState } from "../../store"
+import React from "react"
+import { IoChevronForwardOutline, IoStar, IoStarHalf } from "react-icons/io5"
 
 
 function scoreToStars(score: number) {
@@ -18,18 +18,12 @@ function scoreToStars(score: number) {
     const list: Array<JSX.Element> = []
     for (let i = 0; i < min; i++) {
         list.push(
-            <FontAwesomeIcon
-                key={i}
-                className="w-4 h-4 inline-block text-yellow-500" 
-                icon={faStar}/>
+            <IoStar key={i} className="w-4 h-4 inline-block text-yellow-500" />
         )
     }
     if (max > min) {
         list.push(
-            <FontAwesomeIcon
-                key="-1"
-                className="w-4 h-4 inline-block text-yellow-500" 
-                icon={faStarHalf}/>
+            <IoStarHalf key="-1" className="w-4 h-4 inline-block text-yellow-500" />
         )
     }
     return list
@@ -82,17 +76,17 @@ function Detail({ vod, likeList }: DetailProps) {
                         <Link href="/">
                             <a className="text-gray-700 dark:text-gray-400 px-1">首页</a>
                         </Link>
-                        <FontAwesomeIcon 
-                            style={{top: '-2px'}}
-                            className="w-2 h-2 text-gray-400 relative inline-block" 
-                            icon={faChevronRight}/>
+                        <IoChevronForwardOutline 
+                            style={{ top: '-2px' }}
+                            className="text-gray-400 relative inline-block"
+                        />
                         <Link href={`/list/${currentType?.typeId}/全部`}>
                             <a className="text-gray-700 dark:text-gray-400 px-1">{currentType?.typeName}</a>
                         </Link>
-                        <FontAwesomeIcon 
-                            style={{top: '-2px'}}
-                            className="w-2 h-2 text-gray-400 relative inline-block" 
-                            icon={faChevronRight}/>
+                        <IoChevronForwardOutline 
+                            style={{ top: '-2px' }}
+                            className="text-gray-400 relative inline-block"
+                        />
                         <span className="pl-1">{vod.vodName}</span>
                     </div>
                     <h1 className="text-lg mb-2 sm:hidden dark:text-gray-400">{vod.vodName}</h1>

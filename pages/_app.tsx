@@ -1,21 +1,16 @@
 import '../styles/globals.css'
 import React from 'react'
 import type { AppContext, AppProps } from 'next/app'
-import { PersistGate } from 'redux-persist/integration/react'
 import { wrapper } from '../store'
 import Layout from '../components/Layout'
 import CommonApi from '../services/CommonApi'
-import { useStore } from 'react-redux'
 
 
 const WrappedApp = ({ Component, pageProps }: AppProps) => {
-	const store: any = useStore()
 	return (
-		<PersistGate persistor={store.__persistor} loading={<div>Loading</div>}>
-			<Layout>
-				<Component { ...pageProps} />
-			</Layout>
-		</PersistGate>
+		<Layout>
+			<Component { ...pageProps} />
+		</Layout>
 	)
 }
 

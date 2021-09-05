@@ -1,7 +1,5 @@
 import { GetServerSideProps } from "next"
 import Link from "next/link"
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faChevronRight, faShareSquare } from '@fortawesome/free-solid-svg-icons'
 import { useSelector } from "react-redux"
 import Hls from 'hls.js'
 import VodApi from "../../services/VodApi"
@@ -9,8 +7,9 @@ import Vod from "../../types/Vod"
 import VodType from "../../types/VodType"
 import VodItem from "../../components/VodItem"
 import SEO from '../../components/SEO'
-import { RefObject, useEffect, useRef, useState } from "react"
+import React, { RefObject, useEffect, useRef, useState } from "react"
 import { RootState } from "../../store"
+import { IoChevronForwardOutline, IoShareOutline } from "react-icons/io5"
 
 type PlayProps = {
     vod: Vod,
@@ -93,17 +92,17 @@ function Play({ vod, likeList }: PlayProps) {
                         <Link href="/">
                             <a className="text-gray-700 dark:text-gray-400 px-1">首页</a>
                         </Link>
-                        <FontAwesomeIcon 
-                            style={{top: '-2px'}}
-                            className="w-2 h-2 text-gray-400 relative inline-block" 
-                            icon={faChevronRight}/>
+                        <IoChevronForwardOutline 
+                            style={{ top: '-2px' }}
+                            className="text-gray-400 relative inline-block"
+                        />
                         <Link href={`/list/${currentType.typeId}/全部`}>
                             <a className="text-gray-700 dark:text-gray-400 px-1">{currentType.typeName}</a>
                         </Link>
-                        <FontAwesomeIcon 
-                            style={{top: '-2px'}}
-                            className="w-2 h-2 text-gray-400 relative inline-block" 
-                            icon={faChevronRight}/>
+                        <IoChevronForwardOutline 
+                            style={{ top: '-2px' }}
+                            className="text-gray-400 relative inline-block"
+                        />
                         <span className="pl-1">{vod.vodName}</span>
                     </div>
                     <div className="w-full">
@@ -132,11 +131,12 @@ function Play({ vod, likeList }: PlayProps) {
                             {
                                 hasShare 
                                 ? <div 
-                                    className="bg-gray-500 text-gray-800 px-3 rounded cursor-pointer hover:text-gray-100" onClick={onShare}>
-                                    <FontAwesomeIcon 
-                                    style={{top: '-1px'}}
-                                    className="w-3 h-3 relative inline-block mr-1" 
-                                    icon={faShareSquare}/>
+                                    className="bg-gray-200 text-gray-700 px-3 rounded cursor-pointer hover:text-purple-500" 
+                                    onClick={onShare}>
+                                    <IoShareOutline 
+                                        style={{top: '-1px'}}
+                                        className="relative text-base inline-block mr-1" 
+                                    />
                                     <span>分享</span>
                                 </div> 
                                 : <></>

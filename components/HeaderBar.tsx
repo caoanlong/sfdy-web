@@ -1,11 +1,10 @@
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faSearch, faBars, faTimes, faUser } from '@fortawesome/free-solid-svg-icons'
-import { useState, MouseEvent, useEffect, FormEvent, useRef } from 'react'
+import React, { useState, MouseEvent, useEffect, FormEvent, useRef } from 'react'
 import { useRouter } from 'next/router'
 import Link from 'next/link'
 import { useDispatch, useSelector } from 'react-redux'
 import VodType from '../types/VodType'
 import { RootState } from '../store'
+import { IoClose, IoMenu, IoPerson, IoSearch } from 'react-icons/io5'
 
 const HOT_LIST = [
     '三上悠亚',
@@ -59,7 +58,7 @@ function HeaderBar() {
     const isActive = (typeId: number) => {
         return (router.pathname.includes('/list') && router.query.typeId === String(typeId))
     }
-
+    
     useEffect(() => {
         keywordsRef.current?.addEventListener('keydown', handleEnter)
         return () => {
@@ -68,13 +67,12 @@ function HeaderBar() {
     }, [])
 
     return (
-        <div 
-            className="w-full h-12 sm:h-16 fixed z-50 shadow bg-white dark:bg-black bg-opacity-80 dark:bg-opacity-80 backdrop-filter backdrop-blur">
+        <div className="w-full h-12 sm:h-16 fixed z-50 shadow bg-white dark:bg-black">
             <div className="container h-full flex">
                 <div 
-                    className="w-16 h-full flex justify-center items-center lg:hidden" 
+                    className="w-16 h-full flex justify-center items-center text-gray-600 text-3xl cursor-pointer lg:hidden" 
                     onClick={() => setShowNavs(!showNavs)}>
-                    <FontAwesomeIcon className="w-5 h-5 text-gray-600 cursor-pointer" icon={faBars}/>
+                    <IoMenu />
                 </div>
                 <a className="h-full py-2" style={{width: '160px'}} href="/">
                     <img className="h-full" src="/images/logo.svg" alt="LOGO" />
@@ -140,9 +138,9 @@ function HeaderBar() {
                                 }, 200)
                             }}/>
                         <div 
-                            className="w-8 h-full flex justify-center items-center cursor-pointer" 
+                            className="w-8 h-full text-gray-400 flex justify-center items-center cursor-pointer" 
                             onClick={handleSearch}>
-                            <FontAwesomeIcon className="w-3 h-3 text-gray-400" icon={faSearch}/>
+                            <IoSearch />
                         </div>
                     </div>
                     {
@@ -188,13 +186,15 @@ function HeaderBar() {
                             </form>
                             
                             <div 
-                                className="w-8 h-full flex justify-center items-center cursor-pointer" 
+                                className="w-8 h-full text-gray-400 flex justify-center items-center cursor-pointer" 
                                 onClick={handleSearch}>
-                                <FontAwesomeIcon className="w-3 h-3 text-gray-400" icon={faSearch}/>
+                                <IoSearch />
                             </div>
                         </div>
-                        <div className="w-8 flex justify-center" onClick={() => setShowMobileSearch(false)}>
-                            <FontAwesomeIcon className="w-4 h-4 text-gray-600 cursor-pointer" icon={faTimes}/>
+                        <div 
+                            className="w-10 flex justify-center text-gray-600 text-2xl cursor-pointer" 
+                            onClick={() => setShowMobileSearch(false)}>
+                            <IoClose />
                         </div>
                         <div 
                             className="fixed top-12 left-0 right-0 bottom-0 bg-black bg-opacity-50 backdrop-filter backdrop-blur" onClick={() => setShowMobileSearch(false)}>
@@ -227,19 +227,15 @@ function HeaderBar() {
                     : <></>
                 }
                 <div className="flex-1 lg:flex-none lg:w-40 h-full flex justify-end items-center px-4">
-                    <FontAwesomeIcon 
-                        className="w-4 h-8 text-gray-600 mx-4 sm:hidden" 
-                        icon={faSearch} 
-                        onClick={() => setShowMobileSearch(true)}
+                    <IoSearch 
+                        className="text-xl text-gray-600 mx-4 sm:hidden" 
+                        onClick={() => setShowMobileSearch(true)} 
                     />
                     {
                         token ? 
-                            <Link href={'/mine'}>
-                                <a>
-                                    <FontAwesomeIcon 
-                                        className="w-4 h-8 text-gray-600 mx-4" 
-                                        icon={faUser}
-                                    />
+                            <Link href={'/mine/' + token}>
+                                <a className="text-gray-600 text-xl">
+                                    <IoPerson />
                                 </a>
                             </Link> :
                             <div 

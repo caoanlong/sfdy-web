@@ -1,7 +1,5 @@
 import { GetServerSideProps } from 'next'
 import Link from 'next/link'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faChevronRight } from '@fortawesome/free-solid-svg-icons'
 import BannerCom from '../components/Banner'
 import VodItem from '../components/VodItem'
 import SEO from '../components/SEO'
@@ -12,6 +10,8 @@ import { useSelector } from 'react-redux'
 import { RootState } from '../store'
 import Banner from '../types/Banner'
 import Seo from '../types/Seo'
+import React from 'react'
+import { IoChevronForwardOutline } from 'react-icons/io5'
 
 
 const getVodsNew = async (num=12) => {
@@ -50,12 +50,12 @@ function Home({ vodsNewList }: HomeProps) {
 			{
 				vodsNewList.map((vodsNew: VodType) => (
 					<div className="mb-6" key={vodsNew.typeId}>
-						<div className="p-4">
+						<div className="p-4 flex items-center">
 							<h1 className="text-lg text-gray-700 dark:text-gray-300 inline-block">最新{vodsNew.typeName}</h1>
 							<Link href={`/list/${vodsNew.typeId}/全部?orderBy=time`}>
-								<a>
-									<span className="text-sm text-gray-400 inline-block ml-2">更多</span>
-									<FontAwesomeIcon className="w-2 text-gray-400 inline-block" icon={faChevronRight}/>
+								<a className="text-gray-400 flex items-center">
+									<div className="text-sm ml-2">更多</div>
+									<IoChevronForwardOutline />
 								</a>
 							</Link>
 						</div>

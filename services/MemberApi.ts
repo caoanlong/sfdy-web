@@ -55,6 +55,18 @@ class MemberApi {
             url: this.url + '/info'
         })
     }
+
+    static tokenInfo(token: string) {
+        return request({
+            url: this.url + `/token/${token}`
+        })
+    }
+
+    static orders() {
+        return request({
+            url: this.url + '/orders'
+        })
+    }
 }
 
 export default MemberApi

@@ -5,8 +5,6 @@ import Toast from 'light-toast'
 import MemberApi from "../../services/MemberApi"
 import dayjs from "dayjs"
 
-const isServer = typeof window === 'undefined'
-
 export type LoginProps = {
     mobile?: string,
     email?: string,
@@ -32,7 +30,7 @@ export const login = ({ mobile, email, memberName, password, cb }: LoginProps & 
         Toast.loading('加载中...')
         MemberApi.login({ mobile, email, memberName, password }).then(res => {
             Toast.hide()
-            !isServer && localStorage.setItem('_t', res.headers['authorization'])
+            process.browser && localStorage.setItem('_t', res.headers['authorization'])
             dispatch({
                 type: 'SET_TOKEN',
                 payload: res.headers['authorization']
@@ -49,7 +47,7 @@ export const register = ({ randomCode, mobile, email, password, code, cb }: Regi
         Toast.loading('加载中...')
         MemberApi.register({ randomCode, mobile, email, password, code }).then(res => {
             Toast.hide()
-            !isServer && localStorage.setItem('_t', res.headers['authorization'])
+            process.browser && localStorage.setItem('_t', res.headers['authorization'])
             dispatch({
                 type: 'SET_TOKEN',
                 payload: res.headers['authorization']
@@ -78,10 +76,10 @@ export const getInfo = () => {
         MemberApi.info().then(res => {
             const vips = res.data.data.vips
             let t = 0
-            for (let i = 0; i < vips.length; i++) {
-                vips[i].endTimeTS = dayjs(dayjs(vips[i].startTime).valueOf() + vips[i].validDays * 86400000).valueOf()
-                if (vips[i].endTimeTS > t) {
-                    t = vips[i].endTimeTS
+            for (const vip of vips) {
+                vip.endTimeTS = dayjs(dayjs(vip.startTime).valueOf() + vip.validDays * 86400000).valueOf()
+                if (vip.endTimeTS > t) {
+                    t = vip.endTimeTS
                 }
             }
             dispatch({

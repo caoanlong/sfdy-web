@@ -212,7 +212,7 @@ function LoginModal() {
                 onClick={(e: MouseEvent<HTMLDivElement>) => {
                     e.stopPropagation()
                 }}
-                className="w-4/5 sm:w-96 bg-white dark:bg-black rounded px-3 py-6">
+                className="w-4/5 sm:w-96 bg-white dark:bg-black rounded-lg px-3 py-6">
                 <div className="pb-3 sm:pl-12">
                     <Segement 
                         list={tabs} 

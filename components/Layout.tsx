@@ -14,22 +14,30 @@ type LayoutProps = {
 }
 
 function Layout({children}: LayoutProps) {
-    const theme = useSelector((state: RootState) => state.config.theme)
-    const token = useSelector((state: RootState) => state.member.token)
+    const dispatch = useDispatch()
+    const router = useRouter()
+    // const theme = useSelector((state: RootState) => state.config.theme)
+    
     const seo = useSelector((state: RootState) => state.config.seo)
     const showLogin = useSelector((state: RootState) => state.config.showLogin)
-    const dispatch = useDispatch()
-
-    const router = useRouter()
 
     const authPath = ['/mine']
-    for (let i = 0; i < authPath.length; i++) {
-        if (!token && router.pathname.startsWith(authPath[i])) {
-            dispatch({ type: 'SET_LOGIN_MODAL', payload: true })
-            router.push('/')
-            break
+    useEffect(() => {
+        const _t = localStorage.getItem('_t')
+        if (_t) {
+            dispatch({ type: 'SET_TOKEN', payload: _t })
+            if (router.pathname !== '/mine/[token]') {
+                dispatch(getInfo())
+            }
         }
-    }
+        for (const item of authPath) {
+            if (!_t && router.pathname.startsWith(item)) {
+                dispatch({ type: 'SET_LOGIN_MODAL', payload: true })
+                router.replace('/')
+                break
+            }
+        }
+    }, [])
 
     useEffect(() => {
         const now = new Date().getTime()
@@ -37,7 +45,7 @@ function Layout({children}: LayoutProps) {
             // 因为html, body 都进行了定位，无法滚动
             document.getElementById('__next')?.scrollTo(0, 0)
         })
-        token && dispatch(getInfo())
+        
         const pwa = localStorage.getItem('pwa')
         if (!pwa && isPWA()) {
             localStorage.setItem('pwa', now.toString())

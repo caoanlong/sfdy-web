@@ -1,3 +1,5 @@
+import Vip from "./Vip";
+
 interface Member {
     memberId: number,
     memberName: string,
@@ -18,7 +20,8 @@ interface Member {
     lastLoginTime?: Date,
     createTime?: Date,
     updateTime?: Date,
-    vipEndTime?: number
+    vipEndTime?: number,
+    vips?: Vip[]
 }
 
 export default Member

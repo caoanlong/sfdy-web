@@ -13,19 +13,7 @@ const bindMiddleware = (middleware: Middleware<any, any, any>[]) => {
 }
 
 const makeStore = () => {
-    const isServer = typeof window === 'undefined'
-    if (isServer) return createStore(reducers, bindMiddleware([thunk]))
-    const { persistStore, persistReducer } = require('redux-persist')
-    const storage = require('redux-persist/lib/storage').default
-    const persistConfig = {
-        key: 'jyav',
-        // whitelist: ['reducer'], // make sure it does not clash with server keys
-        storage
-    }
-    const persistedReducer = persistReducer(persistConfig, reducers)
-    const store: any = createStore(persistedReducer, bindMiddleware([thunk]))
-    store.__persistor = persistStore(store)
-    return store
+    return createStore(reducers, bindMiddleware([thunk]))
 }
 
 export type RootState = ReturnType<typeof reducers>
