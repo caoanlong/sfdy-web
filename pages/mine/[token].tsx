@@ -17,6 +17,7 @@ import Vips from "../../components/Vips"
 import MyOrders from "../../components/MyOrders"
 import VipApi from "../../services/VipApi"
 import Order from "../../types/Order"
+import RegMembers from "../../components/RegMembers"
 
 const tabs: Seg[] = [
     { id: 1, path: '', name: '购买VIP' },
@@ -59,10 +60,14 @@ function Mine({ member }: MineProps) {
     const [ active, setActive ] = useState<Seg>(tabs[0])
     const [ vipList, setVipList ] = useState<Vip[]>([])
     const [ orderList, setOrderList ] = useState<Order[]>([])
+    const [ regNumList, setRegNumList ] = useState<Member[]>([])
+    const [ regPayNumList, setRegPayNumList ] = useState<Member[]>([])
 
     const Record = () => {
         if (active.id === 1) return <Vips vipList={vipList}/>
         if (active.id === 2) return <MyOrders orderList={orderList}/>
+        if (active.id === 3) return <RegMembers list={regNumList}/>
+        if (active.id === 4) return <RegMembers list={regPayNumList}/>
         return <></>
     }
 
@@ -87,9 +92,24 @@ function Mine({ member }: MineProps) {
             Toast.hide()
         })
     }
+    const getRegNumList = (pay: boolean) => {
+        Toast.loading('加载中...')
+        MemberApi.regNum({ pageIndex: 1, pageSize: 100, pay }).then(res => {
+            Toast.hide()
+            if (pay) {
+                setRegPayNumList(res.data.data.list)
+            } else {
+                setRegNumList(res.data.data.list)
+            }
+        }).catch(() => {
+            Toast.hide()
+        })
+    }
     const getList = (i: number) => {
         if (i === 1) getVipList()
         if (i === 2) getOrderList()
+        if (i === 3) getRegNumList(false)
+        if (i === 4) getRegNumList(true)
     }
 
     useEffect(() => {

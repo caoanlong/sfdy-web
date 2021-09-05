@@ -6,7 +6,7 @@ type VipItemProps = {
 
 function VipItem({ vip }: VipItemProps) {
     return (
-        <div className="flex border border-pink-500 bg-pink-500 bg-opacity-10 rounded-lg overflow-hidden mb-3">
+        <div className="flex border border-pink-500 bg-pink-500 bg-opacity-10 shadow-md rounded-lg overflow-hidden mb-3">
             <div className="flex-1 p-3">
                 <h1 className="text-pink-500 font-bold text-2xl">{vip.validDays}天VIP</h1>
                 <p className="text-pink-400">¥{vip.price}</p>

@@ -1,6 +1,12 @@
 import { GetCodeProps, LoginProps, RegisterProps } from '../store/actions/userActions'
 import request from '../utils/request'
 
+export type RegNumParams = {
+    pageIndex: number,
+    pageSize: number,
+    pay: boolean
+}
+
 class MemberApi {
     static isClick = true
     static delay = 1000
@@ -65,6 +71,13 @@ class MemberApi {
     static orders() {
         return request({
             url: this.url + '/orders'
+        })
+    }
+
+    static regNum(params: RegNumParams) {
+        return request({
+            url: this.url + '/regNum',
+            params
         })
     }
 }
