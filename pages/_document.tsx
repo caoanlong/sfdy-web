@@ -11,7 +11,6 @@ class Mydocument extends Document {
         return (
             <Html lang={process.env.lang}>
                 <Head>
-                    <script async src="/fastclick.js" />
                     <script async src="https://www.googletagmanager.com/gtag/js?id=G-2XV487XEMB"></script>
                     <script
                         dangerouslySetInnerHTML={{
