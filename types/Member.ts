@@ -12,7 +12,8 @@ interface Member {
     password: string,
     status: number, // 0: 禁用， 1： 正常
     randomCode: string, // 推广链接随机码
-    totalRecharge: number,  // 充值总额，默认为0未充值
+    totalRecharge: number,  // 充值总额（玩家），默认为0未充值
+    balance: number,  // 余额（代理），默认为0
     loginIp?: number, 
     loginNum: number,
     lastLoginIp?: number,

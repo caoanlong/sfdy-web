@@ -18,6 +18,8 @@ import MyOrders from "../../components/MyOrders"
 import VipApi from "../../services/VipApi"
 import Order from "../../types/Order"
 import RegMembers from "../../components/RegMembers"
+import { IoDuplicateOutline, IoShareOutline } from "react-icons/io5"
+import Seo from "../../types/Seo"
 
 const tabs: Seg[] = [
     { id: 1, path: '', name: '购买VIP' },
@@ -27,12 +29,14 @@ const tabs: Seg[] = [
 ]
 
 type MineProps = {
-    member: Member
+    member: Member,
+    tabList: Seg[]
 }
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
     const query = context.query
     const token = query.token as string
+    let tabList: Seg[] = []
     const res = await MemberApi.tokenInfo(token)
     const member = res.data.data
     const vips = member.vips as Vip[]
@@ -44,24 +48,32 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
         }
     }
     member.vipEndTime = t
+    if (member.isAgent) {
+        tabList = [ tabs[1], tabs[2], tabs[3] ]
+    } else {
+        tabList = [ ...tabs ]
+    }
     return {
         props: {
-            member
+            member,
+            tabList
         }
     }
 }
 
-function Mine({ member }: MineProps) {
+function Mine({ member, tabList }: MineProps) {
     const dispatch = useDispatch()
     const router = useRouter()
-    const seo = useSelector((state: RootState) => state.config.seo)
-    const mem = useSelector((state: RootState) => state.member)
+    const seo: Seo = useSelector((state: RootState) => state.config.seo)
+    const mem: Member = useSelector((state: RootState) => state.member)
 
-    const [ active, setActive ] = useState<Seg>(tabs[0])
+    const [ active, setActive ] = useState<Seg>(tabList[0])
     const [ vipList, setVipList ] = useState<Vip[]>([])
     const [ orderList, setOrderList ] = useState<Order[]>([])
     const [ regNumList, setRegNumList ] = useState<Member[]>([])
     const [ regPayNumList, setRegPayNumList ] = useState<Member[]>([])
+
+    const [ hasShare, setHasShare ] = useState(false)
 
     const Record = () => {
         if (active.id === 1) return <Vips vipList={vipList}/>
@@ -69,6 +81,19 @@ function Mine({ member }: MineProps) {
         if (active.id === 3) return <RegMembers list={regNumList}/>
         if (active.id === 4) return <RegMembers list={regPayNumList}/>
         return <></>
+    }
+
+    const onShare = () => {
+        window.navigator.share({
+            title: document.title,
+            url: document.location.href,
+            text: '分享推广链接'
+        }).then(res => {
+            window.gtag && window.gtag('event', 'share', { value: 'share' })
+            console.log('Share success!')
+        }).catch(err => {
+            console.warn('Share failed!')
+        })
     }
 
     
@@ -115,6 +140,7 @@ function Mine({ member }: MineProps) {
     useEffect(() => {
         dispatch({ type: 'SET_MEMBER', payload: member })
         getList(active.id)
+        setHasShare(Boolean(window.navigator.share))
     }, [])
 
     useEffect(() => {
@@ -164,12 +190,12 @@ function Mine({ member }: MineProps) {
                                 </div>
                             </div>
                             <div className="flex">
-                                <div className="w-12 text-black dark:text-gray-100">VIP：</div>
+                                <div className="w-12 text-black dark:text-gray-100">
+                                    { mem.isAgent ? '余额：' : 'VIP：' }
+                                </div>
                                 <div className="flex-1 text-gray-600 dark:text-gray-400">
                                     {
-                                        mem.vipEndTime 
-                                        ? dayjs(mem.vipEndTime).format('YYYY-MM-DD HH:mm:ss') + ' 到期'
-                                        : '无'
+                                        mem.isAgent ? (mem.balance + '元') : (mem.vipEndTime ? dayjs(mem.vipEndTime).format('YYYY-MM-DD HH:mm:ss') + ' 到期' : '无')
                                     }
                                 </div>
                             </div>
@@ -191,11 +217,28 @@ function Mine({ member }: MineProps) {
                     <div className="py-2 sm:inline-block">
                         <span className="text-black dark:text-gray-400">推广链接：</span>
                         <span 
-                            className="bg-pink-500 text-white text-sm px-4 py-1 rounded" 
+                            className="bg-gray-200 text-gray-700 text-sm px-4 py-1 rounded" 
                             id="copyBtn" 
                             data-clipboard-text={process.env.site_url + '/register/' + mem.randomCode}>
-                            复制链接
+                            <IoDuplicateOutline 
+                                style={{top: '-1px'}}
+                                className="relative text-base inline-block mr-1" 
+                            />
+                            <span>复制</span>
                         </span>
+                        {
+                            hasShare ?
+                            <span 
+                                className="bg-gray-200 text-gray-700 text-sm px-4 py-1 ml-2 rounded"
+                                onClick={onShare}>
+                                <IoShareOutline 
+                                    style={{top: '-1px'}}
+                                    className="relative text-base inline-block mr-1" 
+                                />
+                                <span>分享</span>
+                            </span> : <></>
+                        }
+                        
                     </div>
                     <p 
                         className="text-pink-500 sm:inline-block sm:ml-3">
@@ -207,7 +250,7 @@ function Mine({ member }: MineProps) {
                         注：注册人数和付费人数均为通过您的推广链接注册的用户
                     </p>
                     <Segement 
-                        list={tabs} 
+                        list={tabList} 
                         active={active} 
                         onChange={(item: Seg) => {
                             setActive(item)

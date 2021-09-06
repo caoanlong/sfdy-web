@@ -92,7 +92,7 @@ function Register({ randomCode }: RegisterProp) {
                                     <InputCom 
                                         {...input} 
                                         type="text" 
-                                        placeholder="请输入邮箱"
+                                        placeholder="请输入邮箱/手机号"
                                         tips={meta.touched && meta.error && <span>{meta.error}</span>}
                                     />
                                 )}
