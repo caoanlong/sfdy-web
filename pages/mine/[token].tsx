@@ -48,11 +48,6 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
         }
     }
     member.vipEndTime = t
-    // if (member.isAgent) {
-    //     tabList = [ tabs[1], tabs[2], tabs[3] ]
-    // } else {
-    //     tabList = [ ...tabs ]
-    // }
     return {
         props: {
             member,
