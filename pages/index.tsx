@@ -46,6 +46,11 @@ function Home({ vodsNewList }: HomeProps) {
 				canonical={process.env.site_url} 
 			/>
 			<BannerCom banners={banners}></BannerCom>
+			<div 
+				style={{height: '44px', lineHeight: '44px'}}
+				className="text-left sm:text-center text-xs sm:text-sm truncate px-3 sm:px-5 bg-yellow-50 text-yellow-500 overflow-hidden">
+				{seo.seoScript}
+			</div>
 			<div className="container pt-4">
 			{
 				vodsNewList.map((vodsNew: VodType) => (
