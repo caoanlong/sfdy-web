@@ -6,8 +6,9 @@ import { useDispatch, useSelector } from 'react-redux'
 import { useRouter } from 'next/router'
 import { isPWA } from '../utils/tools'
 import { RootState } from '../store'
-import LoginModal from './LoginModal'
 import { getInfo } from '../store/actions/userActions'
+import LoginModal from './LoginModal'
+import BuyVipModal from './BuyVipModal'
 
 type LayoutProps = {
     children: ReactNode
@@ -20,6 +21,7 @@ function Layout({children}: LayoutProps) {
     
     const seo = useSelector((state: RootState) => state.config.seo)
     const showLogin = useSelector((state: RootState) => state.config.showLogin)
+    const showBuyVip = useSelector((state: RootState) => state.config.showBuyVip)
 
     const authPath = ['/mine']
     useEffect(() => {
@@ -91,6 +93,7 @@ function Layout({children}: LayoutProps) {
                 <HeaderBar></HeaderBar>
                 <div className="pt-12 sm:pt-16">{children}</div>
                 { showLogin ? <LoginModal /> : <></>}
+                { showBuyVip ? <BuyVipModal /> : <></>}
                 <FooterBar></FooterBar>
             </div>
         </div>

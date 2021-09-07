@@ -56,7 +56,8 @@ function Play({ vod, likeList }: PlayProps) {
 
     useEffect(() => {
         const videoEle = videoRef.current as HTMLVideoElement
-        const URL = "http" + vod.vodPlayUrl?.split("http")[1]
+        const arr = vod.vodPlayUrl?.split("http")
+        const URL = "http" + arr[arr.length - 1]
         setHasShare(Boolean(window.navigator.share))
 
         if (Hls.isSupported()) {

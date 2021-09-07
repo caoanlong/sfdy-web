@@ -80,6 +80,16 @@ class MemberApi {
             params
         })
     }
+
+    static vipBuy(vipId: number) {
+        if (!this.isClick) return Promise.reject('REPEAT_POST')
+        this.isClick = false
+        setTimeout(() => { this.isClick = true }, this.delay)
+        return request({
+            url: this.url + '/vipBuy/' + vipId,
+            method: 'post'
+        })
+    }
 }
 
 export default MemberApi
