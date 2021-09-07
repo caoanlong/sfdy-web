@@ -12,7 +12,7 @@ function VodItem({ vod, isInShadow }: VodItemProps) {
     return (
         <Link href={`/detail/${vod.vodId}`}>
             <a 
-                className={`bg-white overflow-hidden rounded-lg relative ${isInShadow ? 'dark:bg-black' : 'dark:bg-gray-900 shadow-md'}`} 
+                className={`bg-white block overflow-hidden rounded-lg relative ${isInShadow ? 'dark:bg-black' : 'dark:bg-gray-900 shadow-md'}`} 
                 title={vod.vodName}>
                 <VipTag permission={vod.permission} />
                 <div className="aspectration" data-ratio="4:3">
