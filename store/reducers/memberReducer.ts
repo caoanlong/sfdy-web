@@ -34,7 +34,8 @@ const initState: MemberState = {
 const reducer = (state: MemberState = initState, action: AnyAction) => {
     switch (action.type) {
         case 'SET_MEMBER':
-            return { ...state, ...action.payload }
+            const token = localStorage.getItem('_t') || ''
+            return { ...state, ...action.payload, token }
         case 'DEL_MEMBER':
             return { ...initState }
         case 'SET_TOKEN':

@@ -6,7 +6,7 @@ import Vip from "../types/Vip"
 function BuyVipModal() {
     const dispatch = useDispatch()
     const currentBuyVip: Vip = useSelector((state: RootState) => state.config.currentBuyVip)
-    const token = localStorage.getItem('_t')
+    const token = useSelector((state: RootState) => state.member.token)
     const href = `/app/member/vipBuy/${currentBuyVip.vipId}/${token}`
 
     return (

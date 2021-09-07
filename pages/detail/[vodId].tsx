@@ -10,6 +10,7 @@ import SEO from '../../components/SEO'
 import { RootState } from "../../store"
 import React from "react"
 import { IoChevronForwardOutline, IoStar, IoStarHalf } from "react-icons/io5"
+import VipTag from "../../components/VipTag"
 
 
 function scoreToStars(score: number) {
@@ -93,7 +94,8 @@ function Detail({ vod, likeList }: DetailProps) {
                     <div className="flex">
                         <div className="w-48 sm:w-72">
                             <div className="aspectration" data-ratio="4:3">
-                                <div className="con overflow-hidden rounded">
+                                <div className="con overflow-hidden rounded-lg">
+                                    <VipTag permission={vod.permission} />
                                     <img 
                                         className="h-full w-full object-cover transition duration-500 transform hover:scale-125" 
                                         src={vod.vodPic.includes('http') ? vod.vodPic : process.env.site_url + '/' + vod.vodPic} 

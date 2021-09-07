@@ -17,7 +17,6 @@ type LayoutProps = {
 function Layout({children}: LayoutProps) {
     const dispatch = useDispatch()
     const router = useRouter()
-    // const theme = useSelector((state: RootState) => state.config.theme)
     
     const seo = useSelector((state: RootState) => state.config.seo)
     const showLogin = useSelector((state: RootState) => state.config.showLogin)
@@ -25,20 +24,28 @@ function Layout({children}: LayoutProps) {
 
     const authPath = ['/mine']
     useEffect(() => {
-        const _t = localStorage.getItem('_t')
-        if (_t) {
-            dispatch({ type: 'SET_TOKEN', payload: _t })
+        const token = localStorage.getItem('_t')
+        if (token) {
+            dispatch({ type: 'SET_TOKEN', payload: token })
             if (router.pathname !== '/mine/[token]') {
                 dispatch(getInfo())
             }
         }
         for (const item of authPath) {
-            if (!_t && router.pathname.startsWith(item)) {
+            if (!token && router.pathname.startsWith(item)) {
                 dispatch({ type: 'SET_LOGIN_MODAL', payload: true })
                 router.replace('/')
                 break
             }
         }
+
+        document.addEventListener('visibilitychange', () => {
+            if(document.visibilityState == 'visible') {
+                dispatch({ type: 'SET_BUY_VIP_MODAL', payload: { showBuyVip: false } })
+                if (token) dispatch(getInfo())
+            }
+        })
+
     }, [])
 
     useEffect(() => {
@@ -61,13 +68,6 @@ function Layout({children}: LayoutProps) {
         })
         document.documentElement.className = prefersDarkMode ? 'dark' : 'light'
         document.body.style.backgroundColor = prefersDarkMode ? '#000' : '#fff'
-
-        document.addEventListener('visibilitychange', () => {
-            if(document.visibilityState == 'visible') {
-                dispatch({ type: 'SET_BUY_VIP_MODAL', payload: { showBuyVip: false } })
-            }
-        })
-
     }, [])
     
     return (
