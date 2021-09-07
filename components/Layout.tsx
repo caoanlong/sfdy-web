@@ -1,5 +1,6 @@
 import React, { ReactNode, useEffect } from 'react'
 import Head from "next/head"
+import { Freshchat } from 'reactjs-freshchat'
 import HeaderBar from './HeaderBar'
 import FooterBar from './FooterBar'
 import { useDispatch, useSelector } from 'react-redux'
@@ -9,6 +10,7 @@ import { RootState } from '../store'
 import { getInfo } from '../store/actions/userActions'
 import LoginModal from './LoginModal'
 import BuyVipModal from './BuyVipModal'
+import Member from '../types/Member'
 
 type LayoutProps = {
     children: ReactNode
@@ -18,6 +20,7 @@ function Layout({children}: LayoutProps) {
     const dispatch = useDispatch()
     const router = useRouter()
     
+    const member: Member = useSelector((state: RootState) => state.member)
     const seo = useSelector((state: RootState) => state.config.seo)
     const showLogin = useSelector((state: RootState) => state.config.showLogin)
     const showBuyVip = useSelector((state: RootState) => state.config.showBuyVip)
@@ -103,6 +106,17 @@ function Layout({children}: LayoutProps) {
                 { showBuyVip ? <BuyVipModal /> : <></>}
                 <FooterBar></FooterBar>
             </div>
+            <Freshchat 
+                token={'ca09babd-a5d6-4f9e-8e56-605ccda21c96'} 
+                externalId={'' + member.memberId}
+                firstName={member.email || member.mobile || member.memberName}
+                email={member.email}
+                phone={member.mobile}
+                ic_styles={{
+                    backgroundColor: '#002d85', 
+                    color: '#fff'
+                }}
+            />
         </div>
     )
 }
