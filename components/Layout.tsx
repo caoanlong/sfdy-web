@@ -61,6 +61,13 @@ function Layout({children}: LayoutProps) {
         })
         document.documentElement.className = prefersDarkMode ? 'dark' : 'light'
         document.body.style.backgroundColor = prefersDarkMode ? '#000' : '#fff'
+
+        document.addEventListener('visibilitychange', () => {
+            if(document.visibilityState == 'visible') {
+                dispatch({ type: 'SET_BUY_VIP_MODAL', payload: { showBuyVip: false } })
+            }
+        })
+
     }, [])
     
     return (

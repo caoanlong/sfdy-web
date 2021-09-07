@@ -1,28 +1,13 @@
 import React, { MouseEvent } from "react"
 import { useDispatch, useSelector } from "react-redux"
-import Toast from 'light-toast'
-import MemberApi from "../services/MemberApi"
 import { RootState } from "../store"
 import Vip from "../types/Vip"
-import ButtonCom from "./ButtonCom"
-import { getInfo } from "../store/actions/userActions"
 
 function BuyVipModal() {
     const dispatch = useDispatch()
     const currentBuyVip: Vip = useSelector((state: RootState) => state.config.currentBuyVip)
-
-    const handleBuy = () => {
-        Toast.loading('加载中...')
-        const url = process.browser ? '/app' : process.env.api_url
-        const token = localStorage.getItem('_t')
-        window.location.href = `${url}/member/vipBuy/${currentBuyVip.vipId}/${token}`
-        Toast.hide()
-        // MemberApi.vipBuy(currentBuyVip.vipId).then(res => {
-        //     Toast.hide()
-        //     dispatch({ type: 'SET_BUY_VIP_MODAL', payload: { showBuyVip: false } })
-        //     dispatch(getInfo())
-        // })
-    }
+    const token = localStorage.getItem('_t')
+    const href = `/app/member/vipBuy/${currentBuyVip.vipId}/${token}`
 
     return (
         <div 
@@ -50,7 +35,12 @@ function BuyVipModal() {
                     <div className="dark:text-white">合计支付：</div>
                     <div className="text-yellow-500 font-bold">{currentBuyVip.price}元</div>
                 </div>
-                <ButtonCom text="支付" onClick={handleBuy}/>
+                <a 
+                    style={{height: '48px', lineHeight: '48px'}}
+                    className="w-full block rounded-lg bg-purple-500 text-white text-center" 
+                    href={href} target="_blank">
+                    支付
+                </a>
             </div>
         </div>
     )
