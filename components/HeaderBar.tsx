@@ -173,7 +173,7 @@ function HeaderBar() {
                             className="w-full h-8 bg-gray-100 dark:bg-gray-900 border-gray-200 dark:border-gray-900 border rounded-3xl flex focus-within:ring-2 focus-within:border-purple-600">
                             <form 
                                 className="flex-1 h-full"
-                                onSubmit={(e: FormEvent) => e.preventDefault()}>
+                                action="javascript:return true">
                                 <input 
                                     ref={keywordsRef} 
                                     className="w-full h-full px-3 bg-transparent outline-none dark:text-white" 
