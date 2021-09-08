@@ -1,4 +1,4 @@
-import React, { useState, MouseEvent, useEffect, FormEvent, useRef } from 'react'
+import React, { useState, MouseEvent, KeyboardEvent, FormEvent, useRef } from 'react'
 import { useRouter } from 'next/router'
 import Link from 'next/link'
 import { useDispatch, useSelector } from 'react-redux'
@@ -46,7 +46,7 @@ function HeaderBar() {
         }, 100)
     }
     const handleEnter = (e: KeyboardEvent) => {
-        if (e.keyCode === 13) {
+        if (e.keyCode === 13 || e.key === 'Enter') {
             handleSearch()
         }
     }
@@ -58,13 +58,6 @@ function HeaderBar() {
     const isActive = (typeId: number) => {
         return (router.pathname.includes('/list') && router.query.typeId === String(typeId))
     }
-    
-    useEffect(() => {
-        keywordsRef.current?.addEventListener('keydown', handleEnter)
-        return () => {
-            keywordsRef.current?.removeEventListener('keydown', handleEnter)
-        }
-    }, [])
 
     return (
         <div className="w-full h-12 sm:h-16 fixed z-50 shadow bg-white dark:bg-black">
@@ -74,9 +67,12 @@ function HeaderBar() {
                     onClick={() => setShowNavs(!showNavs)}>
                     <IoMenu />
                 </div>
-                <a className="h-full py-2" style={{width: '160px'}} href="/">
-                    <img className="h-full" src="/images/logo.svg" alt="LOGO" />
-                </a>
+                <Link href={'/'}>
+                    <a className="h-full py-2" style={{width: '160px'}}>
+                        <img className="h-full" src="/images/logo.svg" alt="LOGO" />
+                    </a>
+                </Link>
+                
                 <ul className="flex-1 h-full clear-both hidden lg:block">
                     <li className={`float-left h-full px-4 flex items-center ${router.asPath === '/' ? 'text-purple-500' : 'text-gray-600 hover:text-purple-500'}`}>
                         <Link href="/">
@@ -131,6 +127,7 @@ function HeaderBar() {
                             className="flex-1 h-full px-3 bg-transparent outline-none dark:text-white" 
                             type="search" 
                             placeholder="请输入关键字" 
+                            onKeyDown={handleEnter}
                             onFocus={() => setShowHotList(true)} 
                             onBlur={() => {
                                 setTimeout(() => {
@@ -182,7 +179,9 @@ function HeaderBar() {
                                     className="w-full h-full px-3 bg-transparent outline-none dark:text-white" 
                                     type="search" 
                                     placeholder="请输入关键字" 
-                                    onFocus={() => setShowHotList(true)}/>
+                                    onFocus={() => setShowHotList(true)}
+                                    onKeyDown={handleEnter}
+                                />
                             </form>
                             
                             <div 
