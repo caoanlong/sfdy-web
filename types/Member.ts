@@ -22,6 +22,7 @@ interface Member {
     createTime?: Date,
     updateTime?: Date,
     vipEndTime?: number,
+    platform?: number,
     vips?: Vip[]
 }
 

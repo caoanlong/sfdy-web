@@ -14,7 +14,6 @@ function GetCodeBtn({ account, isAuto }: GetCodeBtnProps) {
     let totalTime = 60
     const [ canClick, setCanClick ] = useState(true)
     const [ smsTitle, setSmsTitle ] = useState('获取验证码')
-    const dispatch = useDispatch()
 
     const countDown = () => {
         if (!canClick) return
@@ -34,7 +33,7 @@ function GetCodeBtn({ account, isAuto }: GetCodeBtnProps) {
     
     const handleGetCode = () => {
         Toast.loading('加载中...')
-        MemberApi.getCode({ account }).then(res => {
+        MemberApi.getCode({ account, platform: 1 }).then(res => {
             Toast.success('发送成功')
             countDown()
         }).catch(() => {

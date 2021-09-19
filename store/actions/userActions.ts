@@ -9,6 +9,7 @@ export type LoginProps = {
     mobile?: string,
     email?: string,
     memberName?: string,
+    platform?: number,
     password: string
 }
 
@@ -21,14 +22,11 @@ export type UpdateProps = {
     formData: FormData
 }
 
-export type GetCodeProps = {
-    account: string
-}
 
 export const login = ({ mobile, email, memberName, password, cb }: LoginProps & { cb?: () => void }) => {
     return function(dispatch: Dispatch<AnyAction>, getState: RootState) {
         Toast.loading('加载中...')
-        MemberApi.login({ mobile, email, memberName, password }).then(res => {
+        MemberApi.login({ mobile, email, memberName, password, platform: 1 }).then(res => {
             Toast.hide()
             process.browser && localStorage.setItem('_t', res.headers['authorization'])
             dispatch({
@@ -45,7 +43,7 @@ export const login = ({ mobile, email, memberName, password, cb }: LoginProps & 
 export const register = ({ randomCode, mobile, email, password, code, cb }: RegisterProps & { cb?: () => void }) => {
     return function(dispatch: Dispatch<AnyAction>, getState: RootState) {
         Toast.loading('加载中...')
-        MemberApi.register({ randomCode, mobile, email, password, code }).then(res => {
+        MemberApi.register({ randomCode, mobile, email, password, code, platform: 1 }).then(res => {
             Toast.hide()
             process.browser && localStorage.setItem('_t', res.headers['authorization'])
             dispatch({

@@ -1,10 +1,15 @@
-import { GetCodeProps, LoginProps, RegisterProps } from '../store/actions/userActions'
+import { LoginProps, RegisterProps } from '../store/actions/userActions'
 import request from '../utils/request'
 
 export type RegNumParams = {
     pageIndex: number,
     pageSize: number,
     pay: boolean
+}
+
+type GetCodeProps = {
+    account: string,
+    platform: number
 }
 
 class MemberApi {
