@@ -147,9 +147,7 @@ function Mine({ member, tabList }: MineProps) {
 
     useEffect(() => {
         const ua = window.navigator.userAgent
-        if (ua.endsWith(';Native-android')) {
-            alert(ua)
-        }
+        alert(ua)
     }, [])
 
     return (
