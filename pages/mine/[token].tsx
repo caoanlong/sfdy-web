@@ -145,11 +145,6 @@ function Mine({ member, tabList }: MineProps) {
         })
     }, [])
 
-    useEffect(() => {
-        const ua = window.navigator.userAgent
-        alert(ua)
-    }, [])
-
     return (
         <main>
             <SEO 
