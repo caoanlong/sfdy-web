@@ -36,6 +36,7 @@ function BuyVipModal() {
                     <div className="text-yellow-500 font-bold">{currentBuyVip.price}元</div>
                 </div>
                 <p className="text-yellow-500 text-center mb-3">更多支付方式和免费试用活动请联系在线客服获取</p>
+                <p className="text-red-500 text-center mb-3">如获取订单失败，可以重新点击充值获取或者刷新充值页面</p>
                 <a 
                     style={{height: '48px', lineHeight: '48px'}}
                     className="w-full block rounded-lg bg-purple-500 text-white text-center" 
