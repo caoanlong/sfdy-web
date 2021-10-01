@@ -56,6 +56,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     }
 }
 
+let pageIndex = 1
 function Mine({ member, tabList }: MineProps) {
     const dispatch = useDispatch()
     const router = useRouter()
@@ -67,12 +68,22 @@ function Mine({ member, tabList }: MineProps) {
     const [ orderList, setOrderList ] = useState<Order[]>([])
     const [ regNumList, setRegNumList ] = useState<Member[]>([])
     const [ regPayNumList, setRegPayNumList ] = useState<Member[]>([])
+    const [ totalOrderPage, setTotalOrderPage ] = useState<number>(0)
 
     const [ hasShare, setHasShare ] = useState(false)
 
+    const onOrdersMore = () => {
+        pageIndex++
+        getOrderList()
+    }
+
     const Record = () => {
         if (active.id === 1) return <Vips vipList={vipList}/>
-        if (active.id === 2) return <MyOrders orderList={orderList}/>
+        if (active.id === 2) return <MyOrders 
+            orderList={orderList} 
+            hasMore={pageIndex <= totalOrderPage} 
+            onMore={onOrdersMore}
+        />
         if (active.id === 3) return <RegMembers list={regNumList}/>
         if (active.id === 4) return <RegMembers list={regPayNumList}/>
         return <></>
@@ -105,9 +116,13 @@ function Mine({ member, tabList }: MineProps) {
 
     const getOrderList = () => {
         Toast.loading('加载中...')
-        MemberApi.orders().then(res => {
+        MemberApi.orders({
+            pageIndex,
+            pageSize: 10
+        }).then(res => {
             Toast.hide()
-            setOrderList(res.data.data)
+            setOrderList([...orderList, ...res.data.data.list])
+            setTotalOrderPage(res.data.data.pages)
         }).catch(() => {
             Toast.hide()
         })
@@ -190,7 +205,7 @@ function Mine({ member, tabList }: MineProps) {
                                 </div>
                                 <div className="flex-1 text-gray-600 dark:text-gray-400">
                                     {
-                                        mem.isAgent ? (mem.balance + '元') : (mem.vipEndTime ? dayjs(mem.vipEndTime).format('YYYY-MM-DD HH:mm:ss') + ' 到期' : '无')
+                                        mem.isAgent ? (mem.balance + '元') : (mem.vipEndTime ? (dayjs(mem.vipEndTime).format('YYYY-MM-DD HH:mm:ss') + ' 到期') : '无')
                                     }
                                 </div>
                             </div>

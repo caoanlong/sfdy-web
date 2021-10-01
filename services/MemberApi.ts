@@ -1,6 +1,11 @@
 import { LoginProps, RegisterProps } from '../store/actions/userActions'
 import request from '../utils/request'
 
+export type OrdersParams = {
+    pageIndex: number,
+    pageSize: number
+}
+
 export type RegNumParams = {
     pageIndex: number,
     pageSize: number,
@@ -73,9 +78,10 @@ class MemberApi {
         })
     }
 
-    static orders() {
+    static orders(params: OrdersParams) {
         return request({
-            url: this.url + '/orders'
+            url: this.url + '/orders',
+            params
         })
     }
 
