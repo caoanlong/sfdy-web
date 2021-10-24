@@ -24,6 +24,7 @@ WrappedApp.getInitialProps = wrapper.getInitialAppProps(store => async ({ Compon
 			store.dispatch({ type: 'SET_SEO', payload: data.data.seo })
 			store.dispatch({ type: 'SET_LINKS', payload: data.data.links })
 			store.dispatch({ type: 'SET_BANNERS', payload: data.data.banners })
+			store.dispatch({ type: 'SET_NOTICES', payload: data.data.notices })
 		}
 	}
 	
